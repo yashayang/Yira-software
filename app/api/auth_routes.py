@@ -73,10 +73,13 @@ def sign_up():
     """
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    print("=========BACKEND SIGNUP ROUTE_formdata:=======", form.data['email'], form.data['administration'])
     if form.validate_on_submit():
         user = User(
-            username=form.data['username'],
+            first_name=form.data['firstName'],
+            last_name=form.data['lastName'],
             email=form.data['email'],
+            is_admin=bool(form.data['administration']),
             password=form.data['password']
         )
         db.session.add(user)
