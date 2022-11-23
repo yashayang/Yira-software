@@ -20,3 +20,14 @@ class Issue(db.Model):
   user = db.relationship("User", back_populates="issues")
   phase = db.relationship("Phase", back_populates="issues")
   comments = db.relationship("Comment", back_populates="issue", cascade="all, delete")
+
+  #instance methods
+  def to_dict_all_issues(self):
+    return {
+      "issueId":self.id,
+      "summary": self.summary,
+      "phaseId": self.phase_id,
+      "ownerId": self.owner_id,
+      'createdAt': self.created_at,
+      'updatedAt': self.updated_at,
+    }

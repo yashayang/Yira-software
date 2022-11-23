@@ -18,3 +18,15 @@ class Phase(db.Model):
   user = db.relationship("User", back_populates="phases")
   project = db.relationship("Project", back_populates="phases")
   issues = db.relationship("Issue", back_populates="phase", cascade="all, delete")
+
+  #instance methods
+  def to_dict_all_phase(self):
+    return {
+      'id': self.id,
+      'title': self.title,
+      'projectId': self.project_id,
+      'ownerId': self.owner_id,
+      'createdAt': self.created_at,
+      'updatedAt': self.updated_at,
+      'Issues': [issue.to_dict_all_issues() for issue in self.issues]
+    }

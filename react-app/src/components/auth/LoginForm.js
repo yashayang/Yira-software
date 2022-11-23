@@ -12,7 +12,7 @@ const LoginForm = () => {
 
   const onLogin = async (e) => {
     e.preventDefault();
-    console.log("ReactLoginForm_email_password:", email, password)
+    // console.log("ReactLoginForm_email_password:", email, password)
     const data = await dispatch(login(email, password));
     if (data) {
       setErrors(data);
