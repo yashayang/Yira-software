@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
-import { getAllPhasesIssues } from '../store/phase'
+import { getAllPhasesIssues } from '../store/phase';
+import "./CSS/Phases.css"
 
 function Phases(){
   const dispatch = useDispatch();
@@ -14,19 +15,22 @@ function Phases(){
   if (!phases) return null;
 
   return (
-    <div>
+    <div className="outer-container">
       {phasesArr.map((phase, i) => {
       return (
-        <div key={i}>
-          {phase.title}
-          {phase.Issues.map((issue, i) => {
+        <div className="card-container-outer" key={i}>
+          <div className="phase-title">
+            {phase.title}
+          </div>
+          <div>
+             {phase.Issues.map((issue, i) => {
             return (
               <div key={i}>
                 {issue.summary}
               </div>
             )
           })}
-        <div></div>
+          </div>
         </div>
         )
       })}
