@@ -16,6 +16,12 @@ class User(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean(40), nullable=False)
     hashed_password = db.Column(db.String(255), nullable=False)
 
+    #relationship
+    issues = db.relationship("Issue", back_populates="user", cascade="all, delete")
+    phases = db.relationship("Phase", back_populates="user", cascade="all, delete")
+    projects = db.relationship("Project", back_populates="user", cascade="all, delete")
+    comments = db.relationship("Comment", back_populates="user", cascade="all, delete")
+
     @property
     def password(self):
         return self.hashed_password

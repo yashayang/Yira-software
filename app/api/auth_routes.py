@@ -44,6 +44,18 @@ def login():
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
+# fetch("http://localhost:5000/api/auth/login", {
+#   method: 'POST',
+#   body: JSON.stringify({
+#    "email": "yasha@gmail.com",
+#    "password": "password"
+#   }),
+#   headers: {
+#     'Content-type': 'application/json'
+#   }
+#   })
+# .then(res => res.json())
+# .then(console.log)
 
 @auth_routes.route('/logout')
 def logout():
