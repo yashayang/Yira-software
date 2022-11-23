@@ -1,4 +1,5 @@
 from app.models import db, Issue, environment, SCHEMA
+from datetime import datetime
 
 def seed_issues():
   issue1 = Issue(
@@ -53,6 +54,6 @@ def seed_issues():
   db.session.add(issue5)
   db.session.commit()
 
-def undo_products():
+def undo_issues():
     db.session.execute('TRUNCATE issues RESTART IDENTITY CASCADE;')
     db.session.commit()

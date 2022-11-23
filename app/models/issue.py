@@ -15,3 +15,8 @@ class Issue(db.Model):
   owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
   created_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.func.now())
   updated_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.func.now())
+
+  #relationship
+  user = db.relationship("User", back_populates="issues")
+  phase = db.relationship("Phase", back_populates="issues")
+  comments = db.relationship("Comment", back_populates="issue", cascade="all, delete")

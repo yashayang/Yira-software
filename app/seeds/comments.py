@@ -1,6 +1,7 @@
 from app.models import db, Comment, environment, SCHEMA
+from datetime import datetime
 
-def seed_Comments():
+def seed_comments():
   Comment1 = Comment(
     comment='review still error out when I was checking the feature.',
     issue_id=1,
@@ -30,6 +31,6 @@ def seed_Comments():
   db.session.add(Comment3)
   db.session.commit()
 
-def undo_products():
+def undo_comments():
     db.session.execute('TRUNCATE Comments RESTART IDENTITY CASCADE;')
     db.session.commit()

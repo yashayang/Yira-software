@@ -1,4 +1,5 @@
 from app.models import db, Project, environment, SCHEMA
+from datetime import datetime
 
 def seed_projects():
   project1 = Project(
@@ -11,6 +12,6 @@ def seed_projects():
   db.session.add(project1)
   db.session.commit()
 
-def undo_products():
+def undo_projects():
     db.session.execute('TRUNCATE projects RESTART IDENTITY CASCADE;')
     db.session.commit()

@@ -1,4 +1,5 @@
 from app.models import db, Phase, environment, SCHEMA
+from datetime import datetime
 
 def seed_phases():
   Phase1 = Phase(
@@ -27,7 +28,6 @@ def seed_phases():
 
   Phase4 = Phase(
     title="QA CHECK",
-    description="schedule sent",
     project_id=1,
     owner_id=1,
     created_at=datetime.now(),
@@ -59,6 +59,6 @@ def seed_phases():
   db.session.add(Phase6)
   db.session.commit()
 
-def undo_products():
+def undo_phases():
     db.session.execute('TRUNCATE Phases RESTART IDENTITY CASCADE;')
     db.session.commit()

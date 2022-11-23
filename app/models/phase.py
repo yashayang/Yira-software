@@ -13,3 +13,8 @@ class Phase(db.Model):
   owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
   created_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.func.now())
   updated_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.func.now())
+
+  #relataionship
+  user = db.relationship("User", back_populates="phases")
+  project = db.relationship("Project", back_populates="phases")
+  issues = db.relationship("Issue", back_populates="phase", cascade="all, delete")
