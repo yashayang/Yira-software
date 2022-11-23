@@ -1,0 +1,8 @@
+.DS_Store
+
+*.db
+*/dev.db
+.dev.db
+dev.db
+app/dev.db
+.///dev.db
