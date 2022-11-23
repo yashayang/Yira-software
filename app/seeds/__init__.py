@@ -22,9 +22,9 @@ def seed():
         # Make sure to add all your other model's undo functions below
         # undo_users()
         seed_users()
-        seed_issues()
-        seed_phases()
         seed_projects()
+        seed_phases()
+        seed_issues()
         seed_comments()
     # Add other seed functions here
 
@@ -33,8 +33,8 @@ def seed():
 @seed_commands.command('undo')
 def undo():
     undo_users()
-    undo_issues()
-    undo_phases()
     undo_projects()
+    undo_phases()
+    undo_issues()
     undo_comments()
     # Add other undo functions here
