@@ -1,19 +1,50 @@
+.project-main-container {
+  display: flex;
+	flex-direction: column;
+	min-height: 100px;
+  max-height: auto;
+  width: 3000px;
+  margin-left: 30px;
+  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+}
+
+.project-title {
+  height: 50px;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.user-circle-container {
+  /* background-color: blue; */
+  margin: 10px 0px 40px 0px;
+}
+
+.user-circle {
+  font-size: 0.9rem;
+  color: white;
+  height: 35px;
+  width: 35px;
+  background-color: #EF476F;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .phase-main-container {
   display: flex;
 	flex-direction: row;
 	min-height: 100px;
   max-height: auto;
   width: 3000px;
-  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
-  /* background-color: #F5F4F4; */
 }
 
 .card-container {
   position: relative;
-  margin: 5px;
   background-color: #F5F4F4;
-  width: 260px;
+  width: 280px;
   border-radius: 2%;
+  margin-right: 12px
 }
 
 .phase-title {

@@ -28,5 +28,6 @@ class Phase(db.Model):
       'ownerId': self.owner_id,
       'createdAt': self.created_at,
       'updatedAt': self.updated_at,
-      'Issues': [issue.to_dict_all_issues() for issue in self.issues]
+      'Issues': [issue.to_dict_all_issues() for issue in self.issues],
+      'Project': self.project.to_dict()
     }

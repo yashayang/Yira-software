@@ -16,3 +16,13 @@ class Project(db.Model):
   #relationship
   user = db.relationship("User", back_populates="projects")
   phases = db.relationship("Phase", back_populates="project", cascade="all, delete")
+
+  #instance methods
+  def to_dict(self):
+    return {
+      'id': self.id,
+      'name': self.name,
+      'ownerId': self.owner_id,
+      'createdAt': self.created_at,
+      'updatedAt': self.updated_at,
+    }
