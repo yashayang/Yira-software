@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
 import { getAllPhasesIssues } from '../store/phase';
+import { loadAllUsers } from '../store/session';
 import "./CSS/Phases.css"
 
 function Phases(){
@@ -13,9 +14,19 @@ function Phases(){
   const curr_user = useSelector(state => state.session.user)
   const curr_user_init = curr_user.first_name[0].toUpperCase() + curr_user.last_name[0].toUpperCase()
 
-  // console.log(curr_user_init)
+  const all_users = useSelector(state => state.session.AllUsers)
+  const all_users_init = all_users?.users.map(user => user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase())
+  const all_users_arr = all_users?.users
+  console.log(all_users?.users && Object.values(all_users?.users).filter((user, i) => {
+    return user.id === 1
+  }))
+
+  // if (all_users?.users) {
+  //   console.log(Object.values(all_users?.users)[0])
+  // }
   useEffect(() => {
     dispatch(getAllPhasesIssues(phases))
+    dispatch(loadAllUsers())
   }, [dispatch])
 
   if (!phases) return null;
@@ -25,7 +36,7 @@ function Phases(){
       <div className='project-path'>Projects  /  Project 1</div>
       <div className='project-title'>{projectName}</div>
       <div className='user-circle-container'>
-        <div className='user-circle'>{curr_user_init}</div>
+        {all_users_init?.map(init => init === curr_user_init ? <div className='curr-user-circle'>{curr_user_init}</div> : <div className='other-user-circle'>{init}</div>)}
       </div>
       <div className="phase-main-container">
         {phasesArr.map((phase, i) => {
@@ -46,8 +57,16 @@ function Phases(){
                     <div className='issue-ellipsis-container'><i className="fa-solid fa-ellipsis"></i></div>
                   </div>
                   <div className="project-name-outer">
-                    <div className='project-name-icon'><i className="fa-solid fa-square-check"></i></div>
-                    <div className="project-name">{phase.Project.name}--{issue.issueId}</div>
+                    <div className="project-name-left">
+                      <div className='project-name-icon'><i className="fa-solid fa-square-check"></i></div>
+                      <div className="project-name">{phase.Project.name}--{issue.issueId}</div>
+                    </div>
+                    {issue.user.first_name[0].toUpperCase()+issue.user.last_name[0].toUpperCase() === curr_user_init
+                    ?
+                    <div className='curr-user-circle-small'>{curr_user_init}</div>
+                    :
+                    <div className='other-user-circle-small'>{issue.user.first_name[0].toUpperCase()+issue.user.last_name[0].toUpperCase()}</div>
+                    }
                   </div>
                 </div>
               )

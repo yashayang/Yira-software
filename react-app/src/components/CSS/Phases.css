@@ -22,14 +22,27 @@
 
 .user-circle-container {
   margin: 15px 0px 35px 0px;
+  display: flex;
 }
 
-.user-circle {
+.curr-user-circle {
   font-size: 0.9rem;
   color: white;
   height: 33px;
   width: 33px;
-  background-color: #EF476F;
+  background-color: #301781;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.other-user-circle {
+  font-size: 0.9rem;
+  color: white;
+  height: 33px;
+  width: 33px;
+  background-color: #06D6A0;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -129,10 +142,6 @@
   min-height: 90px;
 }
 
-.project-name-outer {
-  margin: 5px 0px 15px 10px;
-  width: 90%;
-}
 
 .issue-summary {
   margin: 10px 0px 15px 10px;
@@ -178,15 +187,22 @@
   cursor: pointer;
 }
 
-.project-name-outer {
-  display: flex;
-}
-
 .fa-solid.fa-square-check {
   color: #615DEC;
   font-size: 1rem;
   /* margin-right: 5px;
   margin-top: 20px; */
+}
+
+.project-name-outer {
+  margin: 5px 0px 15px 10px;
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-name-left {
+  display: flex;
 }
 
 .project-name-icon {
@@ -196,6 +212,31 @@
 
 .project-name {
   color: #888888;
+  margin-top: 2px;
+}
+
+.curr-user-circle-small {
+  font-size: 0.6rem;
+  color: white;
+  height: 22px;
+  width: 22px;
+  background-color: #301781;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.other-user-circle-small {
+  font-size: 0.6rem;
+  color: white;
+  height: 22px;
+  width: 22px;
+  background-color: #06D6A0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .create-issue-outer {
