@@ -8,6 +8,12 @@
   font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
 }
 
+.project-path {
+  font-size: 0.9rem;
+  color: #888888;
+  margin-bottom: 18px;
+}
+
 .project-title {
   height: 50px;
   font-size: 1.5rem;
@@ -15,15 +21,14 @@
 }
 
 .user-circle-container {
-  /* background-color: blue; */
-  margin: 10px 0px 40px 0px;
+  margin: 15px 0px 35px 0px;
 }
 
 .user-circle {
   font-size: 0.9rem;
   color: white;
-  height: 35px;
-  width: 35px;
+  height: 33px;
+  width: 33px;
   background-color: #EF476F;
   border-radius: 50%;
   display: flex;
@@ -42,18 +47,63 @@
 .card-container {
   position: relative;
   background-color: #F5F4F4;
-  width: 280px;
+  width: 300px;
   border-radius: 2%;
   margin-right: 12px
+}
+
+.phase-title-container {
+  display: flex;
+}
+
+.phase-ellipsis-container {
+  margin: 10px 10px 10px 0px;
+  height: 31px;
+  width: 31px;
+  color: #2F2F2F;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12%;
+  display: none;
+}
+
+.phase-title-container:hover .phase-ellipsis-container {
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e3e3e3;
+  cursor: pointer;
 }
 
 .phase-title {
   position: relative;
   display: flex;
   margin: 20px auto;
-  margin-left: 20px;
+  /* margin-left: 20px; */
   font-size: 0.8rem;
   color: #2F2F2F;
+
+  /* height: auto; */
+  width: 80%;
+  border-radius: 3%;
+  padding: 10px;
+  padding-left: 10px;
+  /* padding-bottom: 10px; */
+  margin: 8px 20px 8px 5px;
+  border-radius: 3%;
+}
+
+.phase-title:hover {
+  cursor: pointer;
+  background-color: #e3e3e3;
+}
+
+#phase-title-done {
+  color: #06D6A0;
+  margin-left: 8px;
 }
 
 .issue-card-container {
@@ -76,13 +126,56 @@
   margin-left: 5px;
   background-color: white;
   box-shadow: 0 1px 1px #d7d7d7;
-  /* border: 0.5px solid #F5F4F4; */
+  min-height: 90px;
 }
 
-.project-name-outer,
-.issue-card {
+.project-name-outer {
+  margin: 5px 0px 15px 10px;
+  width: 90%;
+}
+
+.issue-summary {
   margin: 10px 0px 15px 10px;
-  width: 80%;
+  width: 78%;
+  padding-bottom: 10px;
+}
+
+.issue-card-title {
+  display: flex;
+	flex-direction: row;
+  justify-content: space-between;
+}
+
+.fa-solid.fa-ellipsis {
+  font-size: 1.1rem;
+}
+
+.issue-ellipsis-container {
+  margin: 10px;
+  height: 31px;
+  width: 31px;
+  color: #2F2F2F;
+  font-size: 1.2rem;
+  background-color: #e3e3e3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12%;
+  display: none;
+}
+
+.issue-card-outer:hover .issue-ellipsis-container {
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2F2F2F;
+  cursor: pointer;
+}
+
+.issue-card-outer:hover {
+  background-color: #F5F4F4;
+  cursor: pointer;
 }
 
 .project-name-outer {
@@ -101,18 +194,49 @@
   margin-top: 2px;
 }
 
-.phase-container-footer {
-  height: 10px;
+.project-name {
+  color: #888888;
 }
 
 .create-issue-outer {
   height: auto;
-  width: 100%;
+  width: 89%;
   font-size: 0.85rem;
   color: #2F2F2F;
   border-radius: 3%;
-  margin: 10px;
-  margin-left: 20px;
+  padding: 10px;
+  padding-left: 20px;
   padding-bottom: 10px;
+  margin: 3px 40px 10px 5px;
   font-weight: 500;
+  border-radius: 3%;
+  /* background-color: #615DEC; */
+}
+
+.create-issue-outer:hover {
+  cursor: pointer;
+  background-color: #e3e3e3;
+ }
+
+#create-issue-plus {
+  font-size: 0.95rem;
+  color: #2F2F2F;
+  margin-right: 2px;
+}
+
+#create-phase-plus {
+  font-size: 1.4rem;
+  height: 35px;
+  width: 35px;
+  color: #2F2F2F;
+  background-color: #F5F4F4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3%;
+}
+
+#create-phase-plus:hover {
+  background-color: #e3e3e3;
+  cursor: pointer;
 }

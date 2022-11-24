@@ -22,6 +22,7 @@ function Phases(){
 
   return (
     <div className="project-main-container">
+      <div className='project-path'>Projects  /  Project 1</div>
       <div className='project-title'>{projectName}</div>
       <div className='user-circle-container'>
         <div className='user-circle'>{curr_user_init}</div>
@@ -30,14 +31,20 @@ function Phases(){
         {phasesArr.map((phase, i) => {
         return (
           <div className="card-container" key={i}>
-            <div className="phase-title">
-              {phase.title}
+            <div className="phase-title-container">
+              <div className="phase-title">
+                {phase.title === "DONE" ? <div>{phase.title}<i className="fa-sharp fa-solid fa-check" id="phase-title-done"></i></div> : phase.title}
+              </div>
+              <div className='phase-ellipsis-container'><i className="fa-solid fa-ellipsis"></i></div>
             </div>
             <div className="issue-card-container" >
               {phase.Issues.map((issue, i) => {
               return (
                 <div className="issue-card-outer" key={i}>
-                  <div className="issue-card">{issue.summary}</div>
+                  <div className="issue-card-title">
+                    <div className="issue-summary">{issue.summary}</div>
+                    <div className='issue-ellipsis-container'><i className="fa-solid fa-ellipsis"></i></div>
+                  </div>
                   <div className="project-name-outer">
                     <div className='project-name-icon'><i className="fa-solid fa-square-check"></i></div>
                     <div className="project-name">{phase.Project.name}--{issue.issueId}</div>
@@ -45,11 +52,12 @@ function Phases(){
                 </div>
               )
             })}
-            <div className='create-issue-outer'><i className="fa-sharp fa-solid fa-plus"></i>{" "}Create issue</div>
+            <div className='create-issue-outer'><i className="fa-sharp fa-solid fa-plus" id="create-issue-plus"></i>{" "}Create issue</div>
             </div>
           </div>
           )
         })}
+        <div className="addPhase-main-container"><i className="fa-solid fa-plus" id="create-phase-plus"></i></div>
       </div>
     </div>
   )
