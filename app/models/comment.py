@@ -17,3 +17,15 @@ class Comment(db.Model):
   #relationship
   user = db.relationship("User", back_populates="comments")
   issue = db.relationship("Issue", back_populates="comments")
+
+  #instance methods
+  def to_dict(self):
+    return {
+      'id': self.id,
+      'comment': self.comment,
+      'issueId': self.issue_id,
+      'ownerId': self.owner_id,
+      'createdAt': self.created_at,
+      'updatedAt': self.updated_at,
+      'user': self.user.to_dict()
+    }

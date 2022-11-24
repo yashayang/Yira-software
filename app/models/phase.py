@@ -31,3 +31,14 @@ class Phase(db.Model):
       'Issues': [issue.to_dict_all_issues() for issue in self.issues],
       'Project': self.project.to_dict()
     }
+
+  def to_dict(self):
+    return {
+      'id': self.id,
+      'title': self.title,
+      'projectId': self.project_id,
+      'ownerId': self.owner_id,
+      'createdAt': self.created_at,
+      'updatedAt': self.updated_at,
+      'Project': self.project.to_dict()
+    }

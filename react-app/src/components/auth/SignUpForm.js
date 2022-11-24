@@ -37,7 +37,7 @@ const SignUpForm = () => {
   };
 
   const updateAdmin = (e) => {
-    setAdmin(false);
+    setAdmin(true);
   };
 
   const updatePassword = (e) => {
@@ -93,7 +93,7 @@ const SignUpForm = () => {
           onChange={updateAdmin}
           value={administration}
         >
-          <option>--Not--</option>
+          <option>--Yes--</option>
         </select>
       </div>
       <div>
