@@ -1,20 +1,87 @@
-.outer-container {
+.phase-main-container {
   display: flex;
 	flex-direction: row;
-  justify-content: space-between;
-	height: 400px;
-  /* width: auto; */
+	min-height: 100px;
+  max-height: auto;
+  width: 3000px;
   font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
   /* background-color: #F5F4F4; */
 }
 
-.card-container-outer {
+.card-container {
   position: relative;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 10px 35px;
+  margin: 5px;
   background-color: #F5F4F4;
-  width: 500px;
+  width: 260px;
   border-radius: 2%;
+}
+
+.phase-title {
+  position: relative;
+  display: flex;
+  margin: 20px auto;
+  margin-left: 20px;
+  font-size: 0.8rem;
+  color: #2F2F2F;
+}
+
+.issue-card-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  /* margin: 20px; */
+  width: 96%;
+}
+
+.issue-card-outer {
+  /* position: relative; */
+  height: auto;
+  width: 100%;
+  font-size: 0.9rem;
+  color: black;
+  border-radius: 3%;
+  margin: 3px;
+  margin-left: 5px;
+  background-color: white;
+  box-shadow: 0 1px 1px #d7d7d7;
+  /* border: 0.5px solid #F5F4F4; */
+}
+
+.project-name-outer,
+.issue-card {
+  margin: 10px 0px 15px 10px;
+  width: 80%;
+}
+
+.project-name-outer {
+  display: flex;
+}
+
+.fa-solid.fa-square-check {
+  color: #615DEC;
+  font-size: 1rem;
+  /* margin-right: 5px;
+  margin-top: 20px; */
+}
+
+.project-name-icon {
+  margin-right: 8px;
+  margin-top: 2px;
+}
+
+.phase-container-footer {
+  height: 10px;
+}
+
+.create-issue-outer {
+  height: auto;
+  width: 100%;
+  font-size: 0.85rem;
+  color: #2F2F2F;
+  border-radius: 3%;
+  margin: 10px;
+  margin-left: 20px;
+  padding-bottom: 10px;
+  font-weight: 500;
 }
