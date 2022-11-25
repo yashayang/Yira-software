@@ -18,6 +18,7 @@ const UpdateIssue = () => {
   const [assigneeId, setAssigneeId] = useState(currUser.id)
   const [errors, setErrors] = useState([]);
   const [summaryInput, setSummaryInput] = useState(false);
+  const [descriptionInput, setDescriptionInput] = useState(false);
 
   const currSummary = currIssue.summary;
   const currDescription = currIssue.description;
@@ -33,6 +34,7 @@ const UpdateIssue = () => {
 
   const showSummary = async (e) => {
     setSummary(currIssue.summary)
+    setDescription(currIssue.description)
     setSummaryInput(true)
   }
 
@@ -55,10 +57,26 @@ const UpdateIssue = () => {
     }
   }
 
+  const handleDescription = async (e) => {
+    e.preventDefault()
+    const issue = {
+      summary: currSummary,
+      description,
+      phaseId: currPhaseId,
+      assigneeId: currAssigneeId
+    }
+    console.log("UPDATE ISSUE-issue:", issue)
+    const response = await dispatch(thunkUpdateIssue(issueId, issue))
+    console.log("UPDATE ISSUE-response:", response)
+    if (response.issueId) {
+      setDescriptionInput(false)
+    }
+  }
+
   return (
-    <div>
+    <div className="update-issue-main-container">
       {!summaryInput
-      ? <h1 onClick={showSummary}>{currIssue.summary}</h1>
+      ? <h3 onClick={showSummary}>{currIssue.summary}</h3>
       : <div>
         <form onSubmit={handleSummary}>
           <div>
@@ -76,6 +94,23 @@ const UpdateIssue = () => {
         </form>
         </div>
       }
+      <div>
+        <div>
+          <label>Description</label>
+        </div>
+          {!descriptionInput && <div onClick={() => setDescriptionInput(true)}>Add a description...</div>}
+          {descriptionInput && <form onSubmit={handleDescription}>
+            <textarea
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <div>
+              <button>Save</button>
+              <button onClick={() => setDescriptionInput(false)}>Cancel</button>
+            </div>
+        </form>}
+      </div>
     </div>
   )
 }
