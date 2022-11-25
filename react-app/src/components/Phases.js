@@ -48,6 +48,7 @@ function Phases(){
               {phase.Issues.map((issue, i) => {
               return (
                 <div className="issue-card-outer" key={i}>
+                  <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}>
                   <div className="issue-card-title">
                     <div className="issue-summary">{issue.summary}</div>
                     <div className='issue-ellipsis-container'><i className="fa-solid fa-ellipsis"></i></div>
@@ -64,6 +65,7 @@ function Phases(){
                     <div className='other-user-circle-small'>{issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase()}</div>
                     }
                   </div>
+                  </NavLink>
                 </div>
               )
             })}

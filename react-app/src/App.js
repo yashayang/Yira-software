@@ -9,7 +9,8 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
 import Phases from './components/Phases';
-import CreateIssue from './components/Issues/CreateIssue.js';
+import CreateIssue from './components/Issues/CreateIssue';
+import UpdateIssue from './components/Issues/UpdateIssue';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -47,6 +48,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path='/issues' exact={true} >
           <CreateIssue />
+        </ProtectedRoute>
+        <ProtectedRoute path='/issues/:issueId' exact={true} >
+          <UpdateIssue />
         </ProtectedRoute>
         <Route path='/' exact={true} >
           <h1>Jira Home Page</h1>

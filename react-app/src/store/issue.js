@@ -83,13 +83,15 @@ export const createIssue = (phaseId, issue) => async (dispatch) => {
 }
 
 export const thunkUpdateIssue = (issueId, issue) => async (dispatch) => {
+  const { summary, description, phaseId, assigneeId } = issue
+  console.log("UPDATE ISSUES THUNK_issue:", summary, description, phaseId, assigneeId)
   try {
     const response = await fetch(`/api/projects/issues/${issueId}`, {
       method: "PUT",
       headers: {
           'Content-Type': 'application/json'
           },
-      body: JSON.stringify(issue)
+      body: JSON.stringify({summary, description, phase_id: parseInt(phaseId), owner_id: parseInt(assigneeId)})
     });
     if (!response.ok) {
       let error;
@@ -128,9 +130,8 @@ export const thunkDeleteIssue = (issueId) => async (dispatch) => {
 }
 
 const initialState = {
-  newIssue: {
-    singleIssue: {}
-  }
+  newIssue: {},
+  singleIssue: {}
 }
 
 const issues = (state = initialState, action) => {
@@ -143,7 +144,7 @@ const issues = (state = initialState, action) => {
     case LOAD_ONE_ISSUE:
       return { ...state, singleIssue: { ...action.issue }};
     case UPDATE_ISSUE:
-      return { ...state, singleIssue: { ...action.issue }};
+      return { ...state, ...state.singleIssue, singleIssue: { ...action.issue }};
     case DELETE_ISSUE:
       newState = { ...state, singleIssue: { ...state.singleIssue } }
       if (newState.singleIssue.issueId === action.issueId) {
