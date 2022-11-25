@@ -30,25 +30,24 @@ const CreateIssue = () => {
   const handleSubmit = async(e) => {
     e.preventDefault()
     setErrors([])
+    const issueInfo = { summary, description, phaseId, assigneeId }
+    // console.log("CREATEISSUE FORM-issueInfo:", issueInfo)
 
-    const issueInfo = { summary, description, assigneeId, phaseId }
-    const newIssue = await dispatch(createIssue(phaseId, issueInfo))
-    .catch(async (res) => {
-      const message = await res.json()
-      const messageErrors = []
-      if (message) {
-        messageErrors.push(message.message)
-        setErrors(messageErrors)
-      }
-    })
-
-    history.push('/projects/')
+    const response = await dispatch(createIssue(phaseId, issueInfo))
+    let errorsArr = []
+    if(response.errors) {
+      let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
+      errorsArr.push(errorMsg)
+      // console.log("!!!!!!!", errorsArr)
+      setErrors(errorsArr)
+    } else {
+      history.push('/projects')
+    }
   }
 
   return (
     <form className="create-issue-main-container" onSubmit={handleSubmit}>
       <div className="create-issue-title">Create Issue</div>
-
       <div className="validation-errors">
         {
         errors &&
@@ -102,8 +101,8 @@ const CreateIssue = () => {
           className="create-issue-assignee-select"
           onChange={(e) => setAssigneeId(e.target.value)}
         >
-        <option disabled selected value={assigneeId}>Unassigned</option>
-        {allUsersArr?.map((user, i) => <option value={user.id} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>)}
+        <option disabled selected value={Number(assigneeId)}>Unassigned</option>
+        {allUsersArr?.map((user, i) => <option value={Number(user.id)} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>)}
         </select>
       </div>
 
@@ -112,11 +111,12 @@ const CreateIssue = () => {
       </div>
       <div>
         <select
-          name="assigneeId"
+          name="reporter"
           className="create-issue-assignee-select"
-          onChange={(e) => setAssigneeId(e.target.value)}
+          // onChange={(e) => setAssigneeId(e.target.value)}
         >
-        {allUsersArr?.map((user, i) => <option value={user.id} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>)}
+        <option disabled selected>{currUser.first_name[0].toUpperCase() + currUser.first_name.slice(1) + " " + currUser.last_name[0].toUpperCase() + currUser.last_name.slice(1)}</option>
+        {/* {allUsersArr?.map((user, i) => <option value={user.id} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>)} */}
         </select>
       </div>
 

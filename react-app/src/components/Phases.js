@@ -18,8 +18,8 @@ function Phases(){
   const all_users = useSelector(state => state.session.AllUsers)
   const all_users_init = all_users?.users.map(user => user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase())
 
+  // console.log("PHASE BROWSING-all phases:", phases)
 
-  console.log("PHASE BROWSING-all phases:", phases)
   useEffect(() => {
     dispatch(getAllPhasesIssues(phases))
     dispatch(loadAllUsers())

@@ -8,7 +8,6 @@ export const allPhasesIssues = (phasesIssues) => {
 }
 
 export const getAllPhasesIssues = () => async (dispatch) => {
-  console.log("GET ALL PHASES ISSUES THUNK:", )
   const response = await fetch('/api/projects/');
 
   if (response.ok) {
