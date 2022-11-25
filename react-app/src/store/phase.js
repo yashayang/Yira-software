@@ -1,4 +1,4 @@
-const LOAD_ALL_PHASES_ISSUES = 'project/LOAD_ALL_PHASES_ISSUES';
+const LOAD_ALL_PHASES_ISSUES = 'phases/LOAD_ALL_PHASES_ISSUES';
 
 export const allPhasesIssues = (phasesIssues) => {
   return {
@@ -8,7 +8,8 @@ export const allPhasesIssues = (phasesIssues) => {
 }
 
 export const getAllPhasesIssues = () => async (dispatch) => {
-  const response = await fetch('/api/projects');
+  console.log("GET ALL PHASES ISSUES THUNK:", )
+  const response = await fetch('/api/projects/');
 
   if (response.ok) {
     const phasesIssues = await response.json();

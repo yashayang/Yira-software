@@ -1,0 +1,116 @@
+.create-issue-main-container {
+  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+}
+
+.create-issue-title {
+  margin-bottom: 15px;
+  color: #2F2F2F;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.create-issue-label-container {
+  display: flex;
+  font-size: 14px;
+  font-weight: 500;
+  color: #888888;
+  margin-bottom: 3px;
+}
+
+.fa-solid.fa-asterisk {
+  font-size: 0.45rem;
+  font-weight: 900;
+  color:#EF476F;
+  margin-left: 3px;
+  padding-top: 2px;
+}
+
+.create-issue-select {
+  font-size: 0.8rem;
+  color: #2F2F2F;
+  border: none;
+  background-color: #F5F4F4;
+  height: 40px;
+  width: 335px;
+  padding-left: 10px;
+  padding-right: 3px;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  /* appearance: none; */
+}
+
+.create-issue-assignee-select,
+.create-issue-select:hover {
+  cursor: pointer;
+}
+
+.create-issue-summary-input {
+  font-size: 0.8rem;
+  color: #2F2F2F;
+  width: 100%;
+  border: none;
+  background-color: #F5F4F4;
+  height: 35px;
+  width: 328px;
+  border: 2px solid #d7d7d7;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.create-issue-description {
+  font-size: 0.8rem;
+  color: #2F2F2F;
+  width: 100%;
+  border: none;
+  background-color: #F5F4F4;
+  min-height: 80px;
+  width: 328px;
+  border: 1px solid #888888;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.create-issue-assignee-select {
+  font-size: 0.9rem;
+  color: #2F2F2F;
+  border: none;
+  background-color: #F5F4F4;
+  height: 42px;
+  width: 335px;
+  padding-left: 10px;
+  padding-right: 3px;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  appearance: none;
+  border: 2px solid #d7d7d7;
+}
+
+.create-issue-footer {
+  height: 42px;
+  width: 335px;
+  display: flex;
+  justify-content: end;
+}
+
+.create-issue-button-container {
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.create-issue-cancel {
+  margin: 8px 15px 0px 0px;
+  color: #888888;
+  font-size: 0.9rem;
+}
+
+.create-issue-create-button {
+  background-color: #615DEC;
+  color: white;
+  border: none;
+  height: 33px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 3px;
+  font-size: 0.9rem;
+}

@@ -34,7 +34,7 @@ def get_one_issue(issue_id):
 def get_all_phases_issues():
   all_phases = Phase.query.all()
   # phases = [phase.to_dict_all() for phase in all_phases]
-  # print("====GETALLPHASESISSUES=====", phases)
+  print("====GETALLPHASESISSUES=====", all_phases)
   if all_phases:
     return {"AllPhases":[phase.to_dict_all_phase() for phase in all_phases]}, 200
 

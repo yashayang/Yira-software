@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { getAllPhasesIssues } from '../store/phase';
 import { loadAllUsers } from '../store/session';
 import "./CSS/Phases.css"
@@ -16,14 +17,9 @@ function Phases(){
 
   const all_users = useSelector(state => state.session.AllUsers)
   const all_users_init = all_users?.users.map(user => user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase())
-  const all_users_arr = all_users?.users
-  console.log(all_users?.users && Object.values(all_users?.users).filter((user, i) => {
-    return user.id === 1
-  }))
 
-  // if (all_users?.users) {
-  //   console.log(Object.values(all_users?.users)[0])
-  // }
+
+  console.log("PHASE BROWSING-all phases:", phases)
   useEffect(() => {
     dispatch(getAllPhasesIssues(phases))
     dispatch(loadAllUsers())
@@ -61,17 +57,19 @@ function Phases(){
                       <div className='project-name-icon'><i className="fa-solid fa-square-check"></i></div>
                       <div className="project-name">{phase.Project.name}--{issue.issueId}</div>
                     </div>
-                    {issue.user.first_name[0].toUpperCase()+issue.user.last_name[0].toUpperCase() === curr_user_init
+                    {issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase() === curr_user_init
                     ?
                     <div className='curr-user-circle-small'>{curr_user_init}</div>
                     :
-                    <div className='other-user-circle-small'>{issue.user.first_name[0].toUpperCase()+issue.user.last_name[0].toUpperCase()}</div>
+                    <div className='other-user-circle-small'>{issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase()}</div>
                     }
                   </div>
                 </div>
               )
             })}
-            <div className='create-issue-outer'><i className="fa-sharp fa-solid fa-plus" id="create-issue-plus"></i>{" "}Create issue</div>
+            <NavLink to='/issues' style={{ textDecoration: 'none'}}>
+              <div className='create-issue-outer'><i className="fa-sharp fa-solid fa-plus" id="create-issue-plus"></i>{" "}Create issue</div>
+            </NavLink>
             </div>
           </div>
           )
