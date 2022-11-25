@@ -45,10 +45,15 @@ const CreateIssue = () => {
     }
   }
 
+  const handleCancel = async(e) => {
+    e.preventDefault()
+    history.push('/projects')
+  }
+
   return (
     <form className="create-issue-main-container" onSubmit={handleSubmit}>
       <div className="create-issue-title">Create Issue</div>
-      <div className="validation-errors">
+      <div className="create-issue-validation-errors">
         {
         errors &&
         errors.map((error)=>(<div key={error}>{error}</div>))
@@ -122,7 +127,7 @@ const CreateIssue = () => {
 
       <div className="create-issue-footer">
         <div className="create-issue-button-container">
-        <div className="create-issue-cancel" type="submit">Cancel</div>
+        <div className="create-issue-cancel" type="submit" onClick={handleCancel}>Cancel</div>
         <button className="create-issue-create-button" type="submit">Create</button>
         </div>
       </div>

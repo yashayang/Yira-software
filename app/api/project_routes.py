@@ -53,10 +53,10 @@ def get_all_phases_issues():
 def create_issue(phase_id):
   form = IssueForm()
   form['csrf_token'].data = request.cookies['csrf_token']
-  print("---CREATE ISSUE---description:", form.data["description"])
-  print("---CREATE ISSUE---SUMMARY:", form.data["summary"])
-  print("---CREATE ISSUE---PHASE_ID:", form.data["phase_id"])
-  print("---CREATE ISSUE---OWNER_ID:", form.data["owner_id"])
+  # print("---CREATE ISSUE---description:", form.data["description"])
+  # print("---CREATE ISSUE---SUMMARY:", form.data["summary"])
+  # print("---CREATE ISSUE---PHASE_ID:", form.data["phase_id"])
+  # print("---CREATE ISSUE---OWNER_ID:", form.data["owner_id"])
   if form.validate_on_submit():
     new_issue = Issue(
       summary = form.data["summary"],
@@ -65,13 +65,13 @@ def create_issue(phase_id):
       owner_id = form.data["owner_id"],
       created_at= datetime.now()
     )
-    print("---CREATE ISSUE---new_issue:", new_issue)
+    # print("---CREATE ISSUE---new_issue:", new_issue)
     db.session.add(new_issue)
     db.session.commit()
 
     return new_issue.to_dict(), 201
   else:
-    print("---CREATE ISSUE---FORM ERRORS:", form.errors)
+    # print("---CREATE ISSUE---FORM ERRORS:", form.errors)
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 # fetch("http://localhost:3000/api/projects/phases/3/issues", {
