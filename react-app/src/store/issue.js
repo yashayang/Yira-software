@@ -84,7 +84,7 @@ export const createIssue = (phaseId, issue) => async (dispatch) => {
 
 export const thunkUpdateIssue = (issueId, issue) => async (dispatch) => {
   const { summary, description, phaseId, assigneeId } = issue
-  console.log("UPDATE ISSUES THUNK_issue:", summary, description, phaseId, assigneeId)
+  // console.log("UPDATE ISSUES THUNK_issue:", summary, description, phaseId, assigneeId)
   try {
     const response = await fetch(`/api/projects/issues/${issueId}`, {
       method: "PUT",
@@ -113,7 +113,7 @@ export const thunkUpdateIssue = (issueId, issue) => async (dispatch) => {
 
     const updatedIssue = await response.json();
     dispatch(updateOneIssue(updatedIssue));
-    return updateOneIssue
+    return updatedIssue
 
   } catch (error) {
     throw error

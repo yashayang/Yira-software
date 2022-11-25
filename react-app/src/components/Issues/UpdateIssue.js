@@ -23,7 +23,7 @@ const UpdateIssue = () => {
   const currDescription = currIssue.description;
   const currPhaseId = currIssue.phaseId;
   const currAssigneeId = currIssue.ownerId;
-  console.log("UPDATE ISSUE-curr", currSummary, currDescription, currPhaseId, currAssigneeId)
+  // console.log("UPDATE ISSUE-curr", currSummary, currDescription, currPhaseId, currAssigneeId)
 
   useEffect(() => {
     dispatch(thunkGetOneIssue(parseInt(issueId)))
@@ -46,10 +46,13 @@ const UpdateIssue = () => {
       assigneeId: currAssigneeId
     }
 
-    console.log("UPDATE ISSUE-issue:", issue)
+    // console.log("UPDATE ISSUE-issue:", issue)
 
     const response = await dispatch(thunkUpdateIssue(issueId, issue))
-    // if (response)
+    console.log("UPDATE ISSUE-response:", response)
+    if (response.issueId) {
+      setSummaryInput(false)
+    }
   }
 
   return (
@@ -64,7 +67,6 @@ const UpdateIssue = () => {
               value={summary}
               required
               onChange={(e) => setSummary(e.target.value)}
-
             />
           </div>
           <div>
