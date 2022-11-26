@@ -2,6 +2,21 @@ const LOAD_ONE_ISSUE = 'issues/LOAD_ONE_ISSUE'
 const CREATE_ISSUE = 'issues/CREATE_ISSUE';
 const UPDATE_ISSUE = 'issues/UPDATE_ISSUE';
 const DELETE_ISSUE = 'issues/DELETE_ISSUE';
+const LOAD_ALL_PHASES_ISSUES = 'phases/LOAD_ALL_PHASES_ISSUES';
+const RESET_PROJECT = 'issues/RESET_PROJECT'
+
+export const cleanState = () => {
+  return {
+    type: RESET_PROJECT
+  }
+}
+
+export const allPhasesIssues = (phasesIssues) => {
+  return {
+    type: LOAD_ALL_PHASES_ISSUES,
+    phasesIssues
+  }
+}
 
 export const loadOneIssue = (issue) => {
   return {
@@ -31,6 +46,16 @@ export const removeOneIssue = (issueId) => {
   }
 }
 
+export const thunkGetAllPhasesIssues = () => async (dispatch) => {
+  const response = await fetch('/api/projects/');
+
+  if (response.ok) {
+    const phasesIssues = await response.json();
+    dispatch(allPhasesIssues(phasesIssues));
+    return phasesIssues;
+  }
+}
+
 export const thunkGetOneIssue = (issueId) => async (dispatch) => {
   const response = await fetch(`/api/projects/issues/${issueId}`)
 
@@ -42,7 +67,7 @@ export const thunkGetOneIssue = (issueId) => async (dispatch) => {
 }
 
 
-export const createIssue = (phaseId, issue) => async (dispatch) => {
+export const thunkCreateIssue = (phaseId, issue) => async (dispatch) => {
   // console.log("CREATE ISSUES THUNK_issue:", issue)
   const { summary, description, phaseId, assigneeId } = issue
   // console.log("CREATE ISSUES THUNK_issue:", summary, description, phaseId, assigneeId)
@@ -84,7 +109,7 @@ export const createIssue = (phaseId, issue) => async (dispatch) => {
 
 export const thunkUpdateIssue = (issueId, issue) => async (dispatch) => {
   const { summary, description, phaseId, assigneeId } = issue
-  // console.log("UPDATE ISSUES THUNK_issue:", summary, description, phaseId, assigneeId)
+  console.log("UPDATE ISSUES THUNK_issue:", issueId, summary, description, phaseId, assigneeId)
   try {
     const response = await fetch(`/api/projects/issues/${issueId}`, {
       method: "PUT",
@@ -130,6 +155,7 @@ export const thunkDeleteIssue = (issueId) => async (dispatch) => {
 }
 
 const initialState = {
+  AllPhases:{},
   newIssue: {},
   singleIssue: {}
 }
@@ -137,20 +163,44 @@ const initialState = {
 const issues = (state = initialState, action) => {
   let newState
   switch(action.type) {
+
+    case LOAD_ALL_PHASES_ISSUES:
+      newState = { ...state, ...state.singleIssue, AllPhases: {...state.AllPhases}}
+      action.phasesIssues.AllPhases.forEach(phase => {
+        newState.AllPhases[phase.id] = phase
+      })
+      return newState;
+
     case CREATE_ISSUE:
-      newState = {...state}
+      newState = {...state, ...state.AllPhases, ...state.singleIssue}
       newState.newIssue = action.issue
+      newState.AllPhases[action.issue.issueId] = action.issue
       return newState
+
     case LOAD_ONE_ISSUE:
-      return { ...state, singleIssue: { ...action.issue }};
+      return { ...state, ...state.AllPhases, singleIssue: { ...state.singleIssue, ...action.issue }};
+
     case UPDATE_ISSUE:
-      return { ...state, ...state.singleIssue, singleIssue: { ...action.issue }};
+      newState = {...state, ...state.AllPhases, ...state.singleIssue}
+      newState.singleIssue = action.issue
+      newState.AllPhases[action.issue.issueId] = action.issue
+      return newState
+
     case DELETE_ISSUE:
-      newState = { ...state, singleIssue: { ...state.singleIssue } }
+      newState = { ...state, ...state.AllPhases, singleIssue: { ...state.singleIssue } }
       if (newState.singleIssue.issueId === action.issueId) {
         delete newState.singleIssue
+        delete newState.AllPhases[action.issue.issueId]
       }
       return newState
+
+    case RESET_PROJECT:
+      newState = {...state}
+      newState.allPhases = {}
+      newState.singleIssue = {}
+      newState.newIssue = {}
+      return newState
+      
     default:
       return state;
   }

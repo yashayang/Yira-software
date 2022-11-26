@@ -99,11 +99,13 @@ def update_issue(issue_id):
   issue = Issue.query.get(issue_id)
   if issue is None:
     return {"errors" : "Issue couldn't be found"}, 404
-
+  print("---UPDATE ISSUE---new_issue:", issue)
+  print("---UPDATE ISSUE---phase_id/onwer_id:", form.data['phase_id'], form.data["owner_id"])
   if form.validate_on_submit():
     issue.summary = form.data['summary']
     issue.description = form.data['description']
     issue.phase_id = form.data['phase_id']
+    issue.owner_id = form.data["owner_id"]
     issue.updated_at = datetime.now()
     db.session.commit()
     return issue.to_dict(), 200

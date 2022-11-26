@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { getAllPhasesIssues } from '../store/phase';
+import { thunkGetAllPhasesIssues } from '../store/issue';
 import { loadAllUsers } from '../store/session';
 import "./CSS/Phases.css"
 
 function Phases(){
   const dispatch = useDispatch();
 
-  const phases = useSelector(state => state.phases.AllPhases)
+  const phases = useSelector(state => state.issues.AllPhases)
   const phasesArr = Object.values(phases)
   const projectName = phasesArr[0]?.Project.name
 
@@ -21,7 +21,7 @@ function Phases(){
   // console.log("PHASE BROWSING-all phases:", phases)
 
   useEffect(() => {
-    dispatch(getAllPhasesIssues(phases))
+    dispatch(thunkGetAllPhasesIssues(phases))
     dispatch(loadAllUsers())
   }, [dispatch])
 
@@ -35,7 +35,7 @@ function Phases(){
         {all_users_init?.map(init => init === curr_user_init ? <div className='curr-user-circle'>{curr_user_init}</div> : <div className='other-user-circle'>{init}</div>)}
       </div>
       <div className="phase-main-container">
-        {phasesArr.map((phase, i) => {
+        {phasesArr?.map((phase, i) => {
         return (
           <div className="card-container" key={i}>
             <div className="phase-title-container">
@@ -45,7 +45,7 @@ function Phases(){
               <div className='phase-ellipsis-container'><i className="fa-solid fa-ellipsis"></i></div>
             </div>
             <div className="issue-card-container" >
-              {phase.Issues.map((issue, i) => {
+              {phase?.Issues?.map((issue, i) => {
               return (
                 <div className="issue-card-outer" key={i}>
                   <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}>
