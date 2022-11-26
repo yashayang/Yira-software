@@ -20,10 +20,12 @@ const UpdateIssue = () => {
   const [phaseId, setPhaseId] = useState();
   const [assigneeId, setAssigneeId] = useState(currUser.id)
   const [errors, setErrors] = useState([]);
+  const [summaryErrors, setSummaryErrors] = useState([]);
+  const [descriptionErrors, setDescriptionErrors] = useState([]);
   const [summaryInput, setSummaryInput] = useState(false);
   const [descriptionInput, setDescriptionInput] = useState(false);
 
-  // console.log("UPDATE ISSUE- allPhasesArr:", allPhasesArr)
+  console.log("UPDATE ISSUE- currIssue:", currIssue)
   const currSummary = currIssue.summary;
   const currDescription = currIssue.description;
   const currPhaseId = currIssue.phaseId;
@@ -49,6 +51,7 @@ const UpdateIssue = () => {
 
   const handleSummary = async (e) => {
     e.preventDefault()
+    setErrors([])
 
     const issue = {
       summary,
@@ -60,7 +63,14 @@ const UpdateIssue = () => {
     // console.log("UPDATE ISSUE-issue:", issue)
 
     const response = await dispatch(thunkUpdateIssue(issueId, issue))
-    console.log("UPDATE ISSUE-response:", response)
+    // console.log("UPDATE ISSUE-response:", response)
+    let errorsArr = []
+    if(response.errors) {
+      let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
+      errorsArr.push(errorMsg)
+      setSummaryErrors(errorsArr)
+    }
+
     if (response.issueId) {
       setSummaryInput(false)
     }
@@ -74,9 +84,16 @@ const UpdateIssue = () => {
       phaseId: currPhaseId,
       assigneeId: currAssigneeId
     }
-    console.log("UPDATE ISSUE-issue:", issue)
+    // console.log("UPDATE ISSUE-issue:", issue)
     const response = await dispatch(thunkUpdateIssue(issueId, issue))
-    console.log("UPDATE ISSUE-response:", response)
+    // console.log("UPDATE ISSUE-response:", response)
+    let errorsArr = []
+    if(response.errors) {
+      let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
+      errorsArr.push(errorMsg)
+      setDescriptionErrors(errorsArr)
+    }
+
     if (response.issueId) {
       setDescriptionInput(false)
     }
@@ -108,6 +125,12 @@ const UpdateIssue = () => {
   return (
     <div className="update-issue-main-container">
       <div>
+        <div className="create-issue-validation-errors">
+          {
+          summaryErrors &&
+          summaryErrors.map((error)=>(<div key={error}>{error}</div>))
+          }
+        </div>
         {!summaryInput
         ? <h3 onClick={showSummary}>{currIssue.summary}</h3>
         : <div>
@@ -122,14 +145,24 @@ const UpdateIssue = () => {
             </div>
             <div>
               <button type="submit"><i className="fa-sharp fa-solid fa-check"></i></button>
-              <button onClick={() => setSummaryInput(false)}><i className="fa-sharp fa-solid fa-xmark"></i></button>
+              <button onClick={() =>{
+                setSummaryErrors([])
+                setSummaryInput(false)
+                }}>
+                <i className="fa-sharp fa-solid fa-xmark"></i></button>
             </div>
           </form>
           </div>
         }
         <div>
+          <label>Description</label>
+          <div className="create-issue-validation-errors">
+            {
+            descriptionErrors &&
+            descriptionErrors.map((error)=>(<div key={error}>{error}</div>))
+            }
+          </div>
           <div>
-            <label>Description</label>
           </div>
             {!descriptionInput &&
               <div onClick={() => setDescriptionInput(true)}>
@@ -145,7 +178,11 @@ const UpdateIssue = () => {
               />
               <div>
                 <button>Save</button>
-                <button onClick={() => setDescriptionInput(false)}>Cancel</button>
+                <button onClick={() =>{
+                  setDescriptionErrors([])
+                  setDescription(currDescription)
+                  setDescriptionInput(false)
+                  }}>Cancel</button>
               </div>
           </form>}
         </div>
@@ -169,8 +206,13 @@ const UpdateIssue = () => {
                 className="create-issue-assignee-select"
                 onChange={(e) => setAssigneeId(e.target.value)}
               >
-              <option disabled selected value={Number(assigneeId)}>Unassigned</option>
-              {allUsersArr?.map((user, i) => <option value={Number(user.id)} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>)}
+              <option disabled selected value={Number(assigneeId)}>{currIssue?.User?.first_name[0].toUpperCase() +currIssue?.User?.first_name.slice(1) + " " + currIssue?.User?.last_name[0].toUpperCase() +currIssue?.User?.last_name.slice(1)}</option>
+              {allUsersArr?.map((user, i) => {
+                return (
+                  user.id !== currIssue?.User?.id &&
+                  <option value={Number(user.id)} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>
+                )
+              })}
               </select>
             </div>
             <div className="create-issue-label-container">

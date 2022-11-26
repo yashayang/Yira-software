@@ -110,6 +110,7 @@ def update_issue(issue_id):
     db.session.commit()
     return issue.to_dict(), 200
   else:
+    print("---UPDATE ISSUE---FORM ERRORS:", form.errors)
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
