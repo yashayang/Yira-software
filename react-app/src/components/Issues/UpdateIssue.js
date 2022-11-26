@@ -124,7 +124,7 @@ const UpdateIssue = () => {
 
   return (
     <div className="update-issue-main-container">
-      <div>
+      <div className="update-issue-left-container">
         <div className="create-issue-validation-errors">
           {
           summaryErrors &&
@@ -132,8 +132,8 @@ const UpdateIssue = () => {
           }
         </div>
         {!summaryInput
-        ? <h3 onClick={showSummary}>{currIssue.summary}</h3>
-        : <div>
+        ? <div className="update-issue-summary" onClick={showSummary}><h3>{currIssue.summary}</h3></div>
+        : <div className="update-issue-summary-input">
           <form onSubmit={handleSummary}>
             <div>
               <input
@@ -154,107 +154,120 @@ const UpdateIssue = () => {
           </form>
           </div>
         }
-        <div>
-          <label>Description</label>
+        <div className="update-issue-description">
+          <label className="update-issue-description-label">Description</label>
           <div className="create-issue-validation-errors">
             {
             descriptionErrors &&
             descriptionErrors.map((error)=>(<div key={error}>{error}</div>))
             }
           </div>
-          <div>
-          </div>
-            {!descriptionInput &&
-              <div onClick={() => setDescriptionInput(true)}>
-                {currDescription
-                ? <div>{currDescription}</div>
-                : <div>Add a description...</div>}
-              </div>}
-            {descriptionInput && <form onSubmit={handleDescription}>
-              <textarea
-                type="text"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-              <div>
-                <button>Save</button>
-                <button onClick={() =>{
-                  setDescriptionErrors([])
-                  setDescription(currDescription)
-                  setDescriptionInput(false)
-                  }}>Cancel</button>
-              </div>
+          {!descriptionInput &&
+            <div onClick={() => setDescriptionInput(true)} className="update-issue-description-placeholder">
+              {currDescription
+              ? <div>{currDescription}</div>
+              : <div>Add a description...</div>}
+            </div>}
+          {descriptionInput && <form onSubmit={handleDescription}>
+            <textarea
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <div>
+              <button>Save</button>
+              <button onClick={() =>{
+                setDescriptionErrors([])
+                setDescription(currDescription)
+                setDescriptionInput(false)
+                }}>Cancel</button>
+            </div>
           </form>}
         </div>
+        <div className="update-issue-time-container">
+          <div className="update-issue-time-inner">Created at: {new Date(currIssue.createdAt).toString().slice(3,-33)} (PT)</div>
+          <div className="update-issue-time-inner">Updated at: {new Date(currIssue.updatedAt).toString().slice(3,-33)} (PT)</div>
+        </div>
       </div>
-      <div>
-        <div>
-          <form onSubmit={handleSubmit}>
+
+      <div className="update-issue-right-container">
+        <form onSubmit={handleSubmit}>
+
+          <div>
             <select
               name="phaseId"
               onChange={(e) => setPhaseId(e.target.value)}
+              className="update-issue-right-phase-selector"
             >
             {allPhasesArr?.map((phase, i) => phase.id === currPhaseId ? <option value={phase.id} selected key={i}>{phase.title}</option> : <option value={Number(phase.id)} key={i}>{phase.title}</option>)}
             </select>
+          </div>
 
-            <div className="create-issue-label-container">
-              <label>Assignee</label>
+          <div className="update-issue-right-assignee-reporter">
+            <div className="update-issue-assignee">
+              <div className="update-issue-label-container">
+                <label>Assignee</label>
+              </div>
+              <div>
+                <select
+                  name="assigneeId"
+                  className="update-issue-assignee-select"
+                  onChange={(e) => setAssigneeId(e.target.value)}
+                >
+                <option disabled selected value={Number(assigneeId)}>{currIssue?.User?.first_name[0].toUpperCase() +currIssue?.User?.first_name.slice(1) + " " + currIssue?.User?.last_name[0].toUpperCase() +currIssue?.User?.last_name.slice(1)}</option>
+                {allUsersArr?.map((user, i) => {
+                  return (
+                    user.id !== currIssue?.User?.id &&
+                    <option value={Number(user.id)} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>
+                  )
+                })}
+                </select>
+              </div>
             </div>
-            <div>
-              <select
-                name="assigneeId"
-                className="create-issue-assignee-select"
-                onChange={(e) => setAssigneeId(e.target.value)}
-              >
-              <option disabled selected value={Number(assigneeId)}>{currIssue?.User?.first_name[0].toUpperCase() +currIssue?.User?.first_name.slice(1) + " " + currIssue?.User?.last_name[0].toUpperCase() +currIssue?.User?.last_name.slice(1)}</option>
-              {allUsersArr?.map((user, i) => {
-                return (
-                  user.id !== currIssue?.User?.id &&
-                  <option value={Number(user.id)} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>
-                )
-              })}
-              </select>
-            </div>
-            <div className="create-issue-label-container">
-              <label>Reporter</label><i className="fa-solid fa-asterisk"></i>
+
+            <div className="update-issue-reporter">
+              <div className="update-issue-label-container">
+                <label>Reporter</label><i className="fa-solid fa-asterisk"></i>
               </div>
               <div>
                 <select
                   name="reporter"
-                  className="create-issue-assignee-select"
+                  className="update-issue-assignee-select"
                   // onChange={(e) => setAssigneeId(e.target.value)}
                 >
                 <option disabled selected>{currUser.first_name[0].toUpperCase() + currUser.first_name.slice(1) + " " + currUser.last_name[0].toUpperCase() + currUser.last_name.slice(1)}</option>
                 {/* {allUsersArr?.map((user, i) => <option value={user.id} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>)} */}
                 </select>
+              </div>
             </div>
-            <button>submit</button>
-          </form>
-          {/* <div onClick={showMenu}>
-            {phaseNameOnStage}
-            <i className="fa-solid fa-angle-down"></i>
           </div>
-          {showPhases &&
-            <>
-              {allPhasesArr?.map((phase, i) => {
-              return (
-                phase.id !== currIssue.phaseId &&
-                <div value={phase?.id} key={i} onClick={(e) =>{
-                  return (
-                    phaseNameOnStage = phase.title
-                    // setNewPhaseId(e.target.value)
-                    )
-                }} type="submit">{phase?.title}</div>
-              )
-              })}
-            </>
-          } */}
 
-        </div>
+          <button>submit</button>
 
+        </form>
       </div>
     </div>
   )
 }
 
 export default UpdateIssue;
+
+{/* <div onClick={showMenu}>
+  {phaseNameOnStage}
+  <i className="fa-solid fa-angle-down"></i>
+</div>
+{showPhases &&
+  <>
+    {allPhasesArr?.map((phase, i) => {
+    return (
+      phase.id !== currIssue.phaseId &&
+      <div value={phase?.id} key={i} onClick={(e) =>{
+        return (
+          phaseNameOnStage = phase.title
+          // setNewPhaseId(e.target.value)
+          )
+      }} type="submit">{phase?.title}</div>
+    )
+    })}
+  </>
+} */}
