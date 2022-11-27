@@ -26,10 +26,10 @@ const UpdateIssue = () => {
   const [descriptionInput, setDescriptionInput] = useState(false);
 
   console.log("UPDATE ISSUE- currIssue:", currIssue)
-  const currSummary = currIssue.summary;
-  const currDescription = currIssue.description;
-  const currPhaseId = currIssue.phaseId;
-  const currAssigneeId = currIssue.ownerId;
+  const currSummary = currIssue?.summary;
+  const currDescription = currIssue?.description;
+  const currPhaseId = currIssue?.phaseId;
+  const currAssigneeId = currIssue?.ownerId;
   // console.log("UPDATE ISSUE-curr", currSummary, currDescription, currPhaseId, currAssigneeId)
   // const [showPhases, setShowPhases] = useState(false)
   // console.log("UPDATE ISSUE-currPhaseId:", currPhaseId)
