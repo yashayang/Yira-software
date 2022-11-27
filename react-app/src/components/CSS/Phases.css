@@ -145,8 +145,10 @@
 
 .issue-summary {
   margin: 10px 0px 15px 10px;
-  width: 78%;
+  width: 200px;
+  height: 40px;
   padding-bottom: 10px;
+  text-decoration: none;
 }
 
 .issue-card-title {
@@ -157,31 +159,6 @@
 
 .fa-solid.fa-ellipsis {
   font-size: 1.1rem;
-}
-
-.issue-ellipsis-container {
-  margin: 10px;
-  height: 31px;
-  width: 31px;
-  color: #2F2F2F;
-  font-size: 1.2rem;
-  background-color: #e3e3e3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12%;
-  display: none;
-  position: relative;
-}
-
-.issue-card-outer:hover .issue-ellipsis-container {
-  display: block;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #2F2F2F;
-  cursor: pointer;
-  z-index: 999;
 }
 
 .issue-card-outer:hover {
@@ -197,7 +174,7 @@
 }
 
 .project-name-outer {
-  margin: 5px 0px 15px 10px;
+  margin: 10px 0px 15px 10px;
   width: 90%;
   display: flex;
   justify-content: space-between;

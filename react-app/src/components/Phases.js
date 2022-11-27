@@ -50,10 +50,12 @@ function Phases(){
               return (
                 <div className="issue-card-outer" key={i}>
                   <div className="issue-card-title">
-                    <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}>
+                  <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}>
                       <div className="issue-summary">{issue.summary}</div>
                     </NavLink>
                     <DeleteIssue issueId={issue.issueId} phaseId={phase.id}/>
+                    {/* <div className='issue-drop-Down'> */}
+                    {/* </div> */}
                     {/* <div className='issue-ellipsis-container'><i className="fa-solid fa-ellipsis"></i></div> */}
                   </div>
                   <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}>
@@ -67,7 +69,7 @@ function Phases(){
                     <div className='curr-user-circle-small'>{curr_user_init}</div>
                     :
                     <div className='other-user-circle-small'>{issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase()}</div>
-                    }
+                  }
                   </div>
                   </NavLink>
                 </div>
