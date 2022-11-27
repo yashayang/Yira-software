@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { thunkCreatePhase, thunkGetAllPhasesIssues } from "../../store/phase";
 import '../CSS/CreatePhase.css';
 
 const CreatePhase = ({projectId, ownerId}) => {
-  console.log("CREATE PHASE - PROJECTID & OWNERID:", projectId, ownerId)
+  // console.log("CREATE PHASE - PROJECTID & OWNERID:", projectId, ownerId)
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [titleInput, setTitleInput] = useState(false);

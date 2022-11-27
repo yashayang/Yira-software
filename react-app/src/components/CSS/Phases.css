@@ -69,27 +69,6 @@
   display: flex;
 }
 
-.phase-ellipsis-container {
-  margin: 10px 10px 10px 0px;
-  height: 31px;
-  width: 31px;
-  color: #2F2F2F;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12%;
-  display: none;
-}
-
-.phase-title-container:hover .phase-ellipsis-container {
-  display: block;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #e3e3e3;
-  cursor: pointer;
-}
 
 .phase-title {
   position: relative;

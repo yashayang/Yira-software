@@ -4,6 +4,7 @@ const UPDATE_ISSUE = 'issues/UPDATE_ISSUE';
 const DELETE_ISSUE = 'issues/DELETE_ISSUE';
 const LOAD_ALL_PHASES_ISSUES = 'phases/LOAD_ALL_PHASES_ISSUES';
 const RESET_PROJECT = 'issues/RESET_PROJECT'
+const DELETE_PHASE = 'issues/DELETE_PHASE';
 
 export const cleanState = () => {
   return {
@@ -25,10 +26,11 @@ export const loadOneIssue = (issue) => {
   }
 }
 
-export const createOneIssue = (issue) => {
+export const createOneIssue = (issue, phaseId) => {
   return {
     type: CREATE_ISSUE,
-    issue
+    issue,
+    phaseId
   }
 }
 
@@ -43,6 +45,13 @@ export const removeOneIssue = (issueId, phaseId) => {
   return {
     type: DELETE_ISSUE,
     issueId,
+    phaseId
+  }
+}
+
+export const removePhase = (phaseId) =>{
+  return {
+    type: DELETE_PHASE,
     phaseId
   }
 }
@@ -100,7 +109,7 @@ export const thunkCreateIssue = (phaseId, issue) => async (dispatch) => {
     }
 
     const newIssue = await response.json();
-    dispatch(createOneIssue(newIssue));
+    dispatch(createOneIssue(newIssue, phaseId));
     return newIssue
 
   } catch(error) {
@@ -178,7 +187,7 @@ const issues = (state = initialState, action) => {
     case CREATE_ISSUE:
       newState = {...state, ...state.AllPhases, ...state.singleIssue}
       newState.newIssue = action.issue
-      newState.AllPhases[action.issue.issueId] = action.issue
+      newState.AllPhases[action.phaseId].Issues[action.issue.issueId] = action.issue
       return newState
 
     case LOAD_ONE_ISSUE:
@@ -201,6 +210,11 @@ const issues = (state = initialState, action) => {
       newState.allPhases = {}
       newState.singleIssue = {}
       newState.newIssue = {}
+      return newState
+
+    case DELETE_PHASE:
+      newState = { ...state, ...state.AllPhases }
+      delete newState.AllPhases[action.phaseId]
       return newState
 
     default:

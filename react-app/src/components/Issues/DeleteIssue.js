@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from "react-redux"
 import { thunkDeleteIssue } from '../../store/issue';
-import { usehistory, useDispatch } from "react-redux"
 import { thunkGetAllPhasesIssues } from '../../store/issue';
 import '../CSS/DeleteIssues.css'
 

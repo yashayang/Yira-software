@@ -157,6 +157,7 @@ const phases = (state = initialState, action) => {
     case DELETE_PHASE:
       newState = { ...state, ...state.AllPhases }
       delete newState.AllPhases[action.phaseId]
+      delete newState[action.phaseId]
       return newState
 
     default:

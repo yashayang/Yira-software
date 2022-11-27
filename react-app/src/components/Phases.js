@@ -5,6 +5,8 @@ import { thunkGetAllPhasesIssues } from '../store/issue';
 import { loadAllUsers } from '../store/session';
 import DeleteIssue from './Issues/DeleteIssue';
 import CreatePhase from './Phases/CreatePhase';
+import UpdatedPhase from './Phases/UpdatePhase';
+import DeletePhase from './Phases/DeletePhase';
 import "./CSS/Phases.css"
 
 function Phases(){
@@ -25,7 +27,7 @@ function Phases(){
   // console.log("PHASE BROWSING-all phases:", phases)
 
   useEffect(() => {
-    dispatch(thunkGetAllPhasesIssues(phases))
+    dispatch(thunkGetAllPhasesIssues())
     dispatch(loadAllUsers())
   }, [dispatch])
 
@@ -43,10 +45,8 @@ function Phases(){
         return (
           <div className="card-container" key={i}>
             <div className="phase-title-container">
-              <div className="phase-title">
-                {phase.title === "DONE" ? <div>{phase.title}<i className="fa-sharp fa-solid fa-check" id="phase-title-done"></i></div> : phase.title}
-              </div>
-              <div className='phase-ellipsis-container'><i className="fa-solid fa-ellipsis"></i></div>
+              <UpdatedPhase phaseId={phase.id} phaseTitle={phase.title} projectId={projectId} ownerId={currUserId}/>
+              <DeletePhase phaseId={phase.id}/>
             </div>
             <div className="issue-card-container" >
               {phase.Issues && Object.values(phase.Issues).map((issue, i) => {
