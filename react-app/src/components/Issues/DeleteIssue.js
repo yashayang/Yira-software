@@ -7,7 +7,7 @@ import '../CSS/DeleteIssues.css'
 const DeleteIssue = ({issueId, phaseId}) => {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState();
-  console.log("DELETE ISSUE---phaseId:", phaseId)
+  // console.log("DELETE ISSUE---phaseId:", phaseId)
 
   const openMenu = () => {
     if (showMenu) return;

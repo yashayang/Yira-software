@@ -45,7 +45,7 @@ export const thunkCreatePhase = (projectId, phase) => async (dispatch) => {
   // console.log("CREATE ISSUES THUNK_issue:", issue)
   // console.log("CREATE ISSUES THUNK_issue:", summary, description, phaseId, assigneeId)
   try {
-    const response = await fetch(`/api/projects${projectId}/phases`, {
+    const response = await fetch(`/api/projects/${projectId}/phases`, {
       method: "POST",
       headers: {
           'Content-Type': 'application/json'

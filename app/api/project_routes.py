@@ -185,9 +185,9 @@ def create_phase(project_id):
 # fetch("http://localhost:3000/api/projects/1/phases", {
 #   method: 'POST',
 #   body: JSON.stringify({
-#       "title": "TO DO LIST",
-#       "project_id": 1,
-#       "owner_id": 1,
+      # "title": "TO DO LIST",
+      # "project_id": 1,
+      # "owner_id": 1,
 #   }),
 #   headers: {
 #     'Content-type': 'application/json'
