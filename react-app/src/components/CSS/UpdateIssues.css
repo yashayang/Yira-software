@@ -1,0 +1,132 @@
+.update-issue-main-container{
+  display: flex;
+  width: auto;
+  color: #2F2F2F;
+  margin-top: 30px;
+  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+}
+.update-issue-right-container,
+.update-issue-left-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* margin: 25px; */
+  min-width: 350px;
+  width: 100%;
+}
+
+.update-issue-left-container {
+  /* background-color: hotpink; */
+  margin-left: 30px;
+}
+
+.update-issue-summary {
+  display: flex;
+  align-items: center;
+  margin-top: -30px;
+  height: 50px;
+  border-radius: 5px;
+  padding-left: 10px;
+  min-width: 300px;
+}
+
+.update-issue-summary:hover {
+  cursor: pointer;
+  background-color: #F5F4F4;
+ }
+
+.update-issue-summary-input {
+  padding-left: 10px;
+}
+
+.update-issue-description {
+  /* padding-left: 10px; */
+  margin-top: 20px;
+}
+
+.update-issue-description-label {
+  font-weight: 600;
+  font-size: 1rem;
+  padding-left: 10px;
+}
+
+.update-issue-description-placeholder {
+  font-size: 0.9rem;
+  color: #888888;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.update-issue-description-placeholder:hover {
+  cursor: pointer;
+  background-color: #F5F4F4;
+}
+
+.update-issue-time-container {
+  padding-left: 10px;
+  margin-top: 50px;
+  font-size: 0.7rem;
+  color: #888888;
+}
+
+.update-issue-time-inner {
+  margin-top: 6px;
+}
+
+.update-issue-right-phase-selector {
+  font-size: 0.85rem;
+  color: white;
+  background-color: #615DEC;
+  height: 36px;
+  width: auto;
+  padding-left: 10px;
+  padding-right: 3px;
+  border-radius: 5px;
+  border: 2px solid #615DEC;
+}
+
+.update-issue-right-assignee-reporter {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #d7d7d7;
+  border-radius: 5px;
+  width: 360px;
+}
+
+.update-issue-reporter,
+.update-issue-assignee {
+  display: flex;
+  margin: 10px;
+  /* justify-content: space-between; */
+}
+
+.update-issue-label-container {
+  display: flex;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding-top: 10px;
+  position: relative;
+  width: 100px;
+}
+
+.update-issue-assignee-select {
+  font-size: 0.9rem;
+  font-weight: 300;
+  border: none;
+  height: 36px;
+  width: 200px;
+  padding-left: 10px;
+  padding-right: 3px;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  appearance: none;
+}
+
+.update-issue-assignee-select:hover {
+  background-color: #F5F4F4;
+  cursor: pointer;
+}

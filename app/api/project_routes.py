@@ -53,10 +53,10 @@ def get_all_phases_issues():
 def create_issue(phase_id):
   form = IssueForm()
   form['csrf_token'].data = request.cookies['csrf_token']
-  print("---CREATE ISSUE---description:", form.data["description"])
-  print("---CREATE ISSUE---SUMMARY:", form.data["summary"])
-  print("---CREATE ISSUE---PHASE_ID:", form.data["phase_id"])
-  print("---CREATE ISSUE---OWNER_ID:", form.data["owner_id"])
+  # print("---CREATE ISSUE---description:", form.data["description"])
+  # print("---CREATE ISSUE---SUMMARY:", form.data["summary"])
+  # print("---CREATE ISSUE---PHASE_ID:", form.data["phase_id"])
+  # print("---CREATE ISSUE---OWNER_ID:", form.data["owner_id"])
   if form.validate_on_submit():
     new_issue = Issue(
       summary = form.data["summary"],
@@ -65,13 +65,13 @@ def create_issue(phase_id):
       owner_id = form.data["owner_id"],
       created_at= datetime.now()
     )
-    print("---CREATE ISSUE---new_issue:", new_issue)
+    # print("---CREATE ISSUE---new_issue:", new_issue)
     db.session.add(new_issue)
     db.session.commit()
 
     return new_issue.to_dict(), 201
   else:
-    print("---CREATE ISSUE---FORM ERRORS:", form.errors)
+    # print("---CREATE ISSUE---FORM ERRORS:", form.errors)
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 # fetch("http://localhost:3000/api/projects/phases/3/issues", {
@@ -99,15 +99,18 @@ def update_issue(issue_id):
   issue = Issue.query.get(issue_id)
   if issue is None:
     return {"errors" : "Issue couldn't be found"}, 404
-
+  print("---UPDATE ISSUE---new_issue:", issue)
+  print("---UPDATE ISSUE---phase_id/onwer_id:", form.data['phase_id'], form.data["owner_id"])
   if form.validate_on_submit():
     issue.summary = form.data['summary']
     issue.description = form.data['description']
     issue.phase_id = form.data['phase_id']
+    issue.owner_id = form.data["owner_id"]
     issue.updated_at = datetime.now()
     db.session.commit()
     return issue.to_dict(), 200
   else:
+    # print("---UPDATE ISSUE---FORM ERRORS:", form.errors)
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
@@ -129,8 +132,9 @@ def update_issue(issue_id):
 @project_routes.route("/issues/<int:issue_id>", methods=["DELETE"])
 @login_required
 def delete_issue(issue_id):
+  print("---DELETE ISSUE ROUTE---issue_id:", issue_id)
   issue = Issue.query.get(issue_id)
-
+  print("---DELETE ISSUE ROUTE---issue:", issue)
   if current_user.is_admin == True:
     db.session.delete(issue)
     db.session.commit()
@@ -141,6 +145,7 @@ def delete_issue(issue_id):
     }), 200
 
   else:
+    print("---DELETE ISSUE---FORM ERRORS:", form.errors)
     return jsonify({
       "errors": "Unauthorized! You are not the admin of this board!"
     }), 403

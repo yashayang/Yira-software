@@ -9,13 +9,23 @@
   font-weight: 500;
 }
 
+.create-issue-validation-errors {
+  color: #EF476F;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .create-issue-label-container {
   display: flex;
   font-size: 14px;
   font-weight: 500;
   color: #888888;
   margin-bottom: 3px;
+  position: relative;
 }
+
 
 .fa-solid.fa-asterisk {
   font-size: 0.45rem;
@@ -113,4 +123,9 @@
   padding-right: 10px;
   border-radius: 3px;
   font-size: 0.9rem;
+}
+
+.create-issue-cancel,
+.create-issue-create-button:hover {
+  cursor: pointer;
 }

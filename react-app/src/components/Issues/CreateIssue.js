@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom"
-import { createIssue } from "../../store/issue";
-import { getAllPhasesIssues } from '../../store/phase';
+import { thunkCreateIssue } from "../../store/issue";
+import { thunkGetAllPhasesIssues } from '../../store/issue';
 import { loadAllUsers } from '../../store/session';
 import "../CSS/CreateIssues.css"
 
@@ -11,7 +11,7 @@ const CreateIssue = () => {
   const history = useHistory();
   const currUser = useSelector(state => state.session.user)
   const allUsersArr = useSelector(state => state.session.AllUsers?.users)
-  const allPhases = useSelector(state => state.phases.AllPhases)
+  const allPhases = useSelector(state => state.issues.AllPhases)
   const allPhasesArr = Object.values(allPhases)
   const [phaseId, setPhaseId] = useState(1);
   const [summary, setSummary] = useState("");
@@ -21,7 +21,7 @@ const CreateIssue = () => {
   // console.log(allUsersArr)
 
   useEffect(() => {
-    dispatch(getAllPhasesIssues())
+    dispatch(thunkGetAllPhasesIssues())
     dispatch(loadAllUsers())
   }, [dispatch])
 
@@ -33,7 +33,7 @@ const CreateIssue = () => {
     const issueInfo = { summary, description, phaseId, assigneeId }
     // console.log("CREATEISSUE FORM-issueInfo:", issueInfo)
 
-    const response = await dispatch(createIssue(phaseId, issueInfo))
+    const response = await dispatch(thunkCreateIssue(phaseId, issueInfo))
     let errorsArr = []
     if(response.errors) {
       let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
@@ -45,10 +45,15 @@ const CreateIssue = () => {
     }
   }
 
+  const handleCancel = async(e) => {
+    e.preventDefault()
+    history.push('/projects')
+  }
+
   return (
     <form className="create-issue-main-container" onSubmit={handleSubmit}>
       <div className="create-issue-title">Create Issue</div>
-      <div className="validation-errors">
+      <div className="create-issue-validation-errors">
         {
         errors &&
         errors.map((error)=>(<div key={error}>{error}</div>))
@@ -122,7 +127,7 @@ const CreateIssue = () => {
 
       <div className="create-issue-footer">
         <div className="create-issue-button-container">
-        <div className="create-issue-cancel" type="submit">Cancel</div>
+        <div className="create-issue-cancel" type="submit" onClick={handleCancel}>Cancel</div>
         <button className="create-issue-create-button" type="submit">Create</button>
         </div>
       </div>
