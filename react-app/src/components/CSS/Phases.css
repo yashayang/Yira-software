@@ -171,6 +171,7 @@
   justify-content: center;
   border-radius: 12%;
   display: none;
+  position: relative;
 }
 
 .issue-card-outer:hover .issue-ellipsis-container {
@@ -180,6 +181,7 @@
   justify-content: center;
   color: #2F2F2F;
   cursor: pointer;
+  z-index: 999;
 }
 
 .issue-card-outer:hover {

@@ -3,6 +3,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { thunkGetAllPhasesIssues } from '../store/issue';
 import { loadAllUsers } from '../store/session';
+import DeleteIssue from './Issues/DeleteIssue';
 import "./CSS/Phases.css"
 
 function Phases(){
@@ -45,14 +46,17 @@ function Phases(){
               <div className='phase-ellipsis-container'><i className="fa-solid fa-ellipsis"></i></div>
             </div>
             <div className="issue-card-container" >
-              {phase?.Issues?.map((issue, i) => {
+              {phase.Issues && Object.values(phase.Issues).map((issue, i) => {
               return (
                 <div className="issue-card-outer" key={i}>
-                  <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}>
                   <div className="issue-card-title">
-                    <div className="issue-summary">{issue.summary}</div>
-                    <div className='issue-ellipsis-container'><i className="fa-solid fa-ellipsis"></i></div>
+                    <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}>
+                      <div className="issue-summary">{issue.summary}</div>
+                    </NavLink>
+                    <DeleteIssue issueId={issue.issueId} phaseId={phase.id}/>
+                    {/* <div className='issue-ellipsis-container'><i className="fa-solid fa-ellipsis"></i></div> */}
                   </div>
+                  <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}>
                   <div className="project-name-outer">
                     <div className="project-name-left">
                       <div className='project-name-icon'><i className="fa-solid fa-square-check"></i></div>

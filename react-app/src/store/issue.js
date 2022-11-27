@@ -39,10 +39,11 @@ export const updateOneIssue = (issue) => {
   }
 }
 
-export const removeOneIssue = (issueId) => {
+export const removeOneIssue = (issueId, phaseId) => {
   return {
     type: DELETE_ISSUE,
-    issueId
+    issueId,
+    phaseId
   }
 }
 
@@ -109,7 +110,7 @@ export const thunkCreateIssue = (phaseId, issue) => async (dispatch) => {
 
 export const thunkUpdateIssue = (issueId, issue) => async (dispatch) => {
   const { summary, description, phaseId, assigneeId } = issue
-  console.log("UPDATE ISSUES THUNK_issue:", issueId, summary, description, phaseId, assigneeId)
+  // console.log("UPDATE ISSUES THUNK_issue:", issueId, summary, description, phaseId, assigneeId)
   try {
     const response = await fetch(`/api/projects/issues/${issueId}`, {
       method: "PUT",
@@ -145,12 +146,15 @@ export const thunkUpdateIssue = (issueId, issue) => async (dispatch) => {
   }
 }
 
-export const thunkDeleteIssue = (issueId) => async (dispatch) => {
+export const thunkDeleteIssue = (issueId, phaseId) => async (dispatch) => {
+  console.log("DELETE ISSUES THUNK_issueId_phaseId:", issueId, phaseId)
   const response = await fetch(`/api/projects/issues/${issueId}`, {
     method: "DELETE"
   })
+  console.log("DELETE ISSUES_response:", response)
   if (response.ok) {
-    dispatch(removeOneIssue(issueId));
+    dispatch(removeOneIssue(issueId, phaseId));
+    return response
   }
 }
 
@@ -188,10 +192,8 @@ const issues = (state = initialState, action) => {
 
     case DELETE_ISSUE:
       newState = { ...state, ...state.AllPhases, singleIssue: { ...state.singleIssue } }
-      if (newState.singleIssue.issueId === action.issueId) {
+        delete newState.AllPhases[action.phaseId].Issues[action.issueId]
         delete newState.singleIssue
-        delete newState.AllPhases[action.issue.issueId]
-      }
       return newState
 
     case RESET_PROJECT:
@@ -200,7 +202,7 @@ const issues = (state = initialState, action) => {
       newState.singleIssue = {}
       newState.newIssue = {}
       return newState
-      
+
     default:
       return state;
   }

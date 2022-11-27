@@ -110,7 +110,7 @@ def update_issue(issue_id):
     db.session.commit()
     return issue.to_dict(), 200
   else:
-    print("---UPDATE ISSUE---FORM ERRORS:", form.errors)
+    # print("---UPDATE ISSUE---FORM ERRORS:", form.errors)
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
@@ -132,8 +132,9 @@ def update_issue(issue_id):
 @project_routes.route("/issues/<int:issue_id>", methods=["DELETE"])
 @login_required
 def delete_issue(issue_id):
+  print("---DELETE ISSUE ROUTE---issue_id:", issue_id)
   issue = Issue.query.get(issue_id)
-
+  print("---DELETE ISSUE ROUTE---issue:", issue)
   if current_user.is_admin == True:
     db.session.delete(issue)
     db.session.commit()
@@ -144,6 +145,7 @@ def delete_issue(issue_id):
     }), 200
 
   else:
+    print("---DELETE ISSUE---FORM ERRORS:", form.errors)
     return jsonify({
       "errors": "Unauthorized! You are not the admin of this board!"
     }), 403
