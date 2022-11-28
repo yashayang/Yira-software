@@ -132,7 +132,7 @@ const UpdateIssue = () => {
           }
         </div>
         {!summaryInput
-        ? <div className="update-issue-summary" onClick={showSummary}><h3>{currIssue.summary}</h3></div>
+        ? <div className="update-issue-summary" onClick={showSummary}><h3>{currIssue?.summary}</h3></div>
         : <div className="update-issue-summary-input">
           <form onSubmit={handleSummary}>
             <div>
@@ -196,6 +196,7 @@ const UpdateIssue = () => {
           <div>
             <select
               name="phaseId"
+              value={phaseId}
               onChange={(e) => setPhaseId(e.target.value)}
               className="update-issue-right-phase-selector"
             >
@@ -211,6 +212,7 @@ const UpdateIssue = () => {
               <div>
                 <select
                   name="assigneeId"
+                  value={assigneeId}
                   className="update-issue-assignee-select"
                   onChange={(e) => setAssigneeId(e.target.value)}
                 >

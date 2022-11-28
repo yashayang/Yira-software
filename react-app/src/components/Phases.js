@@ -38,13 +38,13 @@ function Phases(){
       <div className='project-path'>Projects  /  Project 1</div>
       <div className='project-title'>{projectName}</div>
       <div className='user-circle-container'>
-        {all_users_init?.map(init => init === curr_user_init ? <div className='curr-user-circle'>{curr_user_init}</div> : <div className='other-user-circle'>{init}</div>)}
+        {all_users_init?.map((init, i) => init === curr_user_init ? <div className='curr-user-circle' key={i}>{curr_user_init}</div> : <div className='other-user-circle'>{init}</div>)}
       </div>
       <div className="phase-main-container">
         {phasesArr?.map((phase, i) => {
         return (
           <div className="card-container" key={i}>
-            <div className="phase-title-container">
+            <div className="phase-title-container" key={i}>
               <UpdatedPhase phaseId={phase.id} phaseTitle={phase.title} projectId={projectId} ownerId={currUserId}/>
               <DeletePhase phaseId={phase.id}/>
             </div>

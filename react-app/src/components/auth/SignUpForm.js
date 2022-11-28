@@ -134,7 +134,9 @@ const SignUpForm = () => {
         <span className='login-entry' onClick={handleShowSignin}> Sign in</span>
       </div>
     </div>}
-    {showSignin && <LoginForm/>}
+    {showSignin &&
+    <LoginForm/>
+    }
     </>
   );
 };

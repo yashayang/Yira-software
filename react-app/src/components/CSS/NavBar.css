@@ -1,0 +1,70 @@
+.navbar-main-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* margin: 30px; */
+  /* background-color: #F5F4F4; */
+  width: 100vw;
+  border-bottom: 1px solid #d9d9d9;
+  box-shadow:0px 2px 0px #F5F4F4
+  /* border-bottom-style: ; */
+}
+
+.navbar-left-container {
+  display: flex;
+  color: #2F2F2F;
+  margin: 10px 0px 12px 70px;
+}
+
+.logo-name {
+  font-size: 1.4rem;
+  font-weight: 350;
+  margin: 2px 0px 0px 10px;
+}
+
+.logout-container,
+.navbar-project {
+  margin: 8px 0px 0px 40px;
+  height: 100%;
+  cursor: pointer;
+  color: #2F2F2F;
+}
+
+.navbar-left-seletion div:hover {
+  border-bottom: 3px solid #615DEC;
+}
+
+.navbar-project {
+  border-bottom: 3px solid #615DEC;
+}
+
+.navbar-right-container {
+  margin: 10px 30px 12px 30px;
+}
+
+.logout-container {
+  /* font-size: 0.9rem; */
+  margin-right: 100px;
+}
+
+.fa-sharp.fa-solid.fa-right-from-bracket{
+  margin-left: 5px;
+  /* color: #888888; */
+}
+
+.navBar-signup-entry {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2F2F2F;
+  margin: 0px 90px 5px 30px;
+  border: 1px solid #2F2F2F;
+  height: 35px;
+  width: 130px;
+  border-radius: 5px;
+}
+
+.navBar-signup-entry:hover {
+  background-color: #F5F4F4;
+  cursor: pointer;
+}
