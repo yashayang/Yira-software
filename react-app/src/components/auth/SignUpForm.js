@@ -64,7 +64,7 @@ const SignUpForm = () => {
     {!showSignin && <div className='home-page-signup-container'>
       <div className='signup-title'>Sign up is required!</div>
       <form className="signup-form" onSubmit={onSignUp}>
-        <div>{errors.map((error, ind) => (<div key={ind}>{error}</div>))}</div>
+        <div className="create-issue-validation-errors">{errors.map((error, ind) => (<div key={ind}>{error.slice(error.indexOf(':') + 1, error.length)}</div>))}</div>
         <div className="signup-form-input-outer">
           <label className="signup-form-label">First Name</label>
           <input

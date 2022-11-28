@@ -1,7 +1,8 @@
 .home-page-login-container {
    background-color: white;
-   width: 350px;
-   height: 470px;
+   width: 360px;
+   height: 520px;
+   max-height: auto;
    display: flex;
    flex-direction: column;
    border-radius: 5px;
@@ -10,7 +11,7 @@
 .login-title {
   display: flex;
   justify-content: center;
-  margin-top: 25px;
+  margin-top: 50px;
   margin-bottom: 10px;
   font-size: 1.8rem;
   font-weight: 600;
@@ -20,7 +21,7 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  margin-left: 28px;
+  margin-left: 34px;
 }
 
 .login-form-input-outer {
