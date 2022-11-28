@@ -1,0 +1,40 @@
+.phase-ellipsis-container {
+  margin: 10px 10px 10px 0px;
+  height: 31px;
+  width: 31px;
+  color: #2F2F2F;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12%;
+  display: none;
+}
+
+.phase-title-container:hover .phase-ellipsis-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e3e3e3;
+  cursor: pointer;
+}
+
+.phase-delete-container {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  background-color: white;
+  z-index: 9999;
+  width: 50px;
+  height: 20px;
+  position: relative;
+  border-radius: 5px;
+}
+
+.phase-dropDown {
+  font-size: 0.8rem;
+}
+
+.phase-dropDown:hover {
+  cursor: pointer;
+}

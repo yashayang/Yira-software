@@ -4,6 +4,9 @@ import { NavLink } from 'react-router-dom';
 import { thunkGetAllPhasesIssues } from '../store/issue';
 import { loadAllUsers } from '../store/session';
 import DeleteIssue from './Issues/DeleteIssue';
+import CreatePhase from './Phases/CreatePhase';
+import UpdatedPhase from './Phases/UpdatePhase';
+import DeletePhase from './Phases/DeletePhase';
 import "./CSS/Phases.css"
 
 function Phases(){
@@ -12,9 +15,11 @@ function Phases(){
   const phases = useSelector(state => state.issues.AllPhases)
   const phasesArr = Object.values(phases)
   const projectName = phasesArr[0]?.Project.name
+  const projectId = phasesArr[0]?.Project?.id
 
   const curr_user = useSelector(state => state.session.user)
   const curr_user_init = curr_user.first_name[0].toUpperCase() + curr_user.last_name[0].toUpperCase()
+  const currUserId = curr_user?.id
 
   const all_users = useSelector(state => state.session.AllUsers)
   const all_users_init = all_users?.users.map(user => user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase())
@@ -22,7 +27,7 @@ function Phases(){
   // console.log("PHASE BROWSING-all phases:", phases)
 
   useEffect(() => {
-    dispatch(thunkGetAllPhasesIssues(phases))
+    dispatch(thunkGetAllPhasesIssues())
     dispatch(loadAllUsers())
   }, [dispatch])
 
@@ -40,10 +45,8 @@ function Phases(){
         return (
           <div className="card-container" key={i}>
             <div className="phase-title-container">
-              <div className="phase-title">
-                {phase.title === "DONE" ? <div>{phase.title}<i className="fa-sharp fa-solid fa-check" id="phase-title-done"></i></div> : phase.title}
-              </div>
-              <div className='phase-ellipsis-container'><i className="fa-solid fa-ellipsis"></i></div>
+              <UpdatedPhase phaseId={phase.id} phaseTitle={phase.title} projectId={projectId} ownerId={currUserId}/>
+              <DeletePhase phaseId={phase.id}/>
             </div>
             <div className="issue-card-container" >
               {phase.Issues && Object.values(phase.Issues).map((issue, i) => {
@@ -54,7 +57,6 @@ function Phases(){
                       <div className="issue-summary">{issue.summary}</div>
                     </NavLink>
                     <DeleteIssue issueId={issue.issueId} phaseId={phase.id}/>
-                    {/* <div className='issue-ellipsis-container'><i className="fa-solid fa-ellipsis"></i></div> */}
                   </div>
                   <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}>
                   <div className="project-name-outer">
@@ -80,7 +82,7 @@ function Phases(){
           </div>
           )
         })}
-        <div className="addPhase-main-container"><i className="fa-solid fa-plus" id="create-phase-plus"></i></div>
+        <CreatePhase projectId={projectId} ownerId={currUserId}/>
       </div>
     </div>
   )

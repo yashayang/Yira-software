@@ -9,7 +9,7 @@ project_routes = Blueprint('projects', __name__)
 
 
 @project_routes.route("/issues/<int:issue_id>")
-# @login_required
+@login_required
 def get_one_issue(issue_id):
   # print("---GET ONE ISSUE---ISSUE_ID:", issue_id)
   issue = Issue.query.get(issue_id)
@@ -30,7 +30,7 @@ def get_one_issue(issue_id):
 
 
 @project_routes.route("/")
-# @login_required
+@login_required
 def get_all_phases_issues():
   all_phases = Phase.query.all()
   # phases = [phase.to_dict_all() for phase in all_phases]
@@ -99,8 +99,8 @@ def update_issue(issue_id):
   issue = Issue.query.get(issue_id)
   if issue is None:
     return {"errors" : "Issue couldn't be found"}, 404
-  print("---UPDATE ISSUE---new_issue:", issue)
-  print("---UPDATE ISSUE---phase_id/onwer_id:", form.data['phase_id'], form.data["owner_id"])
+  # print("---UPDATE ISSUE---new_issue:", issue)
+  # print("---UPDATE ISSUE---phase_id/onwer_id:", form.data['phase_id'], form.data["owner_id"])
   if form.validate_on_submit():
     issue.summary = form.data['summary']
     issue.description = form.data['description']
@@ -132,9 +132,9 @@ def update_issue(issue_id):
 @project_routes.route("/issues/<int:issue_id>", methods=["DELETE"])
 @login_required
 def delete_issue(issue_id):
-  print("---DELETE ISSUE ROUTE---issue_id:", issue_id)
+  # print("---DELETE ISSUE ROUTE---issue_id:", issue_id)
   issue = Issue.query.get(issue_id)
-  print("---DELETE ISSUE ROUTE---issue:", issue)
+  # print("---DELETE ISSUE ROUTE---issue:", issue)
   if current_user.is_admin == True:
     db.session.delete(issue)
     db.session.commit()
@@ -145,12 +145,117 @@ def delete_issue(issue_id):
     }), 200
 
   else:
-    print("---DELETE ISSUE---FORM ERRORS:", form.errors)
+    # print("---DELETE ISSUE---FORM ERRORS:", form.errors)
     return jsonify({
       "errors": "Unauthorized! You are not the admin of this board!"
     }), 403
 
 # fetch("http://localhost:3000/api/projects/issues/6", {
+#   method: 'DELETE',
+#   headers: {
+#     'Content-type': 'application/json'
+#   }
+# })
+# .then(res => res.json())
+# .then(console.log)
+
+@project_routes.route("/<int:project_id>/phases", methods=["POST"])
+@login_required
+def create_phase(project_id):
+  form = PhaseForm()
+  form['csrf_token'].data = request.cookies['csrf_token']
+  # print("---CREATE PHASE---TITLE:", form.data["title"])
+  # print("---CREATE PHASE---PROJECT_ID:", form.data["project_id"])
+  if form.validate_on_submit():
+    new_phase = Phase(
+      title = form.data["title"],
+      project_id = project_id,
+      owner_id = current_user.id,
+      created_at= datetime.now()
+    )
+    # print("---CREATE PHASE---new_phase:", new_phase)
+    db.session.add(new_phase)
+    db.session.commit()
+
+    return new_phase.to_dict_all_phase(), 201
+  else:
+    # print("---CREATE PHASE---FORM ERRORS:", form.errors)
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+# fetch("http://localhost:3000/api/projects/1/phases", {
+#   method: 'POST',
+#   body: JSON.stringify({
+      # "title": "TO DO LIST",
+      # "project_id": 1,
+      # "owner_id": 1,
+#   }),
+#   headers: {
+#     'Content-type': 'application/json'
+#   }
+# })
+# .then(res => res.json())
+# .then(console.log)
+
+
+@project_routes.route("/phases/<int:phase_id>", methods=["PUT"])
+@login_required
+def update_phase(phase_id):
+  form = PhaseForm()
+  form['csrf_token'].data = request.cookies['csrf_token']
+
+  phase = Phase.query.get(phase_id)
+  if phase is None:
+    return {"errors" : "Issue couldn't be found"}, 404
+  # print("---UPDATE PHASE---new_issue:", phase)
+  # print("---UPDATE PHASE---title/phase_id:", phase_id, form.data['phase_id'])
+  if form.validate_on_submit():
+    phase.title = form.data['title']
+    phase.phase_id = phase_id
+    phase.owner_id = current_user.id
+    phase.updated_at = datetime.now()
+    db.session.commit()
+    return phase.to_dict_all_phase(), 200
+  else:
+    # print("---UPDATE PHASE---FORM ERRORS:", form.errors)
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+# fetch("http://localhost:3000/api/projects/phases/7", {
+#   method: 'PUT',
+#   body: JSON.stringify({
+#       "title": "UPDATED PHASE",
+#       "project_id": 1,
+#       "owner_id": 1,
+#   }),
+#   headers: {
+#     'Content-type': 'application/json'
+#   }
+# })
+# .then(res => res.json())
+# .then(console.log)
+
+
+@project_routes.route("/phases/<int:phase_id>", methods=["DELETE"])
+@login_required
+def delete_phase(phase_id):
+  # print("---DELETE PHASE ROUTE---phase_id:", phase_id)
+  phase = Phase.query.get(phase_id)
+  # print("---DELETE PHASE ROUTE---phase:", phase)
+  if current_user.is_admin == True:
+    db.session.delete(phase)
+    db.session.commit()
+
+    return jsonify({
+      "message": "Phase is successfully deleted!",
+      "status_code": 200
+    }), 200
+
+  else:
+    # print("---DELETE PHASE---FORM ERRORS:", form.errors)
+    return jsonify({
+      "errors": "Unauthorized! You are not the admin of this board!"
+    }), 403
+
+# fetch("http://localhost:3000/api/projects/phases/7", {
 #   method: 'DELETE',
 #   headers: {
 #     'Content-type': 'application/json'

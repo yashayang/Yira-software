@@ -11,6 +11,7 @@ import User from './components/User';
 import Phases from './components/Phases';
 import CreateIssue from './components/Issues/CreateIssue';
 import UpdateIssue from './components/Issues/UpdateIssue';
+import HomePage from './components/SplashPage';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -53,7 +54,7 @@ function App() {
           <UpdateIssue />
         </ProtectedRoute>
         <Route path='/' exact={true} >
-          <h1>Jira Home Page</h1>
+          <HomePage />
         </Route>
       </Switch>
     </BrowserRouter>
