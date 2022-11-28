@@ -16,6 +16,7 @@
 
 .home-page-left-container {
   color: white;
+  margin-top: 20px;
 }
 
 .home-page-title {
@@ -29,4 +30,37 @@
   margin-top: 20px;
   margin-left: -40px;
   margin-right: 150px;
+}
+
+.social-container {
+  margin-top: 60px;
+  font-size: 1.5rem;
+}
+
+.my-name {
+  animation: rainbow 10s ease infinite;
+}
+
+.social-link {
+  color: white;
+  font-size: 30px;
+  margin-left: 10px;
+}
+
+@keyframes rainbow{
+  0%{
+    color: #FFD166
+  }
+  25%{
+    color: #06D6A0
+  }
+  50%{
+    color:#78C3FB;
+  }
+  75%{
+    color:#EF476F;
+  }
+  100%{
+    color:#FFD166
+  }
 }
