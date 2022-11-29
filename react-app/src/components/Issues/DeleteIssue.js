@@ -41,13 +41,12 @@ const DeleteIssue = ({issueId, phaseId}) => {
   }
 
   return (
-    <div className='issue-ellipsis-outter'>
-      <div className='issue-ellipsis-container' onClick={openMenu} ><i className="fa-solid fa-ellipsis"></i></div>
-      {/* <div > */}
+    <div className='issue-ellipsis-outter' onClick={handleIssueDelete}>
+      <div className='issue-delete-container'><i class="fa-solid fa-xmark"></i></div>
+      {/* <div className='issue-ellipsis-container' onClick={openMenu} ><i className="fa-solid fa-ellipsis"></i></div>
         {showMenu && <div className='issue-delete-container'>
         <div className='issue-ellipsis-dropDown' onClick={handleIssueDelete}>DELETE</div>
-        </div>}
-      {/* </div> */}
+        </div>} */}
     </div>
   )
 }
