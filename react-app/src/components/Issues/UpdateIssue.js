@@ -110,7 +110,7 @@ const UpdateIssue = () => {
       phaseId: phaseId ? phaseId : currPhaseId,
       assigneeId
     }
-    console.log("UPDATE ISSUE-handleSubmit-issue:", issue)
+    // console.log("UPDATE ISSUE-handleSubmit-issue:", issue)
     dispatch(thunkUpdateIssue(issueId, issue))
     // .then(res => phaseNameOnStage = res.Phase.title)
     // console.log("UPDATE ISSUE-response:", response)

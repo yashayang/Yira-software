@@ -3,17 +3,19 @@ import { Modal } from '../../../context/Modal';
 import UpdateIssueForm from './UpdateIssueForm.js';
 import '../../CSS/UpdateIssues.css';
 
-function UpdateIssueModal({showModal, setShowModal}) {
+function UpdateIssueModal({currIssue, showModal, setShowModal}) {
   // const [showModal, setShowModal] = useState(false);
-  // console.log("============", showModal, setShowModal)
+  // console.log("============", currIssue, showModal, setShowModal)
   return (
     <>
-      <div onClick={() => setShowModal(true)}></div>
+      {/* <div className="issue-card-container" onClick={() => setShowModal(true)}></div> */}
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <UpdateIssueForm setModal={setShowModal}/>
+          {console.log("did it get here? this is EditCommentModal", showModal)}
+          <UpdateIssueForm currIssue={currIssue} setShowModal={setShowModal}/>
         </Modal>
       )}
+
     </>
   );
 }

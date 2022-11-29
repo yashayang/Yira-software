@@ -10,6 +10,8 @@ import UpdatedPhase from './Phases/UpdatePhase';
 import DeletePhase from './Phases/DeletePhase';
 import "./CSS/Phases.css"
 
+import IssueCards from './Issues/IssueCards'
+
 
 // import React, { useState } from 'react';
 import { Modal } from '../context/Modal';
@@ -20,10 +22,11 @@ import './CSS/UpdateIssues.css';
 function Phases(){
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
+  const [activeId, setActiveId] = useState()
 
   const phases = useSelector(state => state.issues.AllPhases)
   const phasesArr = Object.values(phases)
-  const projectName = phasesArr[0]?.Project.name
+  const projectName = phasesArr[0]?.Project?.name
   const projectId = phasesArr[0]?.Project?.id
 
   const curr_user = useSelector(state => state.session.user)
@@ -33,7 +36,7 @@ function Phases(){
   const all_users = useSelector(state => state.session.AllUsers)
   const all_users_init = all_users?.users.map(user => user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase())
 
-  console.log("PHASE BROWSING-phasesArr:", phasesArr)
+  // console.log("PHASE BROWSING-phasesArr:", phasesArr)
 
   useEffect(() => {
     dispatch(thunkGetAllPhasesIssues())
@@ -41,6 +44,11 @@ function Phases(){
   }, [dispatch])
 
   if (!phases) return null;
+
+  function activeDiv(issueId) {
+    setActiveId(issueId)
+    setShowModal(true)
+  }
 
 
   return (
@@ -58,40 +66,44 @@ function Phases(){
               <UpdatedPhase phaseId={phase.id} phaseTitle={phase.title} projectId={projectId} ownerId={currUserId}/>
               <DeletePhase phaseId={phase.id}/>
             </div>
-            <div className="issue-card-container" onClick={() => setShowModal(true)}>
-              {phase.Issues && Object.values(phase.Issues).map((issue, i) => {
-              return (
-                <div className="issue-card-outer" key={i}>
-                  <div className="issue-card-title">
-                    {/* <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}> */}
-                      <div className="issue-summary">{issue.summary}</div>
-                    {/* </NavLink> */}
-                    <DeleteIssue issueId={issue.issueId} phaseId={phase.id}/>
-                  </div>
-                  {/* <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}> */}
-                  <div className="project-name-outer">
-                    <div className="project-name-left">
-                      <div className='project-name-icon'><i className="fa-solid fa-square-check"></i></div>
-                      <div className="project-name">{phase.Project.name}--{issue.issueId}</div>
-                    </div>
-                    {issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase() === curr_user_init
-                    ?
-                    <div className='curr-user-circle-small'>{curr_user_init}</div>
-                    :
-                    <div className='other-user-circle-small'>{issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase()}</div>
-                    }
-                  </div>
-                  {/* </NavLink> */}
-                  {showModal && (
-                    <Modal onClose={() => setShowModal(false)}>
-                      <UpdateIssueForm currIssue={issue} setModal={setShowModal}/>
-                    </Modal>)}
-                </div>
-              )
+              {phase.Issues && Object.values(phase.Issues).map((issue) => {
+                return < IssueCards issue={issue} phase={phase}/>
+                // return (
+                //   <div className="issue-card-container" >
+                //     {/* {console.log("ISSUE MAPPING ISSUEID:", issue.issueId)} */}
+                //   <div className="issue-card-outer" key={issue.issueId} onClick={() => activeDiv(issue.issueId)}>
+                //     {/* {console.log("ISSUE-INDEX", i)} */}
+
+                //     {issue.issueId === activeId && showModal &&
+                //       <UpdateIssueModal currIssue={issue} showModal={showModal} setShowModal={setShowModal}/>
+                //     }
+
+                //     <div className="issue-card-title">
+                //       {/* <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}> */}
+                //         <div className="issue-summary">{issue.summary}</div>
+                //       {/* </NavLink> */}
+                //       <DeleteIssue issueId={issue.issueId} phaseId={phase.id}/>
+                //     </div>
+                //     {/* <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}> */}
+                //     <div className="project-name-outer">
+                //       <div className="project-name-left">
+                //         <div className='project-name-icon'><i className="fa-solid fa-square-check"></i></div>
+                //         <div className="project-name">{phase.Project.name}--{issue.issueId}</div>
+                //       </div>
+                //       {issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase() === curr_user_init
+                //       ?
+                //       <div className='curr-user-circle-small'>{curr_user_init}</div>
+                //       :
+                //       <div className='other-user-circle-small'>{issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase()}</div>
+                //       }
+                //     </div>
+                //     {/* </NavLink> */}
+                //   </div>
+                //   </div>
+                //   )
             })}
               <div className='create-issue-outer'><i className="fa-sharp fa-solid fa-plus" id="create-issue-plus"></i>{" "}Create issue</div>
               {/* <CreateIssueModal currPhaseId={phase.id} ownerId={phase.ownerId}/> */}
-            </div>
 
 
           </div>

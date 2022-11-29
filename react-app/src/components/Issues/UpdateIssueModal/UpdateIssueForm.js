@@ -5,7 +5,7 @@ import { thunkUpdateIssue, thunkGetOneIssue, thunkGetAllPhasesIssues, cleanState
 import { loadAllUsers } from '../../../store/session';
 import "../../CSS/UpdateIssues.css"
 
-const UpdateIssueForm = ({currIssue, setModal}) => {
+const UpdateIssueForm = ({currIssue, setShowModal}) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const currUser = useSelector(state => state.session.user)
@@ -116,7 +116,7 @@ const UpdateIssueForm = ({currIssue, setModal}) => {
     // .then(res => phaseNameOnStage = res.Phase.title)
     // console.log("UPDATE ISSUE-response:", response)
     // history.push('/projects')
-    setModal(false)
+    setShowModal(false)
   }
 
   // const showMenu = () => {
@@ -127,7 +127,7 @@ const UpdateIssueForm = ({currIssue, setModal}) => {
   return (
     <div className="update-issue-main-container">
       <div className="update-issue-left-container">
-        <div className="update-issue-validation-errors">
+        <div className="update-issue-summary-errors">
           {
           summaryErrors &&
           summaryErrors.map((error)=>(<div key={error}>{error}</div>))
@@ -159,7 +159,7 @@ const UpdateIssueForm = ({currIssue, setModal}) => {
         }
         <div className="update-issue-description">
           <label className="update-issue-description-label">Description</label>
-          <div className="update-issue-validation-errors">
+          <div className="update-issue-description-errors">
             {
             descriptionErrors &&
             descriptionErrors.map((error)=>(<div key={error}>{error}</div>))
@@ -178,25 +178,24 @@ const UpdateIssueForm = ({currIssue, setModal}) => {
               onChange={(e) => setDescription(e.target.value)}
               className="update-issue-description-input"
             />
-            <div>
-              <button>Save</button>
-              <button onClick={() =>{
+            <div className="update-issue-description-button-container">
+              <button className="update-issue-description-save">Save</button>
+              <div className="update-issue-description-cancel" onClick={() =>{
                 setDescriptionErrors([])
                 setDescription(currDescription)
                 setDescriptionInput(false)
-                }}>Cancel</button>
+                }}>Cancel</div>
             </div>
           </form>}
         </div>
         <div className="update-issue-time-container">
-          <div className="update-issue-time-inner">Created at: {new Date(currIssue.createdAt).toString().slice(3,-33)} (PT)</div>
-          <div className="update-issue-time-inner">Updated at: {new Date(currIssue.updatedAt).toString().slice(3,-33)} (PT)</div>
+          <div className="update-issue-time-inner">Created at: {new Date(currIssue.createdAt).toString().slice(3,-33)}</div>
+          <div className="update-issue-time-inner">Updated at: {new Date(currIssue.updatedAt).toString().slice(3,-33)}</div>
         </div>
       </div>
 
       <div className="update-issue-right-container">
         <form onSubmit={handleSubmit}>
-
           <div>
             <select
               name="phaseId"
@@ -225,8 +224,8 @@ const UpdateIssueForm = ({currIssue, setModal}) => {
                   return (
                     user.id !== currIssue?.User?.id &&
                     <option value={Number(user.id)} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>
-                  )
-                })}
+                    )
+                  })}
                 </select>
               </div>
             </div>
@@ -247,8 +246,7 @@ const UpdateIssueForm = ({currIssue, setModal}) => {
               </div>
             </div>
           </div>
-
-          <button>submit</button>
+          <button>Submit</button>
 
         </form>
       </div>
