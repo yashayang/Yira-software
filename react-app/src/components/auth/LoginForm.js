@@ -85,7 +85,7 @@ const LoginForm = () => {
             <button className='login-button' onClick={DemoUser}>Demo User</button>
           </div>
         </form>
-        <div className='or'>——————————or——————————</div>
+        <div className='or'>————————— or —————————</div>
         <div className='sign-up-entry' onClick={handleShowSignUp}>Sign up for FREE!</div>
       </div>}
       {showSignUp && <SignUpForm />}

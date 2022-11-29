@@ -103,7 +103,7 @@ const SignUpForm = () => {
             value={administration}
             className="signup-form-select-input"
           >
-            <option>—————————YES——————————</option>
+            <option>———————— YES —————————</option>
           </select>
         </div>
         <div className="signup-form-input-outer">

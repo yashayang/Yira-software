@@ -96,8 +96,8 @@ const SoloLoginPage = () => {
             <button className='login-button' onClick={DemoUser}>Demo User</button>
           </div>
         </form>
-        <div className='or'>——————————or——————————</div>
-        <NavLink to="/sign-up"></NavLink><div className='sign-up-entry'>Sign up for FREE!</div>
+        <div className='or'>————————— or —————————</div>
+        <NavLink to="/sign-up"><div className='sign-up-entry'>Sign up for FREE!</div></NavLink>
       </div>
       </div>
     </>
