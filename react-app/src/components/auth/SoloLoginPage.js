@@ -58,8 +58,8 @@ const SoloLoginPage = () => {
             <li><i className="fa-sharp fa-solid fa-check" id="home-page-checkmark"></i>{" "}Is always free, no credit card needed</li>
           </ul>
           <div className="social-container">Created By <span className="my-name">Yasha Yang</span>
-            <a href='https://github.com/yashayang' className="social-link" target="_blank"><span><i className="fa-brands fa-github"></i></span></a>
-            <a href='https://www.linkedin.com/in/yashayang/' className="social-link" target="_blank"><span><i class="fa-brands fa-linkedin"></i></span></a>
+            <a href='https://github.com/yashayang' className="social-link" rel="noreferrer" target="_blank"><span><i className="fa-brands fa-github"></i></span></a>
+            <a href='https://www.linkedin.com/in/yashayang/' className="social-link" rel="noreferrer" target="_blank"><span><i class="fa-brands fa-linkedin"></i></span></a>
           </div>
         </div>
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector} from 'react-redux';
 import LogoutButton from './auth/LogoutButton';
-// import SignUpForm from './auth/SigUpForm.js';
+import CreateIssueModal from './Issues/CreateIssueModal';
 import logo from './Images/logo.svg';
 import './CSS/NavBar.css';
 
@@ -18,6 +18,7 @@ const NavBar = () => {
             <div className='navbar-left-seletion'>
               {curr_user && <div className='navbar-project'>Projects</div>}
             </div>
+            {curr_user && <div className='navbar-create-issue-entry'><CreateIssueModal/></div>}
           </div>
         </NavLink>
         {/* <div>

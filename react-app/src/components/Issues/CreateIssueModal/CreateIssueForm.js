@@ -1,14 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom"
-import { thunkCreateIssue } from "../../store/issue";
-import { thunkGetAllPhasesIssues } from '../../store/issue';
-import { loadAllUsers } from '../../store/session';
-import "../CSS/CreateIssues.css"
+import { thunkCreateIssue } from "../../../store/issue";
+import { thunkGetAllPhasesIssues } from '../../../store/issue';
+import { loadAllUsers } from '../../../store/session';
+import "../../CSS/CreateIssues.css"
 
-const CreateIssue = () => {
+const CreateIssue = ({setModal}) => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const currUser = useSelector(state => state.session.user)
   const allUsersArr = useSelector(state => state.session.AllUsers?.users)
   const allPhases = useSelector(state => state.issues.AllPhases)
@@ -18,7 +16,8 @@ const CreateIssue = () => {
   const [description, setDescription] = useState("");
   const [assigneeId, setAssigneeId] = useState(currUser.id)
   const [errors, setErrors] = useState([]);
-  console.log("CREATE ISSUE - allPhasesArr", allPhasesArr)
+
+  // console.log("CREATE ISSUE - allPhasesArr", allPhasesArr)
 
   useEffect(() => {
     dispatch(thunkGetAllPhasesIssues())
@@ -28,30 +27,38 @@ const CreateIssue = () => {
   if (!allPhases) return null;
 
   const handleSubmit = async(e) => {
+    // console.log("!!!!!!!!!!!!!!")
     e.preventDefault()
     setErrors([])
     const issueInfo = { summary, description, phaseId, assigneeId }
     // console.log("CREATEISSUE FORM-issueInfo:", issueInfo)
 
     const response = await dispatch(thunkCreateIssue(phaseId, issueInfo))
+    // console.log("!!!!!!!", response)
     let errorsArr = []
     if(response.errors) {
-      let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
-      errorsArr.push(errorMsg)
-      // console.log("!!!!!!!", errorsArr)
+      if(response.errors[0].length > 40) {
+        let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
+        errorsArr.push(errorMsg)
+      } else {
+        errorsArr.push(response.errors[0])
+      }
       setErrors(errorsArr)
     } else {
-      history.push('/projects')
+      setModal(false)
+      await dispatch(thunkGetAllPhasesIssues())
     }
   }
 
   const handleCancel = async(e) => {
     e.preventDefault()
-    history.push('/projects')
+    setModal(false)
   }
 
   return (
-    <form className="create-issue-main-container" onSubmit={handleSubmit}>
+    <div className="create-issue-main-container">
+
+    <form className="create-issue-form" onSubmit={handleSubmit} action="#">
       <div className="create-issue-title">Create Issue</div>
       <div className="create-issue-validation-errors">
         {
@@ -68,6 +75,7 @@ const CreateIssue = () => {
           name="phaseId"
           className="create-issue-select"
           required
+          value={phaseId}
           onChange={(e) => setPhaseId(e.target.value)}
         >
         {allPhasesArr?.map((phase, i) => <option value={phase.id} key={i}>{phase.title}</option>)}
@@ -106,7 +114,8 @@ const CreateIssue = () => {
           className="create-issue-assignee-select"
           onChange={(e) => setAssigneeId(e.target.value)}
         >
-        <option disabled selected value={Number(assigneeId)}>Unassigned</option>
+        {/* <option disabled selected value={Number(assigneeId)}>Unassigned</option> */}
+        <option disabled selected value={Number(assigneeId)}>{currUser?.first_name[0].toUpperCase() +currUser?.first_name.slice(1) + " " + currUser?.last_name[0].toUpperCase() +currUser?.last_name.slice(1)}</option>
         {allUsersArr?.map((user, i) => <option value={Number(user.id)} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>)}
         </select>
       </div>
@@ -127,12 +136,14 @@ const CreateIssue = () => {
 
       <div className="create-issue-footer">
         <div className="create-issue-button-container">
-        <div className="create-issue-cancel" type="submit" onClick={handleCancel}>Cancel</div>
-        <button className="create-issue-create-button" type="submit">Create</button>
+        <div className="create-issue-cancel" onClick={handleCancel}>Cancel</div>
+        <button className="create-issue-create-button" type="submit" onClick={handleSubmit}>Create</button>
         </div>
       </div>
 
     </form>
+
+  </div>
   )
 }
 

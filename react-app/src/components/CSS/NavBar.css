@@ -38,6 +38,19 @@
   border-bottom: 3px solid #615DEC;
 }
 
+.navbar-create-issue-entry {
+  margin: 0px 0px 5px 100px;
+  width: 100px;
+  height: 33px;
+  background-color: #615DEC;
+  border-radius: 3px;
+  color: white;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .navbar-right-container {
   margin: 10px 30px 12px 30px;
 }

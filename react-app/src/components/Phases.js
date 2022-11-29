@@ -3,6 +3,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { thunkGetAllPhasesIssues } from '../store/issue';
 import { loadAllUsers } from '../store/session';
+import CreateIssueModal from './Issues/CreateIssueModal';
 import DeleteIssue from './Issues/DeleteIssue';
 import CreatePhase from './Phases/CreatePhase';
 import UpdatedPhase from './Phases/UpdatePhase';
@@ -24,7 +25,7 @@ function Phases(){
   const all_users = useSelector(state => state.session.AllUsers)
   const all_users_init = all_users?.users.map(user => user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase())
 
-  // console.log("PHASE BROWSING-all phases:", phases)
+  // console.log("PHASE BROWSING-phasesArr:", phasesArr)
 
   useEffect(() => {
     dispatch(thunkGetAllPhasesIssues())
@@ -75,9 +76,8 @@ function Phases(){
                 </div>
               )
             })}
-            <NavLink to='/issues' style={{ textDecoration: 'none'}}>
               <div className='create-issue-outer'><i className="fa-sharp fa-solid fa-plus" id="create-issue-plus"></i>{" "}Create issue</div>
-            </NavLink>
+              {/* <CreateIssueModal currPhaseId={phase.id} ownerId={phase.ownerId}/> */}
             </div>
           </div>
           )
