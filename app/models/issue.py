@@ -26,6 +26,7 @@ class Issue(db.Model):
     return {
       "issueId":self.id,
       "summary": self.summary,
+      "description": self.description,
       "phaseId": self.phase_id,
       "ownerId": self.owner_id,
       'createdAt': self.created_at,

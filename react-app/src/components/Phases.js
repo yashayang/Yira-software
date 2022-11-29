@@ -3,15 +3,23 @@ import { useDispatch, useSelector} from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { thunkGetAllPhasesIssues } from '../store/issue';
 import { loadAllUsers } from '../store/session';
-import CreateIssueModal from './Issues/CreateIssueModal';
+import UpdateIssueModal from './Issues/UpdateIssueModal';
 import DeleteIssue from './Issues/DeleteIssue';
 import CreatePhase from './Phases/CreatePhase';
 import UpdatedPhase from './Phases/UpdatePhase';
 import DeletePhase from './Phases/DeletePhase';
 import "./CSS/Phases.css"
 
+
+// import React, { useState } from 'react';
+import { Modal } from '../context/Modal';
+import UpdateIssueForm from './Issues/UpdateIssueModal/UpdateIssueForm';
+import './CSS/UpdateIssues.css';
+
+
 function Phases(){
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
 
   const phases = useSelector(state => state.issues.AllPhases)
   const phasesArr = Object.values(phases)
@@ -25,7 +33,7 @@ function Phases(){
   const all_users = useSelector(state => state.session.AllUsers)
   const all_users_init = all_users?.users.map(user => user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase())
 
-  // console.log("PHASE BROWSING-phasesArr:", phasesArr)
+  console.log("PHASE BROWSING-phasesArr:", phasesArr)
 
   useEffect(() => {
     dispatch(thunkGetAllPhasesIssues())
@@ -33,6 +41,7 @@ function Phases(){
   }, [dispatch])
 
   if (!phases) return null;
+
 
   return (
     <div className="project-main-container">
@@ -49,17 +58,17 @@ function Phases(){
               <UpdatedPhase phaseId={phase.id} phaseTitle={phase.title} projectId={projectId} ownerId={currUserId}/>
               <DeletePhase phaseId={phase.id}/>
             </div>
-            <div className="issue-card-container" >
+            <div className="issue-card-container" onClick={() => setShowModal(true)}>
               {phase.Issues && Object.values(phase.Issues).map((issue, i) => {
               return (
                 <div className="issue-card-outer" key={i}>
                   <div className="issue-card-title">
-                    <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}>
+                    {/* <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}> */}
                       <div className="issue-summary">{issue.summary}</div>
-                    </NavLink>
+                    {/* </NavLink> */}
                     <DeleteIssue issueId={issue.issueId} phaseId={phase.id}/>
                   </div>
-                  <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}>
+                  {/* <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}> */}
                   <div className="project-name-outer">
                     <div className="project-name-left">
                       <div className='project-name-icon'><i className="fa-solid fa-square-check"></i></div>
@@ -72,13 +81,19 @@ function Phases(){
                     <div className='other-user-circle-small'>{issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase()}</div>
                     }
                   </div>
-                  </NavLink>
+                  {/* </NavLink> */}
+                  {showModal && (
+                    <Modal onClose={() => setShowModal(false)}>
+                      <UpdateIssueForm currIssue={issue} setModal={setShowModal}/>
+                    </Modal>)}
                 </div>
               )
             })}
               <div className='create-issue-outer'><i className="fa-sharp fa-solid fa-plus" id="create-issue-plus"></i>{" "}Create issue</div>
               {/* <CreateIssueModal currPhaseId={phase.id} ownerId={phase.ownerId}/> */}
             </div>
+
+
           </div>
           )
         })}

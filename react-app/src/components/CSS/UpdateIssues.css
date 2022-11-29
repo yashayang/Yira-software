@@ -1,33 +1,36 @@
 .update-issue-main-container{
   display: flex;
-  width: auto;
+  width: 1000px;
+  height: 450px;
   color: #2F2F2F;
-  margin-top: 30px;
-  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
 }
 .update-issue-right-container,
 .update-issue-left-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* margin: 25px; */
-  min-width: 350px;
+  margin-top: 50px;
   width: 100%;
 }
 
 .update-issue-left-container {
-  /* background-color: hotpink; */
-  margin-left: 30px;
+  margin-left: 50px;
+  margin-right: 40px;
 }
+
+.update-issue-right-container {
+  margin-top: 67px;
+}
+
 
 .update-issue-summary {
   display: flex;
   align-items: center;
-  margin-top: -30px;
-  height: 50px;
+  margin-top: -70px;
+  height: 40px;
   border-radius: 5px;
   padding-left: 10px;
-  min-width: 300px;
+  font-size: 1.2rem;
 }
 
 .update-issue-summary:hover {
@@ -35,13 +38,44 @@
   background-color: #F5F4F4;
  }
 
-.update-issue-summary-input {
+.update-issue-summary-input-container {
+  display: flex;
+  align-items: center;
+  margin-top: -45px;
+
+  border-radius: 5px;
   padding-left: 10px;
 }
 
+.update-issue-summary-input {
+  border: 2px solid #615DEC;
+  font-size: 1.2rem;
+  height: 40px;
+  width: 400px;
+  padding-left: 10px;
+}
+
+
+
+.update-issue-summary-button-container {
+  margin-left: 338px;
+}
+
+.update-issue-summary-button {
+  margin-top: 3px;
+  margin-left: 5px;
+  background-color: #e3e3e3;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  color: #2F2F2F;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+}
+
 .update-issue-description {
-  /* padding-left: 10px; */
-  margin-top: 20px;
+
+  width: 100%;
 }
 
 .update-issue-description-label {
@@ -58,6 +92,8 @@
   align-items: center;
   border-radius: 5px;
   padding-left: 10px;
+  margin-left: 10px;
+  /* background-color: #615DEC; */
 }
 
 .update-issue-description-placeholder:hover {
@@ -65,9 +101,25 @@
   background-color: #F5F4F4;
 }
 
+.update-issue-description-input-container {
+  margin-left: 10px;
+  width: 400px;
+  height: 100px;
+  /* background-color: #615DEC; */
+}
+
+.update-issue-description-input {
+  font-size: 1rem;
+  padding-left: 10px;
+  padding-top: 10px;
+  width: 400px;
+  height: 100px;
+  border: 2px solid #615DEC;
+}
+
 .update-issue-time-container {
   padding-left: 10px;
-  margin-top: 50px;
+  margin-bottom: 40px;
   font-size: 0.7rem;
   color: #888888;
 }
