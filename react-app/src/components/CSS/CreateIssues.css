@@ -71,7 +71,7 @@
   border: none;
   background-color: #F5F4F4;
   height: 35px;
-  width: 328px;
+  width: 320px;
   border: 2px solid #d7d7d7;
   border-radius: 3px;
   margin-bottom: 20px;
@@ -85,8 +85,11 @@
   width: 100%;
   border: none;
   background-color: #F5F4F4;
-  min-height: 80px;
-  width: 328px;
+  width: 313px;
+  min-width: 313px;
+  max-width: 313px;
+  height: 80px;
+  max-height: 100px;
   border: 1px solid #888888;
   border-radius: 3px;
   margin-bottom: 20px;

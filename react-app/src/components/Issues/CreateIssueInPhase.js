@@ -50,7 +50,7 @@ const CreateIssueInPhase = ({phaseId, assigneeId}) => {
         <form onSubmit={handleSubmit}>
             <div className="phase-title-container">
               <input
-                className="create-issue-summary-input"
+                className="create-issue-inphase-summary-input"
                 value={summary}
                 placeholder="What needs to be done?"
                 required
