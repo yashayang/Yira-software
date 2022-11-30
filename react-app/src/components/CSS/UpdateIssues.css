@@ -43,6 +43,7 @@
   padding-top: 5px;
   padding-bottom: 5px;
   font-size: 1.2rem;
+  width: 320px;
 }
 
 .update-issue-summary:hover {
