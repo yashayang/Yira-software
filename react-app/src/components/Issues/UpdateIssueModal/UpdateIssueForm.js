@@ -1,39 +1,37 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom"
 import { thunkUpdateIssue, thunkGetOneIssue, thunkGetAllPhasesIssues, cleanState } from "../../../store/issue";
 import { loadAllUsers } from '../../../store/session';
 import "../../CSS/UpdateIssues.css"
 
-const UpdateIssueForm = ({currIssue, setShowModal}) => {
+const UpdateIssueForm = ({currIssue, currPhase}) => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const currUser = useSelector(state => state.session.user)
   const allUsersArr = useSelector(state => state.session.AllUsers?.users)
-  // const currIssue = useSelector(state => state.issues.singleIssue)
   const allPhases = useSelector(state => state.issues.AllPhases)
   const allPhasesArr = Object.values(allPhases)
-  // const { issueId } = useParams();
+  const singleIssue = useSelector(state => state.issues.singleIssue)
   const issueId = currIssue.issueId;
+  const phaseTitle = currPhase.title
 
-  const [summary, setSummary] = useState("");
-  const [description, setDescription] = useState("");
-  const [phaseId, setPhaseId] = useState();
-  const [assigneeId, setAssigneeId] = useState(currUser.id)
-  const [errors, setErrors] = useState([]);
-  const [summaryErrors, setSummaryErrors] = useState([]);
-  const [descriptionErrors, setDescriptionErrors] = useState([]);
+  const currSummary = singleIssue.summary;
+  const currDescription = singleIssue.description;
+  const currPhaseId = singleIssue.phaseId;
+  const currAssigneeId = singleIssue.ownerId;
+
+  const [summary, setSummary] = useState(currSummary);
   const [summaryInput, setSummaryInput] = useState(false);
+  const [summaryErrors, setSummaryErrors] = useState([]);
+  const [description, setDescription] = useState(currDescription);
   const [descriptionInput, setDescriptionInput] = useState(false);
+  const [descriptionErrors, setDescriptionErrors] = useState([]);
+  const [phaseId, setPhaseId] = useState();
+  const [assigneeId, setAssigneeId] = useState(currIssue.ownerId)
+  const [errors, setErrors] = useState([]);
 
+  // console.log("UPDATE ISSUE- currPhase:", currPhase)
   console.log("UPDATE ISSUE- currIssue:", currIssue)
-  const currSummary = currIssue?.summary;
-  const currDescription = currIssue?.description;
-  const currPhaseId = currIssue?.phaseId;
-  const currAssigneeId = currIssue?.ownerId;
-  // console.log("UPDATE ISSUE-curr", currSummary, currDescription, currPhaseId, currAssigneeId)
-  // const [showPhases, setShowPhases] = useState(false)
-  // console.log("UPDATE ISSUE-currPhaseId:", currPhaseId)
+
   useEffect(() => {
     dispatch(thunkGetOneIssue(parseInt(issueId)))
     dispatch(loadAllUsers())
@@ -52,7 +50,7 @@ const UpdateIssueForm = ({currIssue, setShowModal}) => {
 
   const handleSummary = async (e) => {
     e.preventDefault()
-    setErrors([])
+    setSummaryErrors([])
 
     const issue = {
       summary,
@@ -61,10 +59,10 @@ const UpdateIssueForm = ({currIssue, setShowModal}) => {
       assigneeId: currAssigneeId
     }
 
-    // console.log("UPDATE ISSUE-issue:", issue)
+    // console.log("UPDATE ISSUE handleSummary-issue:", issue)
 
-    const response = await dispatch(thunkUpdateIssue(issueId, issue))
-    // console.log("UPDATE ISSUE-response:", response)
+    const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
+    // console.log("UPDATE ISSUE handleSummary-response:", response)
     let errorsArr = []
     if(response.errors) {
       let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
@@ -74,19 +72,21 @@ const UpdateIssueForm = ({currIssue, setShowModal}) => {
 
     if (response.issueId) {
       setSummaryInput(false)
+      dispatch(thunkGetAllPhasesIssues())
     }
   }
 
   const handleDescription = async (e) => {
     e.preventDefault()
+    setDescriptionErrors([])
     const issue = {
       summary: currSummary,
       description,
       phaseId: currPhaseId,
       assigneeId: currAssigneeId
     }
-    // console.log("UPDATE ISSUE-issue:", issue)
-    const response = await dispatch(thunkUpdateIssue(issueId, issue))
+    // console.log("UPDATE ISSUE handleDescription-issue:", issue)
+    const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
     // console.log("UPDATE ISSUE-response:", response)
     let errorsArr = []
     if(response.errors) {
@@ -102,31 +102,59 @@ const UpdateIssueForm = ({currIssue, setShowModal}) => {
 
   // let phaseNameOnStage = currIssue.Phase?.title
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault()
 
+  //   const issue = {
+  //     summary: currSummary,
+  //     description: currDescription,
+  //     phaseId: phaseId ? phaseId : currPhaseId,
+  //     assigneeId
+  //   }
+  //   console.log("UPDATE ISSUE-handleSubmit-issue:", issue)
+  //   dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
+    // .then(res => phaseNameOnStage = res.Phase.title)
+    // console.log("UPDATE ISSUE-response:", response)
+    // history.push('/projects')
+    // setShowModal(false)
+  // }
+
+  const handleAssigneeId = async (e) => {
+    e.preventDefault()
+    console.log("UPDATE ISSUE-handleAssigneeId-e.target.value:", e.target.value)
+    // setAssigneeId(e.target.value)
     const issue = {
       summary: currSummary,
       description: currDescription,
       phaseId: phaseId ? phaseId : currPhaseId,
-      assigneeId
+      assigneeId: Number(e.target.value)
     }
-    console.log("UPDATE ISSUE-handleSubmit-issue:", issue)
-    dispatch(thunkUpdateIssue(issueId, issue))
-    // .then(res => phaseNameOnStage = res.Phase.title)
-    // console.log("UPDATE ISSUE-response:", response)
-    // history.push('/projects')
-    setShowModal(false)
+    console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
+    const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
+    dispatch(thunkGetAllPhasesIssues())
   }
 
-  // const showMenu = () => {
-  //   // if (showPhases) return
-  //   setShowPhases(!showPhases)
-  // }
+  const handlePhaseId = async (e) => {
+    e.preventDefault()
+    const issue = {
+      summary: currSummary,
+      description: currDescription,
+      phaseId: Number(e.target.value),
+      assigneeId: currAssigneeId
+    }
+    console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
+    const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
+    if (response.issueId) {
+      // dispatch(thunkGetAllPhasesIssues())
+      setDescriptionInput(false)
+    }
+  }
 
   return (
     <div className="update-issue-main-container">
       <div className="update-issue-left-container">
+        <div>{phaseTitle}{" - "}(Issue #{issueId})</div>
+
         <div className="update-issue-summary-errors">
           {
           summaryErrors &&
@@ -134,9 +162,9 @@ const UpdateIssueForm = ({currIssue, setShowModal}) => {
           }
         </div>
         {!summaryInput
-        ? <div className="update-issue-summary" onClick={showSummary}><h3>{currIssue?.summary}</h3></div>
+        ? <div className="update-issue-summary" onClick={showSummary}><h3>{currSummary}</h3></div>
         : <div className="update-issue-summary-input-container">
-          <form onSubmit={handleSummary}>
+          <form onSubmit={handleSummary} id="summary-form">
             <div>
               <input
                 type="text"
@@ -150,6 +178,7 @@ const UpdateIssueForm = ({currIssue, setShowModal}) => {
               <button type="submit" className="update-issue-summary-button"><i className="fa-sharp fa-solid fa-check"></i></button>
               <button  className="update-issue-summary-button" onClick={() =>{
                 setSummaryErrors([])
+                setSummary(currSummary)
                 setSummaryInput(false)
                 }}>
                 <i className="fa-sharp fa-solid fa-xmark"></i></button>
@@ -157,6 +186,7 @@ const UpdateIssueForm = ({currIssue, setShowModal}) => {
           </form>
           </div>
         }
+
         <div className="update-issue-description">
           <label className="update-issue-description-label">Description</label>
           <div className="update-issue-description-errors">
@@ -188,6 +218,7 @@ const UpdateIssueForm = ({currIssue, setShowModal}) => {
             </div>
           </form>}
         </div>
+
         <div className="update-issue-time-container">
           <div className="update-issue-time-inner">Created at: {new Date(currIssue.createdAt).toString().slice(3,-33)}</div>
           <div className="update-issue-time-inner">Updated at: {new Date(currIssue.updatedAt).toString().slice(3,-33)}</div>
@@ -195,15 +226,19 @@ const UpdateIssueForm = ({currIssue, setShowModal}) => {
       </div>
 
       <div className="update-issue-right-container">
-        <form onSubmit={handleSubmit}>
+        {/* <form onSubmit={handleSubmit}> */}
           <div>
             <select
+              // name="phaseId"
+              // value={phaseId}
+              // onChange={(e) => setPhaseId(e.target.value)}
+              // className="update-issue-right-phase-selector"
               name="phaseId"
               value={phaseId}
-              onChange={(e) => setPhaseId(e.target.value)}
+              onChange={handlePhaseId}
               className="update-issue-right-phase-selector"
             >
-            {allPhasesArr?.map((phase, i) => phase.id === currPhaseId ? <option value={phase.id} selected key={i}>{phase.title}</option> : <option value={Number(phase.id)} key={i}>{phase.title}</option>)}
+            {allPhasesArr?.map((phase, i) => phase.id === currPhaseId ? <option value={currPhaseId} selected key={i}>{phase.title}</option> : <option value={Number(phase.id)} key={i}>{phase.title}</option>)}
             </select>
           </div>
 
@@ -214,15 +249,21 @@ const UpdateIssueForm = ({currIssue, setShowModal}) => {
               </div>
               <div>
                 <select
+                  // name="assigneeId"
+                  // value={assigneeId}
+                  // className="update-issue-assignee-select"
+                  // onChange={(e) => setAssigneeId(e.target.value)}
                   name="assigneeId"
                   value={assigneeId}
                   className="update-issue-assignee-select"
-                  onChange={(e) => setAssigneeId(e.target.value)}
+                  onChange={handleAssigneeId}
                 >
-                <option disabled selected value={Number(assigneeId)}>{currIssue?.user?.first_name[0].toUpperCase() +currIssue?.user?.first_name.slice(1) + " " + currIssue?.user?.last_name[0].toUpperCase() +currIssue?.user?.last_name.slice(1)}</option>
+                <option disabled selected value={Number(assigneeId)}>
+                  {currIssue?.user?.first_name[0].toUpperCase() +currIssue?.user?.first_name.slice(1) + " " + currIssue?.user?.last_name[0].toUpperCase() +currIssue?.user?.last_name.slice(1)}
+                </option>
                 {allUsersArr?.map((user, i) => {
                   return (
-                    user.id !== currIssue?.User?.id &&
+                    user.id !== currIssue.ownerId &&
                     <option value={Number(user.id)} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>
                     )
                   })}
@@ -246,9 +287,9 @@ const UpdateIssueForm = ({currIssue, setShowModal}) => {
               </div>
             </div>
           </div>
-          <button>Submit</button>
+          {/* <button>Submit</button> */}
 
-        </form>
+        {/* </form> */}
       </div>
     </div>
   )

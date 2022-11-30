@@ -68,39 +68,6 @@ function Phases(){
             </div>
               {phase.Issues && Object.values(phase.Issues).map((issue) => {
                 return < IssueCards issue={issue} phase={phase}/>
-                // return (
-                //   <div className="issue-card-container" >
-                //     {/* {console.log("ISSUE MAPPING ISSUEID:", issue.issueId)} */}
-                //   <div className="issue-card-outer" key={issue.issueId} onClick={() => activeDiv(issue.issueId)}>
-                //     {/* {console.log("ISSUE-INDEX", i)} */}
-
-                //     {issue.issueId === activeId && showModal &&
-                //       <UpdateIssueModal currIssue={issue} showModal={showModal} setShowModal={setShowModal}/>
-                //     }
-
-                //     <div className="issue-card-title">
-                //       {/* <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}> */}
-                //         <div className="issue-summary">{issue.summary}</div>
-                //       {/* </NavLink> */}
-                //       <DeleteIssue issueId={issue.issueId} phaseId={phase.id}/>
-                //     </div>
-                //     {/* <NavLink to={`/issues/${issue.issueId}`} style={{ textDecoration: 'none'}}> */}
-                //     <div className="project-name-outer">
-                //       <div className="project-name-left">
-                //         <div className='project-name-icon'><i className="fa-solid fa-square-check"></i></div>
-                //         <div className="project-name">{phase.Project.name}--{issue.issueId}</div>
-                //       </div>
-                //       {issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase() === curr_user_init
-                //       ?
-                //       <div className='curr-user-circle-small'>{curr_user_init}</div>
-                //       :
-                //       <div className='other-user-circle-small'>{issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase()}</div>
-                //       }
-                //     </div>
-                //     {/* </NavLink> */}
-                //   </div>
-                //   </div>
-                //   )
             })}
               <div className='create-issue-outer'><i className="fa-sharp fa-solid fa-plus" id="create-issue-plus"></i>{" "}Create issue</div>
               {/* <CreateIssueModal currPhaseId={phase.id} ownerId={phase.ownerId}/> */}
