@@ -5,7 +5,8 @@ import { thunkGetAllPhasesIssues } from '../../store/issue';
 import UpdateIssueModal from './UpdateIssueModal';
 import '../CSS/DeleteIssues.css'
 
-const DeleteIssue = ({issueId, phaseId}) => {
+const DeleteIssue = ({issueId, phaseId, setShowModal}) => {
+  if(setShowModal) setShowModal(false)
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState();
   // console.log("DELETE ISSUE---phaseId:", phaseId)
@@ -28,6 +29,7 @@ const DeleteIssue = ({issueId, phaseId}) => {
   }, [showMenu])
 
   const handleIssueDelete = async () => {
+
     if (window.confirm("Are you sure you want to delete this Issue?")) {
       // console.log("DELETE ISSUE---issueId:", typeof issueId)
       let response = await dispatch(thunkDeleteIssue(issueId, phaseId))
@@ -43,12 +45,12 @@ const DeleteIssue = ({issueId, phaseId}) => {
 
   return (
     <div className='issue-ellipsis-outter'>
-      {/* <div className='issue-delete-container'><i class="fa-solid fa-xmark"></i></div> */}
-      <div className='issue-ellipsis-container' onClick={openMenu} ><i className="fa-solid fa-ellipsis"></i></div>
+      <div className='issue-delete-container' onClick={handleIssueDelete}><i class="fa-solid fa-xmark"></i></div>
+      {/* <div className='issue-ellipsis-container' onClick={openMenu} ><i className="fa-solid fa-ellipsis"></i></div>
         {showMenu && <div className='issue-delete-container'>
         <div className='issue-ellipsis-dropDown' onClick={handleIssueDelete}>DELETE</div>
         <div className='issue-ellipsis-dropDown'><UpdateIssueModal/></div>
-        </div>}
+        </div> */}
     </div>
   )
 }

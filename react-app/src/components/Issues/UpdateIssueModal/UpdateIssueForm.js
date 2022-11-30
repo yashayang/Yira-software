@@ -13,11 +13,10 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const singleIssue = useSelector(state => state.issues.singleIssue)
   const issueId = currIssue.issueId;
   const phaseTitle = currPhase.title
-
-  const currSummary = singleIssue.summary;
-  const currDescription = singleIssue.description;
-  const currPhaseId = singleIssue.phaseId;
-  const currAssigneeId = singleIssue.ownerId;
+  const currSummary = singleIssue?.summary;
+  const currDescription = singleIssue?.description;
+  const currPhaseId = singleIssue?.phaseId;
+  const currAssigneeId = singleIssue?.ownerId;
 
   const [summary, setSummary] = useState(currSummary);
   const [summaryInput, setSummaryInput] = useState(false);
@@ -103,54 +102,55 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   // let phaseNameOnStage = currIssue.Phase?.title
 
   // const handleSubmit = async (e) => {
-  //   e.preventDefault()
+    //   e.preventDefault()
 
-  //   const issue = {
-  //     summary: currSummary,
-  //     description: currDescription,
-  //     phaseId: phaseId ? phaseId : currPhaseId,
-  //     assigneeId
-  //   }
-  //   console.log("UPDATE ISSUE-handleSubmit-issue:", issue)
-  //   dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
-    // .then(res => phaseNameOnStage = res.Phase.title)
-    // console.log("UPDATE ISSUE-response:", response)
-    // history.push('/projects')
-    // setShowModal(false)
-  // }
+    //   const issue = {
+      //     summary: currSummary,
+      //     description: currDescription,
+      //     phaseId: phaseId ? phaseId : currPhaseId,
+      //     assigneeId
+      //   }
+      //   console.log("UPDATE ISSUE-handleSubmit-issue:", issue)
+      //   dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
+      // .then(res => phaseNameOnStage = res.Phase.title)
+      // console.log("UPDATE ISSUE-response:", response)
+      // history.push('/projects')
+      // setShowModal(false)
+      // }
 
-  const handleAssigneeId = async (e) => {
-    e.preventDefault()
-    console.log("UPDATE ISSUE-handleAssigneeId-e.target.value:", e.target.value)
-    // setAssigneeId(e.target.value)
-    const issue = {
-      summary: currSummary,
-      description: currDescription,
-      phaseId: phaseId ? phaseId : currPhaseId,
-      assigneeId: Number(e.target.value)
-    }
-    console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
-    const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
-    dispatch(thunkGetAllPhasesIssues())
-  }
+      const handleAssigneeId = async (e) => {
+        e.preventDefault()
+        console.log("UPDATE ISSUE-handleAssigneeId-e.target.value:", e.target.value)
+        // setAssigneeId(e.target.value)
+        const issue = {
+          summary: currSummary,
+          description: currDescription,
+          phaseId: phaseId ? phaseId : currPhaseId,
+          assigneeId: Number(e.target.value)
+        }
+        console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
+        const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
+        dispatch(thunkGetAllPhasesIssues())
+      }
 
-  const handlePhaseId = async (e) => {
-    e.preventDefault()
-    const issue = {
-      summary: currSummary,
-      description: currDescription,
-      phaseId: Number(e.target.value),
-      assigneeId: currAssigneeId
-    }
-    console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
-    const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
-    if (response.issueId) {
-      // dispatch(thunkGetAllPhasesIssues())
-      setDescriptionInput(false)
-    }
-  }
+      const handlePhaseId = async (e) => {
+        e.preventDefault()
+        const issue = {
+          summary: currSummary,
+          description: currDescription,
+          phaseId: Number(e.target.value),
+          assigneeId: currAssigneeId
+        }
+        console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
+        const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
+        if (response.issueId) {
+          // dispatch(thunkGetAllPhasesIssues())
+          setDescriptionInput(false)
+        }
+      }
 
-  return (
+      if(!singleIssue) return null;
+      return (
     <div className="update-issue-main-container">
       <div className="update-issue-left-container">
         <div className="update-issue-title">{phaseTitle}<span>{" / "}</span><span>Issue #{issueId}</span></div>

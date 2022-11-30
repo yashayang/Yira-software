@@ -28,7 +28,7 @@ const IssueCards = ({phase, issue}) => {
       <div className="issue-card-outer" key={issue.issueId}>
         <div className="issue-card-title">
             <div className="issue-summary">{issue.summary}</div>
-          <DeleteIssue issueId={issue.issueId} phaseId={phase.id}/>
+          <DeleteIssue issueId={issue.issueId} phaseId={phase.id} setShowModal={setShowModal}/>
         </div>
         <div className="project-name-outer">
           <div className="project-name-left">

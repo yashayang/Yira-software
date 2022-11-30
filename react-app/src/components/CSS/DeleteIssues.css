@@ -51,6 +51,7 @@
   justify-content: center;
   color: #2F2F2F;
   cursor: pointer;
+  z-index: 2;
 }
 
 .issue-ellipsis-dropDown {
