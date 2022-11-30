@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { login } from '../../store/session';
-import SignUpForm from './SignUpForm'
 import '../CSS/LoginForm.css';
 
-const LoginForm = () => {
+const SoloLoginPage = () => {
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showSignUp, setShowSignup] = useState(false);
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
@@ -46,13 +45,25 @@ const LoginForm = () => {
       })
   }
 
-  const handleShowSignUp = () => {
-    setShowSignup(true)
-  }
-
   return (
     <>
-      {!showSignUp && <div className="home-page-login-container">
+      <div className="home-page-main-container">
+        <div className="home-page-left-container">
+          <div className="home-page-title">The #1 software</div>
+          <div className="home-page-title">development tool</div>
+          <div className="home-page-title">used by agile teams</div>
+          <ul className="home-page-subTitle">
+            <li><i className="fa-sharp fa-solid fa-check" id="home-page-checkmark"></i>{" "}Collaborate, manage projects, and reach new productivity peaks.</li>
+            <li><i className="fa-sharp fa-solid fa-check" id="home-page-checkmark"></i>{" "}From high rises to the home office.</li>
+            <li><i className="fa-sharp fa-solid fa-check" id="home-page-checkmark"></i>{" "}Is always free, no credit card needed</li>
+          </ul>
+          <div className="social-container">Created By <span className="my-name">Yasha Yang</span>
+            <a href='https://github.com/yashayang' className="social-link" rel="noreferrer" target="_blank"><span><i className="fa-brands fa-github"></i></span></a>
+            <a href='https://www.linkedin.com/in/yashayang/' className="social-link" rel="noreferrer" target="_blank"><span><i class="fa-brands fa-linkedin"></i></span></a>
+          </div>
+        </div>
+
+      <div className="home-page-login-container">
         <div className='login-title'>Get started</div>
         <form className="login-form" onSubmit={onLogin}>
           <div className="create-issue-validation-errors">
@@ -86,11 +97,12 @@ const LoginForm = () => {
           </div>
         </form>
         <div className='or'>————————— or —————————</div>
-        <div className='sign-up-entry' onClick={handleShowSignUp}>Sign up for FREE!</div>
-      </div>}
-      {showSignUp && <SignUpForm />}
+        <NavLink to="/sign-up"><div className='sign-up-entry'>Sign up for FREE!</div></NavLink>
+      </div>
+      </div>
     </>
   );
+
 };
 
-export default LoginForm;
+export default SoloLoginPage;

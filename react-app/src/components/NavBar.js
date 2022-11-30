@@ -1,36 +1,47 @@
-
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useSelector} from 'react-redux';
 import LogoutButton from './auth/LogoutButton';
+import CreateIssueModal from './Issues/CreateIssueModal';
+import logo from './Images/logo.svg';
+import './CSS/NavBar.css';
 
 const NavBar = () => {
+  const curr_user = useSelector(state => state.session.user);
+
   return (
-    <nav>
-      <ul>
-        <li>
-          <NavLink to='/' exact={true} activeClassName='active'>
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/login' exact={true} activeClassName='active'>
+    <nav className='navbar-main-container'>
+        <NavLink to='/' exact={true} activeClassName='active' style={{textDecoration: "none"}}>
+          <div className='navbar-left-container'>
+            <div className="logo"><img src={logo} alt="logo"/></div>
+            <div className='logo-name'>Yira Software</div>
+            <div className='navbar-left-seletion'>
+              {curr_user && <div className='navbar-project'>Projects</div>}
+            </div>
+            {curr_user && <div className='navbar-create-issue-entry'><CreateIssueModal/></div>}
+          </div>
+        </NavLink>
+        {/* <div>
+          <NavLink to='/login' exact={true} activeClassName='active' style={{textDecoration: "none"}}>
             Login
           </NavLink>
-        </li>
-        <li>
-          <NavLink to='/sign-up' exact={true} activeClassName='active'>
+        </div>
+        <div>
+          <NavLink to='/sign-up' exact={true} activeClassName='active' style={{textDecoration: "none"}}>
             Sign Up
           </NavLink>
-        </li>
-        <li>
-          <NavLink to='/users' exact={true} activeClassName='active'>
+        </div> */}
+        {/* <div>
+          <divLink to='/users' exact={true} activeClassName='active'>
             Users
-          </NavLink>
-        </li>
-        <li>
-          <LogoutButton />
-        </li>
-      </ul>
+          </divLink>
+        </div> */}
+        <div className='navbar-right-container'>
+          {curr_user && <LogoutButton />}
+          {!curr_user && <NavLink to='/sign-up' exact={true} style={{textDecoration: "none"}}><div className = "navBar-signup-entry">
+            Sign up for free
+            </div></NavLink>}
+        </div>
     </nav>
   );
 }

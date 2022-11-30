@@ -1,0 +1,77 @@
+.navbar-main-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* margin: 30px; */
+  /* background-color: #F5F4F4; */
+  width: 100vw;
+  border-bottom: 1px solid #d9d9d9;
+  box-shadow:0px 2px 0px #F5F4F4
+  /* border-bottom-style: ; */
+}
+
+.navbar-left-container {
+  display: flex;
+  color: #2F2F2F;
+  margin: 0px 0px 10px 70px;
+}
+
+.logo {
+  margin-top: 3px;
+}
+
+.logo-name {
+  font-size: 1.4rem;
+  font-weight: 350;
+  margin: 11px 0px 0px 10px;
+}
+
+
+.navbar-project {
+  margin: 17px 0px 0px 50px;
+  height: 82%;
+  cursor: pointer;
+  color: #2F2F2F;
+  border-bottom: 3px solid #615DEC;
+}
+
+.navbar-left-seletion div:hover {
+  border-bottom: 3px solid #615DEC;
+  color: #615DEC;
+}
+
+.navbar-create-issue-entry {
+  margin: 10px 0px 5px 80px;
+  width: 100px;
+  height: 33px;
+  background-color: #615DEC;
+  border-radius: 3px;
+  color: white;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-right-container {
+  margin: 10px 30px 12px 30px;
+}
+
+.navBar-signup-entry {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #301781;
+  margin: 0px 90px 5px 30px;
+  border: 1.3px solid #301781;
+  height: 35px;
+  width: 130px;
+  border-radius: 5px;
+}
+
+.navBar-signup-entry:hover {
+  background-color: #615DEC;
+  border: 1.3px solid #301781;
+  color: white;
+  cursor: pointer;
+}

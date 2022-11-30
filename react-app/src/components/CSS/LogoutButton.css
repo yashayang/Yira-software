@@ -1,0 +1,23 @@
+.logout-container {
+  color: #2F2F2F;
+  margin-top: 6px;
+  margin-right: 100px;
+  height: 107%;
+}
+
+.logout-container:hover {
+  border-bottom: 3px solid #615DEC;
+  color: #615DEC;
+  cursor: pointer;
+}
+
+.fa-sharp.fa-solid.fa-right-from-bracket{
+  margin-left: 3px;
+  /* margin-top: 2px; */
+}
+
+#logout:hover {
+  /* border-bottom: 3px solid #615DEC; */
+  color: #615DEC;
+  cursor: pointer;
+}

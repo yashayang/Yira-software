@@ -4,7 +4,8 @@
 	min-height: 100px;
   max-height: auto;
   width: 3000px;
-  margin-left: 30px;
+  margin-top: 30px;
+  margin-left: 70px;
   font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
 }
 
@@ -30,7 +31,7 @@
   color: white;
   height: 33px;
   width: 33px;
-  background-color: #301781;
+  background-color: #615DEC;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -42,7 +43,7 @@
   color: white;
   height: 33px;
   width: 33px;
-  background-color: #06D6A0;
+  background-color: #16E0BD;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -67,6 +68,8 @@
 
 .phase-title-container {
   display: flex;
+  position: relative;
+  /* margin-bottom: 20px; */
 }
 
 
@@ -91,10 +94,11 @@
 .phase-title:hover {
   cursor: pointer;
   background-color: #e3e3e3;
+  width: 73%;
 }
 
 #phase-title-done {
-  color: #06D6A0;
+  color: #16E0BD;
   margin-left: 8px;
 }
 
@@ -107,6 +111,13 @@
   width: 96%;
 }
 
+/* .issue-card {
+  background-color: #16E0BD;
+  position: absolute;
+  margin-top: 40px;
+  height: auto;
+} */
+
 .issue-card-outer {
   /* position: relative; */
   height: auto;
@@ -117,15 +128,17 @@
   margin: 3px;
   margin-left: 5px;
   background-color: white;
-  box-shadow: 0 1px 1px #d7d7d7;
+  box-shadow: 0px 1px 1px 1px #e4e4e4;
   min-height: 90px;
+  /* background-color: #16E0BD; */
 }
 
 
 .issue-summary {
-  margin: 10px 0px 15px 10px;
+  margin: 10px 0px 0px 10px;
   width: 200px;
-  height: 40px;
+  min-height: 40px;
+  height: auto;
   padding-bottom: 10px;
   text-decoration: none;
 }
@@ -178,7 +191,7 @@
   color: white;
   height: 22px;
   width: 22px;
-  background-color: #301781;
+  background-color: #615DEC;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -190,7 +203,7 @@
   color: white;
   height: 22px;
   width: 22px;
-  background-color: #06D6A0;
+  background-color: #16E0BD;
   border-radius: 50%;
   display: flex;
   align-items: center;

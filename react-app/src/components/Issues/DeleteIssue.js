@@ -9,24 +9,25 @@ const DeleteIssue = ({issueId, phaseId}) => {
   const [showMenu, setShowMenu] = useState();
   // console.log("DELETE ISSUE---phaseId:", phaseId)
 
-  const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true)
-  }
+  // const openMenu = () => {
+  //   if (showMenu) return;
+  //   setShowMenu(true)
+  // }
 
-  useEffect(() => {
-    if (!showMenu) return;
+  // useEffect(() => {
+  //   if (!showMenu) return;
 
-    const closeMenu = () => {
-      setShowMenu(false);
-    }
+  //   const closeMenu = () => {
+  //     setShowMenu(false);
+  //   }
 
-    document.addEventListener('click', closeMenu);
+  //   document.addEventListener('click', closeMenu);
 
-    return () => document.removeEventListener('click', closeMenu);
-  }, [showMenu])
+  //   return () => document.removeEventListener('click', closeMenu);
+  // }, [showMenu])
 
-  const handleIssueDelete = async () => {
+  const handleIssueDelete = async (e) => {
+    e.stopPropagation()
     if (window.confirm("Are you sure you want to delete this Issue?")) {
       // console.log("DELETE ISSUE---issueId:", typeof issueId)
       let response = await dispatch(thunkDeleteIssue(issueId, phaseId))
@@ -42,12 +43,12 @@ const DeleteIssue = ({issueId, phaseId}) => {
 
   return (
     <div className='issue-ellipsis-outter'>
-      <div className='issue-ellipsis-container' onClick={openMenu} ><i className="fa-solid fa-ellipsis"></i></div>
-      {/* <div > */}
+      <div className='issue-delete-container' onClick={handleIssueDelete}><i class="fa-solid fa-xmark"></i></div>
+      {/* <div className='issue-ellipsis-container' onClick={openMenu} ><i className="fa-solid fa-ellipsis"></i></div>
         {showMenu && <div className='issue-delete-container'>
         <div className='issue-ellipsis-dropDown' onClick={handleIssueDelete}>DELETE</div>
-        </div>}
-      {/* </div> */}
+        <div className='issue-ellipsis-dropDown'><UpdateIssueModal/></div>
+        </div> */}
     </div>
   )
 }

@@ -34,10 +34,11 @@ export const createOneIssue = (issue, phaseId) => {
   }
 }
 
-export const updateOneIssue = (issue) => {
+export const updateOneIssue = (issue, phaseId) => {
   return {
     type: UPDATE_ISSUE,
-    issue
+    issue,
+    phaseId
   }
 }
 
@@ -117,7 +118,7 @@ export const thunkCreateIssue = (phaseId, issue) => async (dispatch) => {
   }
 }
 
-export const thunkUpdateIssue = (issueId, issue) => async (dispatch) => {
+export const thunkUpdateIssue = (issueId, issue, phaseId) => async (dispatch) => {
   const { summary, description, phaseId, assigneeId } = issue
   // console.log("UPDATE ISSUES THUNK_issue:", issueId, summary, description, phaseId, assigneeId)
   try {
@@ -147,7 +148,7 @@ export const thunkUpdateIssue = (issueId, issue) => async (dispatch) => {
     }
 
     const updatedIssue = await response.json();
-    dispatch(updateOneIssue(updatedIssue));
+    dispatch(updateOneIssue(updatedIssue, phaseId));
     return updatedIssue
 
   } catch (error) {
@@ -196,7 +197,7 @@ const issues = (state = initialState, action) => {
     case UPDATE_ISSUE:
       newState = {...state, ...state.AllPhases, ...state.singleIssue}
       newState.singleIssue = action.issue
-      newState.AllPhases[action.issue.issueId] = action.issue
+      newState.AllPhases[action.phaseId].Issues[action.issue.issueId] = action.issue
       return newState
 
     case DELETE_ISSUE:

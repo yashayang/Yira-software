@@ -37,9 +37,10 @@
 }
 
 .login-form-input {
-  width: 280px;
+  width: 275px;
   height: 30px;
   border: 1px solid #888888;
+  padding-left: 10px;
 }
 
 .login-button {
