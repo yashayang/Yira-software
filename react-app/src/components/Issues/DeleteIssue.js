@@ -2,34 +2,32 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux"
 import { thunkDeleteIssue } from '../../store/issue';
 import { thunkGetAllPhasesIssues } from '../../store/issue';
-import UpdateIssueModal from './UpdateIssueModal';
 import '../CSS/DeleteIssues.css'
 
-const DeleteIssue = ({issueId, phaseId, setShowModal}) => {
-  if(setShowModal) setShowModal(false)
+const DeleteIssue = ({issueId, phaseId}) => {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState();
   // console.log("DELETE ISSUE---phaseId:", phaseId)
 
-  const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true)
-  }
+  // const openMenu = () => {
+  //   if (showMenu) return;
+  //   setShowMenu(true)
+  // }
 
-  useEffect(() => {
-    if (!showMenu) return;
+  // useEffect(() => {
+  //   if (!showMenu) return;
 
-    const closeMenu = () => {
-      setShowMenu(false);
-    }
+  //   const closeMenu = () => {
+  //     setShowMenu(false);
+  //   }
 
-    document.addEventListener('click', closeMenu);
+  //   document.addEventListener('click', closeMenu);
 
-    return () => document.removeEventListener('click', closeMenu);
-  }, [showMenu])
+  //   return () => document.removeEventListener('click', closeMenu);
+  // }, [showMenu])
 
-  const handleIssueDelete = async () => {
-
+  const handleIssueDelete = async (e) => {
+    e.stopPropagation()
     if (window.confirm("Are you sure you want to delete this Issue?")) {
       // console.log("DELETE ISSUE---issueId:", typeof issueId)
       let response = await dispatch(thunkDeleteIssue(issueId, phaseId))

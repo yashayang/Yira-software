@@ -68,6 +68,8 @@
 
 .phase-title-container {
   display: flex;
+  position: relative;
+  /* margin-bottom: 20px; */
 }
 
 
@@ -109,6 +111,13 @@
   width: 96%;
 }
 
+/* .issue-card {
+  background-color: #16E0BD;
+  position: absolute;
+  margin-top: 40px;
+  height: auto;
+} */
+
 .issue-card-outer {
   /* position: relative; */
   height: auto;
@@ -121,6 +130,7 @@
   background-color: white;
   box-shadow: 0px 1px 1px 1px #e4e4e4;
   min-height: 90px;
+  /* background-color: #16E0BD; */
 }
 
 

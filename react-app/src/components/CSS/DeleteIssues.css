@@ -1,9 +1,3 @@
-/* .issue-ellipsis-outter {
-  position: fixed;
-  margin-top: 10px;
-  margin-left: 250px;
-  background-color: hotpink;
-} */
 
 .issue-ellipsis-container {
   margin-top: 10px;
@@ -27,7 +21,7 @@
   justify-content: center;
   color: #2F2F2F;
   cursor: pointer;
-  z-index: 999;
+  z-index: 2;
   right: 0;
   left: auto;
 }

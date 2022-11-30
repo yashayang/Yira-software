@@ -25,24 +25,26 @@ const IssueCards = ({phase, issue}) => {
           <UpdateIssueForm currIssue={issue} currPhase={phase}/>
         </Modal>)
       }
-      <div className="issue-card-outer" key={issue.issueId}>
-        <div className="issue-card-title">
-            <div className="issue-summary">{issue.summary}</div>
-          <DeleteIssue issueId={issue.issueId} phaseId={phase.id} setShowModal={setShowModal}/>
-        </div>
-        <div className="project-name-outer">
-          <div className="project-name-left">
-            <div className='project-name-icon'><i className="fa-solid fa-square-check"></i></div>
-            <div className="project-name">{phase.Project.name}--{issue.issueId}</div>
+      {/* <div className="issue-card"> */}
+        <div className="issue-card-outer" key={issue.issueId}>
+          <div className="issue-card-title">
+              <div className="issue-summary">{issue.summary}</div>
+            <DeleteIssue issueId={issue.issueId} phaseId={phase.id}/>
           </div>
-          {issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase() === curr_user_init
-          ?
-          <div className='curr-user-circle-small'>{curr_user_init}</div>
-          :
-          <div className='other-user-circle-small'>{issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase()}</div>
-          }
+          <div className="project-name-outer">
+            <div className="project-name-left">
+              <div className='project-name-icon'><i className="fa-solid fa-square-check"></i></div>
+              <div className="project-name">{phase.Project.name}--{issue.issueId}</div>
+            </div>
+            {issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase() === curr_user_init
+            ?
+            <div className='curr-user-circle-small'>{curr_user_init}</div>
+            :
+            <div className='other-user-circle-small'>{issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase()}</div>
+            }
+          </div>
         </div>
-      </div>
+      {/* </div> */}
     </div>
     )
 }

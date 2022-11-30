@@ -69,6 +69,7 @@ function Phases(){
               {phase.Issues && Object.values(phase.Issues).map((issue) => {
                 return < IssueCards issue={issue} phase={phase}/>
             })}
+
               <div className='create-issue-outer'><i className="fa-sharp fa-solid fa-plus" id="create-issue-plus"></i>{" "}Create issue</div>
               {/* <CreateIssueModal currPhaseId={phase.id} ownerId={phase.ownerId}/> */}
 
