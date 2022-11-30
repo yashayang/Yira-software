@@ -153,7 +153,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   return (
     <div className="update-issue-main-container">
       <div className="update-issue-left-container">
-        <div>{phaseTitle}{" - "}(Issue #{issueId})</div>
+        <div className="update-issue-title">{phaseTitle}<span>{" / "}</span><span>Issue #{issueId}</span></div>
 
         <div className="update-issue-summary-errors">
           {
@@ -162,7 +162,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
           }
         </div>
         {!summaryInput
-        ? <div className="update-issue-summary" onClick={showSummary}><h3>{currSummary}</h3></div>
+        ? <div className="update-issue-summary" onClick={showSummary}><span>{currSummary}</span></div>
         : <div className="update-issue-summary-input-container">
           <form onSubmit={handleSummary} id="summary-form">
             <div>
@@ -226,13 +226,8 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
       </div>
 
       <div className="update-issue-right-container">
-        {/* <form onSubmit={handleSubmit}> */}
           <div>
             <select
-              // name="phaseId"
-              // value={phaseId}
-              // onChange={(e) => setPhaseId(e.target.value)}
-              // className="update-issue-right-phase-selector"
               name="phaseId"
               value={phaseId}
               onChange={handlePhaseId}
@@ -249,10 +244,6 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
               </div>
               <div>
                 <select
-                  // name="assigneeId"
-                  // value={assigneeId}
-                  // className="update-issue-assignee-select"
-                  // onChange={(e) => setAssigneeId(e.target.value)}
                   name="assigneeId"
                   value={assigneeId}
                   className="update-issue-assignee-select"

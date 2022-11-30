@@ -1,14 +1,23 @@
 .update-issue-main-container{
   display: flex;
-  width: 1000px;
-  height: 450px;
+  width: auto;
+  height: auto;
   color: #2F2F2F;
+}
+
+.update-issue-title {
+  color: #888888;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding-left: 10px;
+  height: 20px;
+  margin-bottom: 10px;
 }
 
 .update-issue-summary-errors {
   color: #EF476F;
   font-size: 0.8rem;
-  margin: 0px 0px -20px 10px;
+
 }
 
 .update-issue-right-container,
@@ -16,54 +25,58 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-top: 50px;
-  width: 100%;
+  margin-top: 30px;
+  width: 350px;
 }
 
 .update-issue-left-container {
-  margin-left: 60px;
-  margin-right: 30px;
+  margin-left: 40px;
 }
-
-.update-issue-right-container {
-  margin-top: 67px;
-}
-
 
 .update-issue-summary {
   display: flex;
+  /* margin: 0px; */
   align-items: center;
-  margin-top: -70px;
-  height: 40px;
-  border-radius: 5px;
+  min-height: 30px;
+  border-radius: 3px;
   padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   font-size: 1.2rem;
 }
 
 .update-issue-summary:hover {
   cursor: pointer;
   background-color: #F5F4F4;
- }
+  width: 320px;
+}
+
+.summary-form {
+  display: flex;
+  flex-direction: column;
+}
 
 .update-issue-summary-input-container {
-  display: flex;
-  align-items: center;
-  margin-top: -45px;
-
-  border-radius: 5px;
-  padding-left: 10px;
+  min-height: 40px;
 }
 
 .update-issue-summary-input {
   border: 2px solid #615DEC;
   font-size: 1.2rem;
-  height: 40px;
-  width: 400px;
+  min-height: 40px;
+  max-height: auto;
+  width: 320px;
   padding-left: 10px;
+  position: absolute;
 }
 
+
 .update-issue-summary-button-container {
-  margin-left: 338px;
+  position: absolute;
+  display: flex;
+  margin-left: 266px;
+  margin-top: 45px;
+  z-index: 2;
 }
 
 .update-issue-summary-button {
@@ -79,7 +92,8 @@
 }
 
 .update-issue-description {
-  margin-top: 0px;
+  margin-top: 40px;
+  margin-bottom: 30px;
   width: 100%;
 }
 
@@ -87,7 +101,7 @@
   font-weight: 600;
   font-size: 1rem;
   padding-left: 10px;
-  margin-top: -40px;
+  margin-bottom: 10px;
 }
 
 .update-issue-description-errors {
@@ -99,38 +113,44 @@
 .update-issue-description-placeholder {
   font-size: 0.9rem;
   color: #888888;
-  height: 35px;
+  min-height: 40px;
   display: flex;
   align-items: center;
-  border-radius: 5px;
+  border-radius: 3px;
   padding-left: 10px;
-  margin-left: 10px;
-  /* background-color: #615DEC; */
+  margin-top: 10px;
 }
 
 .update-issue-description-placeholder:hover {
   cursor: pointer;
   background-color: #F5F4F4;
+  min-height: 40px;
+  width: 320px;
 }
 
 .update-issue-description-input-container {
   margin-left: 10px;
-  width: 400px;
-  height: 100px;
-  /* background-color: #615DEC; */
+  margin-top: 5px;
+  height: 80px;
+  margin-bottom: 20px;
 }
 
 .update-issue-description-input {
   font-size: 1rem;
   padding-left: 10px;
   padding-top: 10px;
-  width: 400px;
-  height: 100px;
-  border: 2px solid #615DEC;
+  width: 320px;
+  height: 80px;
+  border: 1px solid #888888;
+  position: absolute;
+  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
 }
 
 .update-issue-description-button-container {
   display: flex;
+  position: absolute;
+  margin-top: 100px;
+  z-index: 2;
 }
 
 .update-issue-description-save {
@@ -155,6 +175,7 @@
 
 .update-issue-time-container {
   padding-left: 10px;
+  margin-top: 20px;
   margin-bottom: 40px;
   font-size: 0.7rem;
   color: #888888;
@@ -164,8 +185,13 @@
   margin-top: 6px;
 }
 
+.update-issue-right-container {
+  margin-top: 67px;
+  margin-right: 40px;
+}
+
 .update-issue-right-phase-selector {
-  font-size: 0.85rem;
+  font-size: 0.80rem;
   color: white;
   background-color: #615DEC;
   height: 36px;
@@ -177,12 +203,13 @@
 }
 
 .update-issue-right-assignee-reporter {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  /* background-color: antiquewhite; */
+  margin-bottom: 40px;
+  margin-top: 10px;
   padding: 10px;
   border: 1px solid #d7d7d7;
   border-radius: 5px;
-  width: 360px;
+  width: 320px;
 }
 
 .update-issue-reporter,
@@ -199,7 +226,6 @@
   padding-top: 10px;
   position: relative;
   width: 100px;
-  margin-right: 40px;
 }
 
 .update-issue-assignee-select {
@@ -207,12 +233,15 @@
   font-weight: 300;
   border: none;
   height: 36px;
-  width: 200px;
+  width: 190px;
   padding-left: 10px;
   padding-right: 3px;
   border-radius: 3px;
   margin-bottom: 20px;
+  margin-left: 20px;
   appearance: none;
+  display: flex;
+  justify-content: center;
 }
 
 .update-issue-assignee-select:hover {
