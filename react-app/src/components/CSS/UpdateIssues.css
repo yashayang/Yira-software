@@ -146,9 +146,9 @@
   font-size: 1rem;
   padding-left: 10px;
   padding-top: 10px;
-  width: 320px;
-  min-width: 320x;
-  max-width: 320px;
+  width: 310px;
+  min-width: 310x;
+  max-width: 310px;
   height: 100px;
   min-height: 100px;
   max-height: 100px;
@@ -214,7 +214,6 @@
 }
 
 .update-issue-right-assignee-reporter {
-  background-color: antiquewhite;
   position: absolute;
   margin-bottom: 40px;
   margin-top: 70px;

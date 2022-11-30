@@ -21,7 +21,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const [summary, setSummary] = useState(currSummary);
   const [summaryInput, setSummaryInput] = useState(false);
   const [summaryErrors, setSummaryErrors] = useState([]);
-  const [description, setDescription] = useState(currDescription);
+  const [description, setDescription] = useState(currIssue.description);
   const [descriptionInput, setDescriptionInput] = useState(false);
   const [descriptionErrors, setDescriptionErrors] = useState([]);
   const [phaseId, setPhaseId] = useState();
@@ -29,7 +29,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const [errors, setErrors] = useState([]);
 
   // console.log("UPDATE ISSUE- currPhase:", currPhase)
-  console.log("UPDATE ISSUE- currIssue:", currIssue)
+  // console.log("UPDATE ISSUE- currIssue:", currIssue)
 
   useEffect(() => {
     dispatch(thunkGetOneIssue(parseInt(issueId)))
@@ -44,6 +44,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const showSummary = async (e) => {
     setSummary(currIssue.summary)
     setDescription(currIssue.description)
+    setDescriptionInput(false)
     setSummaryInput(true)
   }
 
@@ -58,10 +59,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
       assigneeId: currAssigneeId
     }
 
-    // console.log("UPDATE ISSUE handleSummary-issue:", issue)
-
     const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
-    // console.log("UPDATE ISSUE handleSummary-response:", response)
     let errorsArr = []
     if(response.errors) {
       let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
@@ -75,18 +73,19 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     }
   }
 
+
   const handleDescription = async (e) => {
     e.preventDefault()
     setDescriptionErrors([])
+    setSummaryInput(false)
     const issue = {
       summary: currSummary,
       description,
       phaseId: currPhaseId,
       assigneeId: currAssigneeId
     }
-    // console.log("UPDATE ISSUE handleDescription-issue:", issue)
+
     const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
-    // console.log("UPDATE ISSUE-response:", response)
     let errorsArr = []
     if(response.errors) {
       let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
@@ -96,6 +95,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
 
     if (response.issueId) {
       setDescriptionInput(false)
+      setDescription(currDescription)
     }
   }
 
@@ -118,39 +118,38 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
       // setShowModal(false)
       // }
 
-      const handleAssigneeId = async (e) => {
-        e.preventDefault()
-        console.log("UPDATE ISSUE-handleAssigneeId-e.target.value:", e.target.value)
-        // setAssigneeId(e.target.value)
-        const issue = {
-          summary: currSummary,
-          description: currDescription,
-          phaseId: phaseId ? phaseId : currPhaseId,
-          assigneeId: Number(e.target.value)
-        }
-        console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
-        const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
-        dispatch(thunkGetAllPhasesIssues())
-      }
+  const handleAssigneeId = async (e) => {
+    e.preventDefault()
+    setAssigneeId(e.target.value)
+    setDescriptionInput(false)
+    setSummaryInput(false)
+    const issue = {
+      summary: currSummary,
+      description: currDescription,
+      phaseId: phaseId ? phaseId : currPhaseId,
+      assigneeId: Number(e.target.value)
+    }
+    // console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
+    await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
+  }
 
-      const handlePhaseId = async (e) => {
-        e.preventDefault()
-        const issue = {
-          summary: currSummary,
-          description: currDescription,
-          phaseId: Number(e.target.value),
-          assigneeId: currAssigneeId
-        }
-        console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
-        const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
-        if (response.issueId) {
-          // dispatch(thunkGetAllPhasesIssues())
-          setDescriptionInput(false)
-        }
-      }
+  const handlePhaseId = async (e) => {
+    e.preventDefault()
+    setDescriptionInput(false)
+    setSummaryInput(false)
+    const issue = {
+      summary: currSummary,
+      description: currDescription,
+      phaseId: Number(e.target.value),
+      assigneeId: currAssigneeId
+    }
+    // console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
+   await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
+  }
 
-      if(!singleIssue) return null;
-      return (
+  if(!singleIssue) return null;
+
+  return (
     <div className="update-issue-main-container">
       <div className="update-issue-left-container">
         <div className="update-issue-title">{phaseTitle}<span>{" / "}</span><span>Issue #{issueId}</span></div>
@@ -164,26 +163,26 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
         {!summaryInput
         ? <div className="update-issue-summary" onClick={showSummary}><span>{currSummary}</span></div>
         : <div className="update-issue-summary-input-container">
-          <form onSubmit={handleSummary} id="summary-form">
-            <div>
-              <input
-                type="text"
-                value={summary}
-                required
-                onChange={(e) => setSummary(e.target.value)}
-                className="update-issue-summary-input"
-              />
-            </div>
-            <div className="update-issue-summary-button-container">
-              <button type="submit" className="update-issue-summary-button"><i className="fa-sharp fa-solid fa-check"></i></button>
-              <button  className="update-issue-summary-button" onClick={() =>{
-                setSummaryErrors([])
-                setSummary(currSummary)
-                setSummaryInput(false)
-                }}>
-                <i className="fa-sharp fa-solid fa-xmark"></i></button>
-            </div>
-          </form>
+            <form onSubmit={handleSummary} id="summary-form">
+              <div>
+                <input
+                  type="text"
+                  value={summary}
+                  required
+                  onChange={(e) => setSummary(e.target.value)}
+                  className="update-issue-summary-input"
+                />
+              </div>
+              <div className="update-issue-summary-button-container">
+                <button type="submit" className="update-issue-summary-button"><i className="fa-sharp fa-solid fa-check"></i></button>
+                <button  className="update-issue-summary-button" onClick={() =>{
+                  setSummaryErrors([])
+                  setSummary(currSummary)
+                  setSummaryInput(false)
+                  }}>
+                  <i className="fa-sharp fa-solid fa-xmark"></i></button>
+              </div>
+            </form>
           </div>
         }
 
@@ -196,7 +195,12 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
             }
           </div>
           {!descriptionInput &&
-            <div onClick={() => setDescriptionInput(true)} className="update-issue-description-placeholder">
+            <div onClick={() => {
+              setDescriptionInput(true)
+              setSummaryInput(false)
+              }}
+              className="update-issue-description-placeholder"
+            >
               {currDescription
               ? <div>{currDescription}</div>
               : <div>Add a description...</div>}
@@ -226,62 +230,61 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
       </div>
 
       <div className="update-issue-right-container">
-          <div>
-            <select
-              name="phaseId"
-              value={phaseId}
-              onChange={handlePhaseId}
-              className="update-issue-right-phase-selector"
-            >
-            {allPhasesArr?.map((phase, i) => phase.id === currPhaseId ? <option value={currPhaseId} selected key={i}>{phase.title}</option> : <option value={Number(phase.id)} key={i}>{phase.title}</option>)}
-            </select>
-          </div>
+        <div>
+          <select
+            name="phaseId"
+            value={phaseId}
+            onChange={handlePhaseId}
+            className="update-issue-right-phase-selector"
+          >
+          {allPhasesArr?.map((phase, i) => phase.id === currPhaseId ? <option value={currPhaseId} selected key={i}>{phase.title}</option> : <option value={Number(phase.id)} key={i}>{phase.title}</option>)}
+          </select>
+        </div>
 
-          <div className="update-issue-right-assignee-reporter">
-            <div className="update-issue-assignee">
-              <div className="update-issue-label-container">
-                <label>Assignee</label>
-              </div>
-              <div>
-                <select
-                  name="assigneeId"
-                  value={assigneeId}
-                  className="update-issue-assignee-select"
-                  onChange={handleAssigneeId}
-                >
-                <option disabled selected value={Number(assigneeId)}>
-                  {currIssue?.user?.first_name[0].toUpperCase() +currIssue?.user?.first_name.slice(1) + " " + currIssue?.user?.last_name[0].toUpperCase() +currIssue?.user?.last_name.slice(1)}
-                </option>
-                {allUsersArr?.map((user, i) => {
-                  return (
-                    user.id !== currIssue.ownerId &&
-                    <option value={Number(user.id)} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>
-                    )
-                  })}
-                </select>
-              </div>
+        <div className="update-issue-right-assignee-reporter">
+          <div className="update-issue-assignee">
+            <div className="update-issue-label-container">
+              <label>Assignee</label>
             </div>
-
-            <div className="update-issue-reporter">
-              <div className="update-issue-label-container">
-                <label>Reporter</label><i className="fa-solid fa-asterisk"></i>
-              </div>
-              <div>
-                <select
-                  name="reporter"
-                  className="update-issue-assignee-select"
-                  // onChange={(e) => setAssigneeId(e.target.value)}
-                >
-                <option disabled selected>{currUser.first_name[0].toUpperCase() + currUser.first_name.slice(1) + " " + currUser.last_name[0].toUpperCase() + currUser.last_name.slice(1)}</option>
-                {/* {allUsersArr?.map((user, i) => <option value={user.id} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>)} */}
-                </select>
-              </div>
+            <div>
+              <select
+                name="assigneeId"
+                value={assigneeId}
+                className="update-issue-assignee-select"
+                onChange={handleAssigneeId}
+              >
+              {allUsersArr?.map((user, i) => {
+                return (
+                  user.id === currIssue.ownerId
+                  ? <option selected value={Number(user.id)} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>
+                  : <option value={Number(user.id)} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>
+                  )
+                })}
+              </select>
             </div>
           </div>
-          {/* <button>Submit</button> */}
 
-        {/* </form> */}
+          <div className="update-issue-reporter">
+            <div className="update-issue-label-container">
+              <label>Reporter</label><i className="fa-solid fa-asterisk"></i>
+            </div>
+            <div>
+              <select
+                name="reporter"
+                className="update-issue-assignee-select"
+                // onChange={(e) => setAssigneeId(e.target.value)}
+              >
+              <option disabled selected>{currUser.first_name[0].toUpperCase() + currUser.first_name.slice(1) + " " + currUser.last_name[0].toUpperCase() + currUser.last_name.slice(1)}</option>
+              {/* {allUsersArr?.map((user, i) => <option value={user.id} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>)} */}
+              </select>
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
+
     </div>
   )
 }
