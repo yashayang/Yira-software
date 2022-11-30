@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
@@ -17,8 +17,18 @@ const SignUpForm = () => {
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const errors=[];
+    if (!email.includes("@") && !email.includes(".") ) errors.push("Email: please enter a valid email address.")
+    if (password !== repeatPassword) errors.push("Password: repeat password is not matching.")
+    setErrors(errors)
+  }, [email, password, repeatPassword])
+
   const onSignUp = async (e) => {
     e.preventDefault();
+    if (errors.length > 0) {
+      return
+    }
     if (password === repeatPassword) {
       const data = await dispatch(signUp(firstName, lastName, email, administration, password));
       if (data) {

@@ -115,9 +115,9 @@
 }
 
 .breakline {
-  color: #d9d9d9;
+  color: #e3e3e3;
   margin-top: 150px;
-  width: 92%;
+  width: 90%;
 }
 
 .sidebar-footer {
@@ -134,22 +134,22 @@
   margin-left: 40px;
 }
 
-.my-name {
-  animation: rainbow 10s ease infinite;
+.sidebar-my-name {
+  animation: rainbow2 10s ease infinite;
 }
 
 .sidebar-social-link-container {
   margin: 10px 0px 20px 95px;
 }
 
-.social-link {
+.sidebar-social-link {
   color: #888888;
   font-size: 1rem;
   margin-left: 10px;
   margin-top: 50px;
 }
 
-@keyframes rainbow{
+@keyframes rainbow2{
   0%{
     color: #FFD166
   }

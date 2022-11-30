@@ -59,11 +59,11 @@ function Phases(){
             <hr className='breakline'></hr>
         <div className='sidebar-footer-container'>
             <div className='sidebar-footer'>You are in a team-managed project</div>
-            <div className="sidebar-social-container">Created By <span className="my-name">Yasha Yang</span>
+            <div className="sidebar-social-container">Created By <span className="sidebar-my-name">Yasha Yang</span>
             </div>
             <div className="sidebar-social-link-container">
-              <a href='https://github.com/yashayang' className="social-link" target="_blank" rel="noreferrer" ><span><i className="fa-brands fa-github"></i></span></a>
-              <a href='https://www.linkedin.com/in/yashayang/' className="social-link" target="_blank" rel="noreferrer" ><span><i class="fa-brands fa-linkedin"></i></span></a>
+              <a href='https://github.com/yashayang' className="sidebar-social-link" target="_blank" rel="noreferrer" ><span><i className="fa-brands fa-github"></i></span></a>
+              <a href='https://www.linkedin.com/in/yashayang/' className="sidebar-social-link" target="_blank" rel="noreferrer" ><span><i class="fa-brands fa-linkedin"></i></span></a>
             </div>
         </div>
       </div>
@@ -79,7 +79,7 @@ function Phases(){
         <div className='project-path'>Projects  /  Project 1</div>
         <div className='project-title'>{projectName}</div>
         <div className='user-circle-container'>
-          {all_users_init?.map((init, i) => init === curr_user_init ? <div className='curr-user-circle' key={i}>{curr_user_init}</div> : <div className='other-user-circle'>{init}</div>)}
+          {all_users?.users.map((user, i) => currUserId === user.id ? <div className='curr-user-circle' key={i}>{user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase()}</div> : <div className='other-user-circle'>{user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase()}</div>)}
         </div>
         <div className="phase-main-container">
           {phasesArr?.map((phase, i) => {
