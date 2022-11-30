@@ -69,7 +69,7 @@ function Phases(){
             })}
 
 
-              <CreateIssueInPhase />
+              <CreateIssueInPhase phaseId={phase.id} assigneeId={currUserId}/>
 
 
           </div>
