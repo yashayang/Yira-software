@@ -92,6 +92,7 @@
 .phase-title:hover {
   cursor: pointer;
   background-color: #e3e3e3;
+  width: 73%;
 }
 
 #phase-title-done {

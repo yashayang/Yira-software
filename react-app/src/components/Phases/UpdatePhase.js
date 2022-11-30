@@ -1,17 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { thunkUpdatePhase, thunkGetAllPhasesIssues } from "../../store/phase";
 import '../CSS/CreatePhase.css';
 
 const UpdatedPhase = ({phaseId, phaseTitle, projectId, ownerId}) => {
   const dispatch = useDispatch();
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(phaseTitle);
   const [titleInput, setTitleInput] = useState(false);
   const [errors, setErrors] = useState([]);
+
 
   const handleUpdatePhaseInput = () => {
     setTitleInput(true)
   }
+
+  // useEffect(() =>{
+  //   setTitle(phaseTitle)
+  // }, [phaseTitle])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -40,7 +45,7 @@ const UpdatedPhase = ({phaseId, phaseTitle, projectId, ownerId}) => {
 
       {titleInput &&
         <div className="card-container">
-        <div className="create-issue-validation-errors">
+        <div className="update-phase-validation-errors">
           {
           errors &&
           errors.map((error)=>(<div key={error}>{error}</div>))
@@ -55,14 +60,15 @@ const UpdatedPhase = ({phaseId, phaseTitle, projectId, ownerId}) => {
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
-              <div className="phase-create-button-container">
-                <button type="submit" className="phase-create-submit-button"><i className="fa-sharp fa-solid fa-check"></i></button>
-                <button className="phase-create-cancel-button" onClick={() =>{
-                  setErrors([])
-                  setTitleInput(false)
-                  }}>
-                  <i className="fa-sharp fa-solid fa-xmark"></i></button>
-              </div>
+            <div className="phase-create-button-container">
+              <button type="submit" className="phase-create-submit-button"><i className="fa-sharp fa-solid fa-check"></i></button>
+              <button className="phase-create-cancel-button" onClick={() =>{
+                setErrors([])
+                setTitle(phaseTitle)
+                setTitleInput(false)
+                }}>
+                <i className="fa-sharp fa-solid fa-xmark"></i></button>
+            </div>
           </form>
         </div>
       }

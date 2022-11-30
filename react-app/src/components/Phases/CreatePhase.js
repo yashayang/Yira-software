@@ -10,6 +10,7 @@ const CreatePhase = ({projectId, ownerId}) => {
   const [titleInput, setTitleInput] = useState(false);
   const [errors, setErrors] = useState([]);
 
+
   const handleCreatePhaseInput = () => {
     setTitleInput(true)
   }

@@ -9,6 +9,8 @@
   justify-content: center;
   border-radius: 12%;
   display: none;
+  position: absolute;
+  margin-left: 250px;
 }
 
 .phase-title-container:hover .phase-delete-icon-container {
