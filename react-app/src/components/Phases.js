@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import { thunkGetAllPhasesIssues } from '../store/issue';
 import { loadAllUsers } from '../store/session';
-import UpdateIssueModal from './Issues/UpdateIssueModal';
-import DeleteIssue from './Issues/DeleteIssue';
+import CreateIssueInPhase from './Issues/CreateIssueInPhase';
 import CreatePhase from './Phases/CreatePhase';
 import UpdatedPhase from './Phases/UpdatePhase';
 import DeletePhase from './Phases/DeletePhase';
@@ -70,8 +68,8 @@ function Phases(){
                 return < IssueCards issue={issue} phase={phase}/>
             })}
 
-              <div className='create-issue-outer'><i className="fa-sharp fa-solid fa-plus" id="create-issue-plus"></i>{" "}Create issue</div>
-              {/* <CreateIssueModal currPhaseId={phase.id} ownerId={phase.ownerId}/> */}
+
+              <CreateIssueInPhase />
 
 
           </div>
