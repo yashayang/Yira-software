@@ -12,6 +12,7 @@ import "./CSS/Phases.css"
 
 function Phases(){
   const dispatch = useDispatch();
+  const [showSideBar, setShowSideBar] = useState(true);
 
   const phases = useSelector(state => state.issues.AllPhases);
   const phasesArr = Object.values(phases);
@@ -35,27 +36,67 @@ function Phases(){
   if (!phases) return null;
 
   return (
-    <div className="project-main-container">
-      <div className='project-path'>Projects  /  Project 1</div>
-      <div className='project-title'>{projectName}</div>
-      <div className='user-circle-container'>
-        {all_users_init?.map((init, i) => init === curr_user_init ? <div className='curr-user-circle' key={i}>{curr_user_init}</div> : <div className='other-user-circle'>{init}</div>)}
-      </div>
-      <div className="phase-main-container">
-        {phasesArr?.map((phase, i) => {
-        return (
-          <div className="card-container" key={i}>
-            <div className="phase-title-container" key={i}>
-              <UpdatedPhase phaseId={phase.id} phaseTitle={phase.title} projectId={projectId} ownerId={currUserId}/>
-              <DeletePhase phaseId={phase.id}/>
-            </div>
-              {phase.Issues && Object.values(phase.Issues).map((issue) => {
-                return < IssueCards issue={issue} phase={phase}/>
-              })}
-              <CreateIssueInPhase phaseId={phase.id} assigneeId={currUserId}/>
+    <div className='main-page-main-container'>
+      {showSideBar
+      ?
+      <div className='sidebar-show-container'>
+        <div className='sidebar-project-name-container'>
+          <div className='sidebar-project-project-logo'><i class="fa-solid fa-list-check"></i></div>
+          <div>
+            <div className='sidebar-project-name'>Project 1</div>
+            <div className='sidebar-project-subtitle'>software project</div>
           </div>
-        )})}
-        <CreatePhase projectId={projectId} ownerId={currUserId}/>
+          <div className='sidebar-collapse-button' onClick={() => setShowSideBar(false)}><i class="fa-solid fa-less-than"></i></div>
+        </div>
+
+        <div className='sidebar-project-planning-container'>
+          <div className='sidebar-project-planning-title'>PLANNING</div>
+          <div className='sidebar-project-planning-board'>
+            <div className='sidebar-project-project-logo'><i class="fa-sharp fa-solid fa-folder-open"></i></div>
+            <div className='sidebar-project-planning-board-title'>Board</div>
+          </div>
+        </div>
+            <hr className='breakline'></hr>
+        <div className='sidebar-footer-container'>
+            <div className='sidebar-footer'>You are in a team-managed project</div>
+            <div className="sidebar-social-container">Created By <span className="my-name">Yasha Yang</span>
+            </div>
+            <div className="sidebar-social-link-container">
+              <a href='https://github.com/yashayang' className="social-link" target="_blank" rel="noreferrer" ><span><i className="fa-brands fa-github"></i></span></a>
+              <a href='https://www.linkedin.com/in/yashayang/' className="social-link" target="_blank" rel="noreferrer" ><span><i class="fa-brands fa-linkedin"></i></span></a>
+            </div>
+        </div>
+      </div>
+      :
+      <div className='Sidebar-close-container'>
+        <div className='sidebar-project-name-container'>
+          <div className='sidebar-collapse-button' onClick={() => setShowSideBar(true)}><i class="fa-solid fa-greater-than"></i></div>
+        </div>
+      </div>
+      }
+
+      <div className="project-main-container">
+        <div className='project-path'>Projects  /  Project 1</div>
+        <div className='project-title'>{projectName}</div>
+        <div className='user-circle-container'>
+          {all_users_init?.map((init, i) => init === curr_user_init ? <div className='curr-user-circle' key={i}>{curr_user_init}</div> : <div className='other-user-circle'>{init}</div>)}
+        </div>
+        <div className="phase-main-container">
+          {phasesArr?.map((phase, i) => {
+          return (
+            <div className="card-container" key={i}>
+              <div className="phase-title-container" key={i}>
+                <UpdatedPhase phaseId={phase.id} phaseTitle={phase.title} projectId={projectId} ownerId={currUserId}/>
+                <DeletePhase phaseId={phase.id}/>
+              </div>
+                {phase.Issues && Object.values(phase.Issues).map((issue) => {
+                  return < IssueCards issue={issue} phase={phase}/>
+                })}
+                <CreateIssueInPhase phaseId={phase.id} assigneeId={currUserId}/>
+            </div>
+          )})}
+          <CreatePhase projectId={projectId} ownerId={currUserId}/>
+        </div>
       </div>
     </div>
   )
