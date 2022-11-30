@@ -41,13 +41,15 @@ const CreateIssueInPhase = ({phaseId, assigneeId}) => {
       {!summaryInput && <div onClick={handleCreateIssueInput} className='create-issue-outer'><i className="fa-sharp fa-solid fa-plus" id="create-issue-plus"></i>{" "}Create issue</div>}
       {summaryInput &&
         <div className="card-container">
-        <div className="create-issue-validation-errors">
-          {
-          errors &&
-          errors.map((error)=>(<div key={error}>{error}</div>))
-          }
-        </div>
-        <form onSubmit={handleSubmit}>
+
+          <div className="create-issue-validation-errors">
+            {
+            errors &&
+            errors.map((error)=>(<div key={error}>{error}</div>))
+            }
+          </div>
+
+          <form onSubmit={handleSubmit}>
             <div className="phase-title-container">
               <input
                 className="create-issue-inphase-summary-input"
@@ -57,15 +59,16 @@ const CreateIssueInPhase = ({phaseId, assigneeId}) => {
                 onChange={(e) => setSummary(e.target.value)}
               />
             </div>
-              <div className="create-issue-button-container">
-                <button type="submit" className="phase-create-submit-button"><i className="fa-sharp fa-solid fa-check"></i></button>
-                <button className="phase-create-cancel-button" onClick={() =>{
-                  setErrors([])
-                  setsummaryInput(false)
-                  }}>
-                  <i className="fa-sharp fa-solid fa-xmark"></i></button>
-              </div>
+            <div className="create-issue-button-container">
+              <button type="submit" className="phase-create-submit-button"><i className="fa-sharp fa-solid fa-check"></i></button>
+              <button className="phase-create-cancel-button" onClick={() =>{
+                setErrors([])
+                setsummaryInput(false)
+                }}>
+                <i className="fa-sharp fa-solid fa-xmark"></i></button>
+            </div>
           </form>
+
         </div>
       }
     </>

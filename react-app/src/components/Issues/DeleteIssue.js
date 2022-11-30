@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+// import { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux"
 import { thunkDeleteIssue } from '../../store/issue';
 import { thunkGetAllPhasesIssues } from '../../store/issue';
@@ -6,7 +7,7 @@ import '../CSS/DeleteIssues.css'
 
 const DeleteIssue = ({issueId, phaseId}) => {
   const dispatch = useDispatch();
-  const [showMenu, setShowMenu] = useState();
+  // const [showMenu, setShowMenu] = useState();
   // console.log("DELETE ISSUE---phaseId:", phaseId)
 
   // const openMenu = () => {

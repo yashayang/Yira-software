@@ -25,14 +25,13 @@ const UpdateIssue = () => {
   const [summaryInput, setSummaryInput] = useState(false);
   const [descriptionInput, setDescriptionInput] = useState(false);
 
-  console.log("UPDATE ISSUE- currIssue:", currIssue)
+
   const currSummary = currIssue?.summary;
   const currDescription = currIssue?.description;
   const currPhaseId = currIssue?.phaseId;
   const currAssigneeId = currIssue?.ownerId;
   // console.log("UPDATE ISSUE-curr", currSummary, currDescription, currPhaseId, currAssigneeId)
-  // const [showPhases, setShowPhases] = useState(false)
-  // console.log("UPDATE ISSUE-currPhaseId:", currPhaseId)
+
   useEffect(() => {
     dispatch(thunkGetOneIssue(parseInt(issueId)))
     dispatch(loadAllUsers())
@@ -52,16 +51,13 @@ const UpdateIssue = () => {
   const handleSummary = async (e) => {
     e.preventDefault()
     setErrors([])
-
     const issue = {
       summary,
       description: currDescription,
       phaseId: currPhaseId,
       assigneeId: currAssigneeId
     }
-
     // console.log("UPDATE ISSUE-issue:", issue)
-
     const response = await dispatch(thunkUpdateIssue(issueId, issue))
     // console.log("UPDATE ISSUE-response:", response)
     let errorsArr = []
@@ -70,7 +66,6 @@ const UpdateIssue = () => {
       errorsArr.push(errorMsg)
       setSummaryErrors(errorsArr)
     }
-
     if (response.issueId) {
       setSummaryInput(false)
     }
@@ -93,7 +88,6 @@ const UpdateIssue = () => {
       errorsArr.push(errorMsg)
       setDescriptionErrors(errorsArr)
     }
-
     if (response.issueId) {
       setDescriptionInput(false)
     }
@@ -103,7 +97,6 @@ const UpdateIssue = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
     const issue = {
       summary: currSummary,
       description: currDescription,
@@ -192,7 +185,6 @@ const UpdateIssue = () => {
 
       <div className="update-issue-right-container">
         <form onSubmit={handleSubmit}>
-
           <div>
             <select
               name="phaseId"
@@ -253,23 +245,3 @@ const UpdateIssue = () => {
 }
 
 export default UpdateIssue;
-
-{/* <div onClick={showMenu}>
-  {phaseNameOnStage}
-  <i className="fa-solid fa-angle-down"></i>
-</div>
-{showPhases &&
-  <>
-    {allPhasesArr?.map((phase, i) => {
-    return (
-      phase.id !== currIssue.phaseId &&
-      <div value={phase?.id} key={i} onClick={(e) =>{
-        return (
-          phaseNameOnStage = phase.title
-          // setNewPhaseId(e.target.value)
-          )
-      }} type="submit">{phase?.title}</div>
-    )
-    })}
-  </>
-} */}

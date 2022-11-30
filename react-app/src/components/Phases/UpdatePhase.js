@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { thunkUpdatePhase, thunkGetAllPhasesIssues } from "../../store/phase";
 import '../CSS/CreatePhase.css';
@@ -13,10 +13,6 @@ const UpdatedPhase = ({phaseId, phaseTitle, projectId, ownerId}) => {
   const handleUpdatePhaseInput = () => {
     setTitleInput(true)
   }
-
-  // useEffect(() =>{
-  //   setTitle(phaseTitle)
-  // }, [phaseTitle])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -45,12 +41,13 @@ const UpdatedPhase = ({phaseId, phaseTitle, projectId, ownerId}) => {
 
       {titleInput &&
         <div className="card-container">
-        <div className="update-phase-validation-errors">
-          {
-          errors &&
-          errors.map((error)=>(<div key={error}>{error}</div>))
-          }
-        </div>
+          <div className="update-phase-validation-errors">
+            {
+            errors &&
+            errors.map((error)=>(<div key={error}>{error}</div>))
+            }
+          </div>
+
           <form onSubmit={handleSubmit}>
             <div className="phase-title-container">
               <input
@@ -70,6 +67,7 @@ const UpdatedPhase = ({phaseId, phaseTitle, projectId, ownerId}) => {
                 <i className="fa-sharp fa-solid fa-xmark"></i></button>
             </div>
           </form>
+          
         </div>
       }
     </>

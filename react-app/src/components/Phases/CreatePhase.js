@@ -4,7 +4,6 @@ import { thunkCreatePhase, thunkGetAllPhasesIssues } from "../../store/phase";
 import '../CSS/CreatePhase.css';
 
 const CreatePhase = ({projectId, ownerId}) => {
-  // console.log("CREATE PHASE - PROJECTID & OWNERID:", projectId, ownerId)
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [titleInput, setTitleInput] = useState(false);
@@ -38,12 +37,14 @@ const CreatePhase = ({projectId, ownerId}) => {
 
       {titleInput &&
         <div className="card-container">
-        <div className="create-issue-validation-errors">
-          {
-          errors &&
-          errors.map((error)=>(<div key={error}>{error}</div>))
-          }
-        </div>
+
+          <div className="create-issue-validation-errors">
+            {
+            errors &&
+            errors.map((error)=>(<div key={error}>{error}</div>))
+            }
+          </div>
+
           <form onSubmit={handleSubmit}>
             <div className="phase-title-container">
               <input
@@ -53,15 +54,16 @@ const CreatePhase = ({projectId, ownerId}) => {
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
-              <div className="phase-create-button-container">
-                <button type="submit" className="phase-create-submit-button"><i className="fa-sharp fa-solid fa-check"></i></button>
-                <button className="phase-create-cancel-button" onClick={() =>{
-                  setErrors([])
-                  setTitleInput(false)
-                  }}>
-                  <i className="fa-sharp fa-solid fa-xmark"></i></button>
-              </div>
+            <div className="phase-create-button-container">
+              <button type="submit" className="phase-create-submit-button"><i className="fa-sharp fa-solid fa-check"></i></button>
+              <button className="phase-create-cancel-button" onClick={() =>{
+                setErrors([])
+                setTitleInput(false)
+                }}>
+                <i className="fa-sharp fa-solid fa-xmark"></i></button>
+            </div>
           </form>
+          
         </div>
       }
 

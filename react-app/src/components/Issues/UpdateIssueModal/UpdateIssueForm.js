@@ -26,7 +26,6 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const [descriptionErrors, setDescriptionErrors] = useState([]);
   const [phaseId, setPhaseId] = useState();
   const [assigneeId, setAssigneeId] = useState(currIssue.ownerId)
-  const [errors, setErrors] = useState([]);
 
   // console.log("UPDATE ISSUE- currPhase:", currPhase)
   // console.log("UPDATE ISSUE- currIssue:", currIssue)
@@ -98,25 +97,6 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
       setDescription(currDescription)
     }
   }
-
-  // let phaseNameOnStage = currIssue.Phase?.title
-
-  // const handleSubmit = async (e) => {
-    //   e.preventDefault()
-
-    //   const issue = {
-      //     summary: currSummary,
-      //     description: currDescription,
-      //     phaseId: phaseId ? phaseId : currPhaseId,
-      //     assigneeId
-      //   }
-      //   console.log("UPDATE ISSUE-handleSubmit-issue:", issue)
-      //   dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
-      // .then(res => phaseNameOnStage = res.Phase.title)
-      // console.log("UPDATE ISSUE-response:", response)
-      // history.push('/projects')
-      // setShowModal(false)
-      // }
 
   const handleAssigneeId = async (e) => {
     e.preventDefault()
@@ -278,7 +258,6 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
               {/* {allUsersArr?.map((user, i) => <option value={user.id} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>)} */}
               </select>
             </div>
-
           </div>
 
         </div>

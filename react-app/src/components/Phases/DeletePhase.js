@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux"
+import React from 'react';
+// import { useEffect, useState } from 'react';
+import { useDispatch } from "react-redux"
 import { thunkDeletePhase } from '../../store/phase';
 import { thunkGetAllPhasesIssues } from '../../store/phase';
 import { removePhase } from '../../store/issue';
@@ -7,25 +8,25 @@ import '../CSS/DeletePhase.css'
 
 const DeletePhase = ({phaseId}) => {
   const dispatch = useDispatch();
-  const [showMenu, setShowMenu] = useState(false);
-  const allPhases = useSelector(state => state.phases.AllPhases)
+  // const [showMenu, setShowMenu] = useState(false);
+  // const allPhases = useSelector(state => state.phases.AllPhases);
 
-  const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true)
-  }
+  // const openMenu = () => {
+  //   if (showMenu) return;
+  //   setShowMenu(true)
+  // }
 
-  useEffect(() => {
-    if (!showMenu) return;
+  // useEffect(() => {
+  //   if (!showMenu) return;
 
-    const closeMenu = () => {
-      setShowMenu(false);
-    }
+  //   const closeMenu = () => {
+  //     setShowMenu(false);
+  //   }
 
-    document.addEventListener('click', closeMenu);
+  //   document.addEventListener('click', closeMenu);
 
-    return () => document.removeEventListener('click', closeMenu);
-  }, [showMenu, allPhases])
+  //   return () => document.removeEventListener('click', closeMenu);
+  // }, [showMenu, allPhases])
 
 
   const handlePhaseDelete = async () => {

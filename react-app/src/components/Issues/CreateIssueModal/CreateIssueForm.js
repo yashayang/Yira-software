@@ -7,10 +7,10 @@ import "../../CSS/CreateIssues.css"
 
 const CreateIssue = ({setModal}) => {
   const dispatch = useDispatch();
-  const currUser = useSelector(state => state.session.user)
-  const allUsersArr = useSelector(state => state.session.AllUsers?.users)
-  const allPhases = useSelector(state => state.issues.AllPhases)
-  const allPhasesArr = Object.values(allPhases)
+  const currUser = useSelector(state => state.session.user);
+  const allUsersArr = useSelector(state => state.session.AllUsers?.users);
+  const allPhases = useSelector(state => state.issues.AllPhases);
+  const allPhasesArr = Object.values(allPhases);
   const [phaseId, setPhaseId] = useState(1);
   const [summary, setSummary] = useState("");
   const [description, setDescription] = useState("");
@@ -24,15 +24,12 @@ const CreateIssue = ({setModal}) => {
     dispatch(loadAllUsers())
   }, [dispatch])
 
-  if (!allPhases) return null;
 
   const handleSubmit = async(e) => {
-    // console.log("!!!!!!!!!!!!!!")
     e.preventDefault()
     setErrors([])
     const issueInfo = { summary, description, phaseId, assigneeId }
     // console.log("CREATEISSUE FORM-issueInfo:", issueInfo)
-
     const response = await dispatch(thunkCreateIssue(phaseId, issueInfo))
     // console.log("!!!!!!!", response)
     let errorsArr = []
@@ -50,10 +47,14 @@ const CreateIssue = ({setModal}) => {
     }
   }
 
+
   const handleCancel = async(e) => {
     e.preventDefault()
     setModal(false)
   }
+
+
+  if (!allPhases) return null;
 
   return (
     <div className="create-issue-main-container">
