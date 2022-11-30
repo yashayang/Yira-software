@@ -47,7 +47,7 @@ const CreatePhase = ({projectId, ownerId}) => {
           <form onSubmit={handleSubmit}>
             <div className="phase-title-container">
               <input
-                className="phase-title-input"
+                className="create-phase-title-input"
                 value={title}
                 required
                 onChange={(e) => setTitle(e.target.value)}
