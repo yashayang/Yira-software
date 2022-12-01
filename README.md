@@ -35,3 +35,10 @@ User can login or signup from the landing page.
 
 ![image](https://user-images.githubusercontent.com/1794317/205171027-c62d407f-66d5-4296-938a-21ba180f8a26.png)
 
+### Project Page
+
+This is the main page for your project. User can start managing their project using this page.
+
+![image](https://user-images.githubusercontent.com/1794317/205171296-dedf2ed7-81c2-4b15-9bd1-6e31797d0308.png)
+
+
