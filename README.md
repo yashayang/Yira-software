@@ -39,6 +39,7 @@ User can login or signup from the landing page.
 
 This is the main page for your project. User can start managing their project using this page.
 
-![image](https://user-images.githubusercontent.com/1794317/205171296-dedf2ed7-81c2-4b15-9bd1-6e31797d0308.png)
+![Screen Shot 2022-12-01 at 2 20 00 PM](https://user-images.githubusercontent.com/1794317/205171507-28959b39-59e0-4226-abba-2f02d44407f1.png)
+
 
 
