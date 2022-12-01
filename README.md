@@ -23,4 +23,5 @@ Yira Software is a web application inspired by the actual [Jira Software](https:
 ### Hosting
 ![Render](https://img.shields.io/badge/Render-12100E?style=for-the-badge&logo=Render)
 
-#### Database:
+### Database:
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
