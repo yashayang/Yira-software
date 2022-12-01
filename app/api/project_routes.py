@@ -4,6 +4,8 @@ from datetime import datetime
 from app.models import Phase, Issue, db
 from app.forms import PhaseForm, IssueForm
 from .auth_routes import validation_errors_to_error_messages
+from app.s3_helpers import (
+    upload_file_to_s3, allowed_file, get_unique_filename)
 
 project_routes = Blueprint('projects', __name__)
 
@@ -57,12 +59,38 @@ def create_issue(phase_id):
   # print("---CREATE ISSUE---SUMMARY:", form.data["summary"])
   # print("---CREATE ISSUE---PHASE_ID:", form.data["phase_id"])
   # print("---CREATE ISSUE---OWNER_ID:", form.data["owner_id"])
+  if "image" not in request.files:
+      return {"errors": "image required"}, 400
+
+  image = request.files["image"]
+
+  if not allowed_file(image.filename):
+      return {"errors": "file type not permitted"}, 400
+
+  image.filename = get_unique_filename(image.filename)
+
+  upload = upload_file_to_s3(image)
+
+  if "url" not in upload:
+      # if the dictionary doesn't have a url key
+      # it means that there was an error when we tried to upload
+      # so we send back that error message
+      return upload, 400
+
+  url = upload["url"]
+  # flask_login allows us to get the current user from the request
+  # new_image = Image(user=current_user, url=url)
+  # db.session.add(new_image)
+  # db.session.commit()
+  # return {"url": url}
+
   if form.validate_on_submit():
     new_issue = Issue(
       summary = form.data["summary"],
       description = form.data["description"],
       phase_id = form.data["phase_id"],
       owner_id = form.data["owner_id"],
+      attachment = url,
       created_at= datetime.now()
     )
     # print("---CREATE ISSUE---new_issue:", new_issue)

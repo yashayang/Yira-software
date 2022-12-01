@@ -134,6 +134,7 @@
   padding-bottom: 8px;
   min-height: 40px;
   width: 320px;
+  word-break: break-word;
 }
 
 .update-issue-description-input-container {
