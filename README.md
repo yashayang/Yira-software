@@ -1,6 +1,6 @@
-# About Airdnd clone:
+# About Yira clone:
 
-Airbnb clone is a web application inspired by the actual [Airbnb](https://www.airbnb.com/), that provides an online marketplace for lodging primirily homestays for vacation retals, and tourism activities. 
+Jira clone is a web application inspired by the actual [Airbnb]([https://www.airbnb.com/](https://www.atlassian.com/software/jira?&aceid=&adposition=&adgroup=136973859330&campaign=18440774103&creative=632787634544&device=c&keyword=jira%20software&matchtype=e&network=g&placement=&ds_kids=p73335831615&ds_e=GOOGLE&ds_eid=700000001558501&ds_e1=GOOGLE&gclid=EAIaIQobChMI0K3unbDP-wIVv2xvBB35UwypEAAYAiAAEgIutvD_BwE&gclsrc=aw.ds#)), that provides an online marketplace for lodging primirily homestays for vacation retals, and tourism activities. 
 
 [Click here to view Airbnb Live Site](https://my-first-project-airbnb.herokuapp.com/)
 
