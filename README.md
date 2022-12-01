@@ -1,14 +1,14 @@
-# About Yira clone:
+# About Yira Software:
 
-Jira clone is a web application inspired by the actual [Jira Software](https://www.atlassian.com/software/jira?&aceid=&adposition=&adgroup=136973859330&campaign=18440774103&creative=632787634544&device=c&keyword=jira%20software&matchtype=e&network=g&placement=&ds_kids=p73335831615&ds_e=GOOGLE&ds_eid=700000001558501&ds_e1=GOOGLE&gclid=EAIaIQobChMI0K3unbDP-wIVv2xvBB35UwypEAAYAiAAEgIutvD_BwE&gclsrc=aw.ds#), that provides an online marketplace for lodging primirily homestays for vacation retals, and tourism activities. 
+Yira Software is a web application inspired by the actual [Jira Software](https://www.atlassian.com/software/jira?&aceid=&adposition=&adgroup=136973859330&campaign=18440774103&creative=632787634544&device=c&keyword=jira%20software&matchtype=e&network=g&placement=&ds_kids=p73335831615&ds_e=GOOGLE&ds_eid=700000001558501&ds_e1=GOOGLE&gclid=EAIaIQobChMI0K3unbDP-wIVv2xvBB35UwypEAAYAiAAEgIutvD_BwE&gclsrc=aw.ds#), that provides an online project management tool specificlly for Agile teams. 
 
-[Click here to view Airbnb Live Site](https://my-first-project-airbnb.herokuapp.com/)
+[Click here to view Yira Live Site]([https://my-first-project-airbnb.herokuapp.com/](https://yira-jira-clone.onrender.com/))
 
 ### Please see below links to project Wiki:
-* [Feature List](https://github.com/yashayang/Airdnd-Project/wiki/Feature-List)
-* [Database Schema](https://github.com/yashayang/Airdnd-Project/wiki/Database-Schema)
-* [API Documentation](https://github.com/yashayang/Airdnd-Project/wiki/API-Documentation)
-* [Redux Store State Shape](https://github.com/yashayang/Airdnd-Project/wiki/Redux-Store-Shape)
+* [Feature List]([https://github.com/yashayang/Airdnd-Project/wiki/Feature-List](https://github.com/yashayang/Yira---Jira-clone/wiki/MVP-Features)
+* [Database Schema]([https://github.com/yashayang/Airdnd-Project/wiki/Database-Schema](https://github.com/yashayang/Yira---Jira-clone/wiki/Database-Schema)
+* [API Documentation]([https://github.com/yashayang/Airdnd-Project/wiki/API-Documentation](https://github.com/yashayang/Yira---Jira-clone/wiki/API-Documentation)
+* [User Stories]([https://github.com/yashayang/Airdnd-Project/wiki/Redux-Store-Shape](https://github.com/yashayang/Yira---Jira-clone/wiki/User-Stories)
 
 ### This project is build with:
 #### Frameworks, Platforms, & Libraries:
