@@ -25,3 +25,13 @@ Yira Software is a web application inspired by the actual [Jira Software](https:
 
 ### Database:
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+
+
+## Feather Directions:
+
+### Landing Page
+
+User can login or signup from the landing page.
+
+![image](https://user-images.githubusercontent.com/1794317/205171027-c62d407f-66d5-4296-938a-21ba180f8a26.png)
+
