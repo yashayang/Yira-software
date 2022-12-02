@@ -1,10 +1,13 @@
 # About Yira Software:
 
- Yira Software is a web application inspired by the [Jira Software](https://www.atlassian.com/software/jira?&aceid=&adposition=&adgroup=136973859330&campaign=18440774103&creative=632787634544&device=c&keyword=jira%20software&matchtype=e&network=g&placement=&ds_kids=p73335831615&ds_e=GOOGLE&ds_eid=700000001558501&ds_e1=GOOGLE&gclid=EAIaIQobChMI0K3unbDP-wIVv2xvBB35UwypEAAYAiAAEgIutvD_BwE&gclsrc=aw.ds#), that provides an online project management tool specificlly for Agile teams. 
- 
- The first interation of this web application is only to complete two main features: Phases, and Issues. This iteration is not allowing to have different level of users or different projects. The logged in user can only viewing the same project, and they will be only working together on the same project.
+Yira Software is a web application inspired by the [Jira Software](https://www.atlassian.com/software/jira?&aceid=&adposition=&adgroup=136973859330&campaign=18440774103&creative=632787634544&device=c&keyword=jira%20software&matchtype=e&network=g&placement=&ds_kids=p73335831615&ds_e=GOOGLE&ds_eid=700000001558501&ds_e1=GOOGLE&gclid=EAIaIQobChMI0K3unbDP-wIVv2xvBB35UwypEAAYAiAAEgIutvD_BwE&gclsrc=aw.ds#), that provides an online project management tool specificlly for Agile teams. 
+
+### first interatio
+
+The first interation of this web application is only to complete two main features: Phases, and Issues. This iteration is not allowing to have different level of users or different projects. The logged in user can only viewing the same project, and they will be only working together on the same project.
 
 [Click here to view Yira Live Site](https://yira-jira-clone.onrender.com/)
+
 
 ### Please see below links to project Wiki:
 * [Feature List](https://github.com/yashayang/Yira---Jira-clone/wiki/MVP-Features)
