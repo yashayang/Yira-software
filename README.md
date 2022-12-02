@@ -54,4 +54,29 @@ The second way is to create new issue by clicking on the "+ Create Issue" under 
 
 ![Screen Shot 2022-12-01 at 6 56 02 PM](https://user-images.githubusercontent.com/1794317/205204774-1e0a9db5-d404-41d7-92ac-4b3fc165754b.png)
 
+### Update Issue
 
+User can update issues by clicking on the issue card they want to making the updates.
+
+![image](https://user-images.githubusercontent.com/1794317/205206433-d6bf8396-7ee4-4fbb-b582-6df1715b9d8c.png)
+
+### Delete Issue
+
+User can delete issue by hover over on the issue card, and clicking on the "x" at the upper right corner on each issue card.
+
+![Screen Shot 2022-12-01 at 7 13 50 PM](https://user-images.githubusercontent.com/1794317/205207060-fe136af0-3083-4294-af47-541ac3ccfd3a.png)
+
+
+### Create Phase
+
+User can create new phase by clicking on the plus sign at the most right side of the all the phases.
+
+![image](https://user-images.githubusercontent.com/1794317/205206519-dee29a43-2041-4d76-b8f1-6a84b07de727.png)
+
+### Update Phase
+
+User can update phase title by clicking on the phase title, and a input box will shows up. User can make change in place.
+
+![image](https://user-images.githubusercontent.com/1794317/205206753-30824a73-865c-40a4-af77-8868fc2ee136.png)
+
+![image](https://user-images.githubusercontent.com/1794317/205206519-dee29a43-2041-4d76-b8f1-6a84b07de727.png)
