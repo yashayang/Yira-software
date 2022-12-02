@@ -64,7 +64,7 @@ User can update issues by clicking on the issue card they want to making the upd
 
 User can delete issue by hover over on the issue card, and clicking on the "x" at the upper right corner on each issue card.
 
-![Screen Shot 2022-12-01 at 7 13 50 PM](https://user-images.githubusercontent.com/1794317/205207060-fe136af0-3083-4294-af47-541ac3ccfd3a.png)
+![Screen Shot 2022-12-01 at 7 13 50 PM](https://user-images.githubusercontent.com/1794317/205207833-7246a8de-1e66-4192-b6c9-cbfeeefbcded.png)
 
 
 ### Create Phase
@@ -83,5 +83,6 @@ User can update phase title by clicking on the phase title, and a input box will
 
 User can delete phase by hover over the phase title, and a "x" will shows, user can delete phase by clicking on the "x" sign.
 
-![Screen Shot 2022-12-01 at 7 19 22 PM](https://user-images.githubusercontent.com/1794317/205207585-c5b8d05e-1cad-42b9-aee0-d76f15745ca9.png)
+![Screen Shot 2022-12-01 at 7 19 22 PM](https://user-images.githubusercontent.com/1794317/205207762-1bcb1ac6-7c4f-4b44-97b9-5d77bdacf913.png)
+
 
