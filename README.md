@@ -4,7 +4,7 @@ Yira Software is a web application inspired by the [Jira Software](https://www.a
 
 ### First interation:
 
-The first interation of this web application is only to complete two main features: Phases, and Issues. This iteration is not allowing to have different level of users or different projects. The logged in user can only viewing the same project, and they will be only working together on the same project.
+The first interation of this web application is only to complete two main features: Phases, and Issues. This iteration is not allowing to have different level of users or different projects. All logged in users will be viewing the same project, and they will be working together on the same project.
 
 [Click here to view Yira Live Site](https://yira-jira-clone.onrender.com/)
 
