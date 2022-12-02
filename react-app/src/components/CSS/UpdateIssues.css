@@ -125,6 +125,7 @@
   overflow-y: auto;
   overflow-x: auto;
   width: 320px;
+  word-break: break-word;
 }
 
 .update-issue-description-placeholder:hover {
@@ -210,7 +211,7 @@
   height: 36px;
   width: auto;
   padding-left: 10px;
-  padding-right: 3px;
+  padding-right: 10px;
   border-radius: 5px;
   border: 2px solid #615DEC;
 }

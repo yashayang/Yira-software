@@ -16,9 +16,18 @@ const LoginForm = () => {
   const onLogin = async (e) => {
     e.preventDefault();
     // console.log("ReactLoginForm_email_password:", email, password)
+    let errors = []
+    if (!email) errors.push("Email: this field is required.")
+    if (!password) errors.push("Password: this field is required.")
     const data = await dispatch(login(email, password));
+    console.log(data)
     if (data) {
-      setErrors(data);
+      if (data.filter(error => error.includes("Password was incorrect.") || error.includes("Email provided not found."))){
+        errors.push("The credentials are invalid.")
+        setErrors(errors)
+      } else {
+        setErrors(["The credentials are invalid."]);
+      }
     }
   };
 
