@@ -8,3 +8,4 @@ class IssueForm(FlaskForm):
   description = TextAreaField('description', validators=[Length(max=500, message="Description must be under 500 characters long!")])
   owner_id = IntegerField('owner_id')
   phase_id = IntegerField('phase_id')
+  attachment = TextAreaField('Thumbnail')

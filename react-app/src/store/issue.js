@@ -80,20 +80,20 @@ export const thunkGetOneIssue = (issueId) => async (dispatch) => {
 
 export const thunkCreateIssue = (phaseId, issue) => async (dispatch) => {
   // console.log("CREATE ISSUES THUNK_issue:", issue)
-  const { summary, description, phaseId, assigneeId } = issue
+  // const { summary, description, phaseId, assigneeId } = issue
   // console.log("CREATE ISSUES THUNK_issue:", summary, description, phaseId, assigneeId)
   try {
     const response = await fetch(`/api/projects/phases/${phaseId}/issues`, {
       method: "POST",
-      headers: {
-          'Content-Type': 'application/json'
-          },
-      body: JSON.stringify({summary, description, phase_id: parseInt(phaseId), owner_id: parseInt(assigneeId)})
+      // headers: {
+      //     'Content-Type': 'application/json'
+      //     },
+      body: issue
     })
     // console.log("CREATE ISSUES THUNK_response:", response)
     if (!response.ok) {
       let error;
-      if (response.status === 401) {
+      if (response.status === 401 || 400) {
         error = await response.json();
         // console.log("CREATE ISSUES THUNK_error:", error)
         return error;

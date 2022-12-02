@@ -267,3 +267,26 @@
   outline: none;
   border: 2px solid #615DEC;
 }
+
+.update-issue-attachment-img {
+  margin-top: 5px;
+  width: 100px;
+  height: auto;
+}
+
+.fa-regular.fa-file-word {
+  margin-top: 5px;
+  font-size: 70px;
+  color: #888888;
+}
+
+.issue-card-attachment-img {
+  border-radius: 5px 5px 0px 0px;
+  width: 100%;
+  height: auto;
+}
+
+.fa-solid.fa-paperclip {
+  font-size: 20px;
+  color: #888888;
+}

@@ -17,6 +17,9 @@ const CreateIssue = ({setModal}) => {
   const [assigneeId, setAssigneeId] = useState(currUser.id)
   const [errors, setErrors] = useState([]);
 
+  const [attachment, setAttachment] = useState(null)
+  const [attachLoading, setAttachLoading] = useState(false)
+
   // console.log("CREATE ISSUE - allPhasesArr", allPhasesArr)
 
   useEffect(() => {
@@ -26,20 +29,33 @@ const CreateIssue = ({setModal}) => {
 
 
   const handleSubmit = async(e) => {
+    console.log("!!!!!!!!!!")
     e.preventDefault()
     setErrors([])
-    const issueInfo = { summary, description, phaseId, assigneeId }
-    // console.log("CREATEISSUE FORM-issueInfo:", issueInfo)
-    const response = await dispatch(thunkCreateIssue(phaseId, issueInfo))
-    // console.log("!!!!!!!", response)
+    // const issueInfo = { summary, description, phaseId, assigneeId }
+    console.log("CREATEISSUE FORM-summary, description, phaseId, assigneeId:", summary, description, phaseId, assigneeId)
+    const formData = new FormData()
+    formData.append("summary", summary)
+    formData.append("description", description)
+    formData.append("phase_id", parseInt(phaseId))
+    formData.append("owner_id", parseInt(assigneeId))
+    formData.append("image", attachment)
+
+    setAttachLoading(true)
+    console.log("CREATEISSUE FORM-formData:", formData)
+    const response = await dispatch(thunkCreateIssue(phaseId, formData))
+    console.log("!!!!!!!", response)
     let errorsArr = []
     if(response.errors) {
       if(response.errors[0].length > 40) {
         let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
         errorsArr.push(errorMsg)
+      } else if(!Array.isArray(response)) {
+        errorsArr.push(response.errors)
       } else {
         errorsArr.push(response.errors[0])
       }
+
       setErrors(errorsArr)
     } else {
       setModal(false)
@@ -53,13 +69,19 @@ const CreateIssue = ({setModal}) => {
     setModal(false)
   }
 
+  const updateAttachment = (e) => {
+    const file = e.target.files[0];
+    setAttachment(file);
+}
+
+
 
   if (!allPhases) return null;
 
-  return (
-    <div className="create-issue-main-container">
 
-    <form className="create-issue-form" onSubmit={handleSubmit} action="#">
+  return (
+    // <div className="create-issue-main-container">
+    <form onSubmit={handleSubmit} className="create-issue-form">
       <div className="create-issue-title">Create Issue</div>
       <div className="create-issue-validation-errors">
         {
@@ -135,16 +157,24 @@ const CreateIssue = ({setModal}) => {
         </select>
       </div>
 
+      <div>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={updateAttachment}
+      />
+    </div>
+
       <div className="create-issue-footer">
         <div className="create-issue-button-container">
-        <div className="create-issue-cancel" onClick={handleCancel}>Cancel</div>
-        <button className="create-issue-create-button" type="submit" onClick={handleSubmit}>Create</button>
+        <div className="create-issue-cancel">Cancel</div>
+        <button className="create-issue-create-button" type="submit">Create</button>
+        {/* {(attachLoading)&& <p>Loading...</p>} */}
         </div>
       </div>
 
     </form>
-
-  </div>
+   // </div>
   )
 }
 

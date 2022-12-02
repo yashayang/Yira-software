@@ -4,6 +4,8 @@ import { thunkUpdateIssue, thunkGetOneIssue, thunkGetAllPhasesIssues, cleanState
 import { loadAllUsers } from '../../../store/session';
 import "../../CSS/UpdateIssues.css"
 
+import word_icon from '../../Images/wordFile.webp'
+
 const UpdateIssueForm = ({currIssue, currPhase}) => {
   const dispatch = useDispatch();
   const currUser = useSelector(state => state.session.user)
@@ -26,6 +28,9 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const [descriptionErrors, setDescriptionErrors] = useState([]);
   const [phaseId, setPhaseId] = useState();
   const [assigneeId, setAssigneeId] = useState(currIssue.ownerId)
+
+  const [attachment, setAttachment] = useState(null)
+  const [attachLoading, setAttachLoading] = useState(false)
 
   // console.log("UPDATE ISSUE- currPhase:", currPhase)
   console.log("UPDATE ISSUE- currIssue:", currIssue)
@@ -169,6 +174,15 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
           </div>
         }
 
+        <div>
+          <input
+            type="file"
+            accept="image/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            onChange={(e) => setAttachment(e.target.files[0])}
+          />
+          {(attachLoading)&& <p>Loading...</p>}
+        </div>
+
         <div className="update-issue-description">
           <label className="update-issue-description-label">Description</label>
           <div className="update-issue-description-errors">
@@ -204,6 +218,18 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
                 }}>Cancel</div>
             </div>
           </form>}
+        </div>
+
+        <div>
+          {currIssue.attachment &&
+            <>
+              <div>Attachment:</div>
+              {currIssue.attachment.includes("jpeg")
+                ? <img src={`${currIssue.attachment}`} alt={currIssue.attachment} className="update-issue-attachment-img"/>
+                : <i class="fa-regular fa-file-word"></i>
+              }
+            </>
+          }
         </div>
 
         <div className="update-issue-time-container">

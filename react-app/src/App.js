@@ -9,7 +9,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
 import Phases from './components/Phases';
-import CreateIssue from './components/Issues/CreateIssue';
+import CreateIssuePage from './components/Issues/CreateIssuePage';
 import UpdateIssue from './components/Issues/UpdateIssue';
 import HomePage from './components/SplashPage';
 
@@ -48,7 +48,7 @@ function App() {
           <Phases />
         </ProtectedRoute>
         <ProtectedRoute path='/issues' exact={true} >
-          <CreateIssue />
+          <CreateIssuePage />
         </ProtectedRoute>
         <ProtectedRoute path='/issues/:issueId' exact={true} >
           <UpdateIssue />

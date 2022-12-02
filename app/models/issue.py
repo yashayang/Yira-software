@@ -29,6 +29,7 @@ class Issue(db.Model):
       "description": self.description,
       "phaseId": self.phase_id,
       "ownerId": self.owner_id,
+      "attachment": self.attachment,
       'createdAt': self.created_at,
       'updatedAt': self.updated_at,
       'user': self.user.to_dict()
@@ -41,6 +42,7 @@ class Issue(db.Model):
       "description": self.description,
       "phaseId": self.phase_id,
       "ownerId": self.owner_id,
+      "attachment": self.attachment,
       'createdAt': self.created_at,
       'updatedAt': self.updated_at,
       'Phase': self.phase.to_dict(),

@@ -99,7 +99,7 @@ def create_issue(phase_id):
 
     return new_issue.to_dict(), 201
   else:
-    # print("---CREATE ISSUE---FORM ERRORS:", form.errors)
+    print("---CREATE ISSUE---FORM ERRORS:", form.errors)
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 # fetch("http://localhost:3000/api/projects/phases/3/issues", {
