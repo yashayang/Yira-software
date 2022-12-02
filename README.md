@@ -1,6 +1,7 @@
 # About Yira Software:
 
 Yira Software is a web application inspired by the actual [Jira Software](https://www.atlassian.com/software/jira?&aceid=&adposition=&adgroup=136973859330&campaign=18440774103&creative=632787634544&device=c&keyword=jira%20software&matchtype=e&network=g&placement=&ds_kids=p73335831615&ds_e=GOOGLE&ds_eid=700000001558501&ds_e1=GOOGLE&gclid=EAIaIQobChMI0K3unbDP-wIVv2xvBB35UwypEAAYAiAAEgIutvD_BwE&gclsrc=aw.ds#), that provides an online project management tool specificlly for Agile teams. 
+The first interation of this web application is only for two main features. One is to create phases, the other one is to create issues. The first interation is not allowing to have different level of users or different projects. The logged in user can only viewing the same project, and they will be only working together on the same project.
 
 [Click here to view Yira Live Site](https://yira-jira-clone.onrender.com/)
 
@@ -43,7 +44,13 @@ This is the main page for your project. User can start managing their project us
 
 ### Create Issue
 
+User can create new issue in two different way just like the actual Jira. 
+The first way is to create new issue through a create button in the navigation bar:
+
 ![Screen Shot 2022-12-01 at 2 23 36 PM](https://user-images.githubusercontent.com/1794317/205172227-df7e84c9-eb51-4279-b635-ac4f3c731b53.png)
 
+The second way is to create new issue by clicking on the "+ Create Issue" under each phase:
+
+![Screen Shot 2022-12-01 at 6 56 02 PM](https://user-images.githubusercontent.com/1794317/205204774-1e0a9db5-d404-41d7-92ac-4b3fc165754b.png)
 
 
