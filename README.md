@@ -69,7 +69,7 @@ User can delete issue by hover over on the issue card, and clicking on the "x" a
 
 ### Create Phase
 
-User can create new phase by clicking on the plus sign at the most right side of the all the phases.
+User can create new phase by clicking on the plus sign at the most right end of all the phases.
 
 ![image](https://user-images.githubusercontent.com/1794317/205206519-dee29a43-2041-4d76-b8f1-6a84b07de727.png)
 
@@ -79,4 +79,9 @@ User can update phase title by clicking on the phase title, and a input box will
 
 ![image](https://user-images.githubusercontent.com/1794317/205206753-30824a73-865c-40a4-af77-8868fc2ee136.png)
 
-![image](https://user-images.githubusercontent.com/1794317/205206519-dee29a43-2041-4d76-b8f1-6a84b07de727.png)
+### Delete Phase
+
+User can delete phase by hover over the phase title, and a "x" will shows, user can delete phase by clicking on the "x" sign.
+
+![Screen Shot 2022-12-01 at 7 19 22 PM](https://user-images.githubusercontent.com/1794317/205207585-c5b8d05e-1cad-42b9-aee0-d76f15745ca9.png)
+
