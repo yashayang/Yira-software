@@ -27,6 +27,7 @@ const CreatePhase = ({projectId, ownerId}) => {
       setErrors(errorsArr)
     } else {
       setTitleInput(false)
+      setTitle("")
       dispatch(thunkGetAllPhasesIssues())
     }
   }
@@ -63,7 +64,7 @@ const CreatePhase = ({projectId, ownerId}) => {
                 <i className="fa-sharp fa-solid fa-xmark"></i></button>
             </div>
           </form>
-          
+
         </div>
       }
 

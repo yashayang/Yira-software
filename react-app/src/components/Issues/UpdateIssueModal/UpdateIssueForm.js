@@ -28,7 +28,8 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const [assigneeId, setAssigneeId] = useState(currIssue.ownerId)
 
   // console.log("UPDATE ISSUE- currPhase:", currPhase)
-  // console.log("UPDATE ISSUE- currIssue:", currIssue)
+  console.log("UPDATE ISSUE- currIssue:", currIssue)
+  console.log("Update Issue Form- currDescription", currDescription)
 
   useEffect(() => {
     dispatch(thunkGetOneIssue(parseInt(issueId)))
@@ -41,7 +42,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
 
 
   const showSummary = async (e) => {
-    setSummary(currIssue.summary)
+    setSummary(currSummary)
     setDescription(currIssue.description)
     setDescriptionInput(false)
     setSummaryInput(true)
@@ -68,7 +69,8 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
 
     if (response.issueId) {
       setSummaryInput(false)
-      dispatch(thunkGetAllPhasesIssues())
+      dispatch(thunkGetOneIssue(parseInt(issueId)))
+      // dispatch(thunkGetAllPhasesIssues())
     }
   }
 
@@ -114,6 +116,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   }
 
   const handlePhaseId = async (e) => {
+    e.stopPropagation()
     e.preventDefault()
     setDescriptionInput(false)
     setSummaryInput(false)
@@ -124,7 +127,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
       assigneeId: currAssigneeId
     }
     // console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
-   await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
+    await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
   }
 
   if(!singleIssue) return null;

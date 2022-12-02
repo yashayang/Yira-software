@@ -18,7 +18,7 @@ const CreateIssueInPhase = ({phaseId, assigneeId}) => {
     setErrors([])
     const issueInfo = {
       summary,
-      description: " ",
+      description: "",
       phaseId,
       assigneeId
     }
