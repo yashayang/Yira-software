@@ -78,19 +78,54 @@ export const thunkGetOneIssue = (issueId) => async (dispatch) => {
 }
 
 
-export const thunkCreateIssue = (phaseId, issue) => async (dispatch) => {
-  // console.log("CREATE ISSUES THUNK_issue:", issue)
-  // const { summary, description, phaseId, assigneeId } = issue
-  // console.log("CREATE ISSUES THUNK_issue:", summary, description, phaseId, assigneeId)
+export const thunkCreateIssue = (phaseId, issue, attachment) => async (dispatch) => {
+  console.log("CREATE ISSUES - phaseId/THUNK_issue:", phaseId, issue)
+  if (attachment) {
+    console.log("CREATE ISSUES THUNK_issue.attachment:", issue.attachment)
+    try {
+      const response = await fetch(`/api/projects/phases/${phaseId}/issues`, {
+        method: "POST",
+        body: issue
+      })
+      // console.log("CREATE ISSUES THUNK_response:", response)
+      if (!response.ok) {
+        let error;
+        if (response.status === 401 || 400) {
+          error = await response.json();
+          // console.log("CREATE ISSUES THUNK_error:", error)
+          return error;
+        } else {
+          let errorJSON;
+          error = await response.text();
+          try {
+            errorJSON = JSON.parse(error);
+          } catch {
+            throw new Error(error);
+          }
+          throw new Error(`${errorJSON.title}: ${errorJSON.message}`)
+        }
+      }
+
+      const newIssue = await response.json();
+      dispatch(createOneIssue(newIssue, phaseId));
+      return newIssue
+
+    } catch(error) {
+      throw error
+    }
+  }
+
+  console.log("CREATE ISSUES THUNK_withoutImage_JSON.stringify(issue):", JSON.stringify(issue))
+
   try {
     const response = await fetch(`/api/projects/phases/${phaseId}/issues`, {
       method: "POST",
-      // headers: {
-      //     'Content-Type': 'application/json'
-      //     },
-      body: issue
+      headers: {
+          'Content-Type': 'application/json'
+          },
+      body: JSON.stringify(issue)
     })
-    // console.log("CREATE ISSUES THUNK_response:", response)
+    console.log("CREATE ISSUES THUNK_without image_response:", response)
     if (!response.ok) {
       let error;
       if (response.status === 401 || 400) {
@@ -116,11 +151,49 @@ export const thunkCreateIssue = (phaseId, issue) => async (dispatch) => {
   } catch(error) {
     throw error
   }
+
+
 }
 
-export const thunkUpdateIssue = (issueId, issue, phaseId) => async (dispatch) => {
+
+export const thunkUpdateIssue = (issueId, issue, phaseId, attachment) => async (dispatch) => {
   const { summary, description, phaseId, assigneeId } = issue
-  // console.log("UPDATE ISSUES THUNK_issue:", issueId, summary, description, phaseId, assigneeId)
+  console.log("UPDATE ISSUES THUNK_issue:", issueId, summary, description, phaseId, assigneeId, attachment)
+  if (attachment) {
+    console.log("UPDATE ISSUES THUNK_issue.attachment:", issue.attachment)
+    try {
+      const response = await fetch(`/api/projects/issues/${issueId}`, {
+        method: "PUT",
+        body: issue
+      })
+      console.log("CREATE ISSUES THUNK_response:", response)
+      if (!response.ok) {
+        let error;
+        if (response.status === 401 || 400) {
+          error = await response.json();
+          // console.log("CREATE ISSUES THUNK_error:", error)
+          return error;
+        } else {
+          let errorJSON;
+          error = await response.text();
+          try {
+            errorJSON = JSON.parse(error);
+          } catch {
+            throw new Error(error);
+          }
+          throw new Error(`${errorJSON.title}: ${errorJSON.message}`)
+        }
+      }
+
+      const updatedIssue = await response.json();
+      dispatch(updateOneIssue(updatedIssue, phaseId));
+      return updatedIssue
+
+    } catch(error) {
+      throw error
+    }
+  }
+
   try {
     const response = await fetch(`/api/projects/issues/${issueId}`, {
       method: "PUT",
@@ -197,7 +270,7 @@ const issues = (state = initialState, action) => {
     case UPDATE_ISSUE:
       newState = {...state, ...state.AllPhases, ...state.singleIssue}
       newState.singleIssue = action.issue
-      newState.AllPhases[action.phaseId].Issues[action.issue.issueId] = action.issue
+      newState.AllPhases[action.issue.phaseId].Issues[action.issue.issueId] = action.issue
       return newState
 
     case DELETE_ISSUE:

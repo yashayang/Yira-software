@@ -5,6 +5,7 @@ import { loadAllUsers } from '../../../store/session';
 import "../../CSS/UpdateIssues.css"
 
 import word_icon from '../../Images/wordFile.webp'
+import { thunkCreateIssue } from "../../../store/issue";
 
 const UpdateIssueForm = ({currIssue, currPhase}) => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const currDescription = singleIssue?.description;
   const currPhaseId = singleIssue?.phaseId;
   const currAssigneeId = singleIssue?.ownerId;
+  const currAttachment = singleIssue?.attachment;
 
   const [summary, setSummary] = useState(currSummary);
   const [summaryInput, setSummaryInput] = useState(false);
@@ -29,12 +31,13 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const [phaseId, setPhaseId] = useState();
   const [assigneeId, setAssigneeId] = useState(currIssue.ownerId)
 
-  const [attachment, setAttachment] = useState(null)
-  const [attachLoading, setAttachLoading] = useState(false)
+  const [attachment, setAttachment] = useState(null);
+  const [attachLoading, setAttachLoading] = useState(false);
+  const [attachErrors, setAttachErrors] = useState([]);
 
-  // console.log("UPDATE ISSUE- currPhase:", currPhase)
-  console.log("UPDATE ISSUE- currIssue:", currIssue)
-  console.log("Update Issue Form- currDescription", currDescription)
+  console.log("UPDATE ISSUE- singleIssue:", singleIssue)
+  console.log("UPDATE ISSUE- currAttachment:", currAttachment)
+  // console.log("Update Issue Form- currDescription", currDescription)
 
   useEffect(() => {
     dispatch(thunkGetOneIssue(parseInt(issueId)))
@@ -43,7 +46,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     return () => {
       dispatch(cleanState())
     }
-  }, [dispatch, issueId])
+  }, [dispatch, issueId, currIssue.attachment])
 
 
   const showSummary = async (e) => {
@@ -54,6 +57,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   }
 
   const handleSummary = async (e) => {
+    e.stopPropagation()
     e.preventDefault()
     setSummaryErrors([])
 
@@ -79,8 +83,45 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     }
   }
 
+  const handleAttachment = async(e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    setAttachErrors([])
+    // console.log("update-issue-upload-attachment__currIssue.summary/attachment", currIssue.summary, attachment)
+
+    const formData = new FormData()
+    formData.append("summary", currIssue.summary)
+    formData.append("description", currDescription)
+    formData.append("phase_id", parseInt(currPhaseId))
+    formData.append("owner_id", parseInt(currAssigneeId))
+    formData.append("image", attachment)
+    // console.log("update-issue-upload-attachment__formData-PHASEID", parseInt(phaseId))
+
+    setAttachLoading(true)
+    const response = await dispatch(thunkUpdateIssue(issueId, formData, currPhaseId, attachment))
+    // console.log("update-issue-upload-attachment__response", response)
+    let errorsArr = []
+    if(response.errors) {
+      if(response.errors[0].length > 40) {
+        let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
+        errorsArr.push(errorMsg)
+      } else if(!Array.isArray(response)) {
+        errorsArr.push(response.errors)
+      } else {
+        errorsArr.push(response.errors[0])
+      }
+
+      setAttachErrors(errorsArr)
+    }
+    if(response.issueId) {
+      setAttachLoading(false)
+      await dispatch(thunkGetOneIssue(parseInt(issueId)))
+    }
+}
+
 
   const handleDescription = async (e) => {
+    e.stopPropagation()
     e.preventDefault()
     setDescriptionErrors([])
     setSummaryInput(false)
@@ -106,6 +147,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   }
 
   const handleAssigneeId = async (e) => {
+    e.stopPropagation()
     e.preventDefault()
     setAssigneeId(e.target.value)
     setDescriptionInput(false)
@@ -174,14 +216,20 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
           </div>
         }
 
-        <div>
+        <form onSubmit={handleAttachment} className="update-issue-attachment-upload-container">
+          {/* <label for="file-upload" className="custom-file-upload">
+            <i className="fa-solid fa-paperclip" id="update-issue-paperclip"></i>
+            <span className="upload-issue-attach-label">Attach</span>
+          </label> */}
+            {(attachLoading)&& <p>Loading...</p>}
           <input
+            id="file-upload"
             type="file"
             accept="image/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             onChange={(e) => setAttachment(e.target.files[0])}
           />
-          {(attachLoading)&& <p>Loading...</p>}
-        </div>
+          <button type="submit"> Upload</button>
+        </form>
 
         <div className="update-issue-description">
           <label className="update-issue-description-label">Description</label>
@@ -220,12 +268,12 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
           </form>}
         </div>
 
-        <div>
-          {currIssue.attachment &&
+        <div className="update-issue-attachment-container">
+          {currAttachment &&
             <>
-              <div>Attachment:</div>
-              {currIssue.attachment.includes("jpeg")
-                ? <img src={`${currIssue.attachment}`} alt={currIssue.attachment} className="update-issue-attachment-img"/>
+              <div className="update-issue-attachment-label">Attachment</div>
+              {(currAttachment?.includes("jpeg") || currAttachment?.includes("png"))
+                ? <img src={`${currAttachment}`} alt={currAttachment} className="update-issue-attachment-img"/>
                 : <i class="fa-regular fa-file-word"></i>
               }
             </>

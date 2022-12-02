@@ -25,7 +25,7 @@ const IssueCards = ({phase, issue}) => {
       }
 
       <div className="issue-card-outer" key={issue.issueId}>
-        {issue.attachment?.includes("jpeg") && <img src={`${issue.attachment}`} alt={issue.attachment} className="issue-card-attachment-img"/>}
+        {(issue.attachment?.includes("jpeg") || issue.attachment?.includes("png")) && <img src={`${issue.attachment}`} alt={issue.attachment} className="issue-card-attachment-img"/>}
         <div className="issue-card-title">
           <div className="issue-summary">{issue.summary}</div>
           <DeleteIssue issueId={issue.issueId} phaseId={phase.id}/>
@@ -38,12 +38,12 @@ const IssueCards = ({phase, issue}) => {
           {issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase() === curr_user_init
           ?
           <div className='curr-user-circle-small'>
-            {issue.attachment?.includes("docx") && <i class="fa-regular fa-paperclip"></i>}
+            {issue.attachment?.includes("docx") && <i className="fa-regular fa-paperclip"></i>}
             {curr_user_init}
           </div>
           :
           <>
-            {issue.attachment?.includes("docx") && <i class="fa-solid fa-paperclip"></i>}
+            {issue.attachment?.includes("docx") && <i className="fa-solid fa-paperclip"></i>}
             <div className='other-user-circle-small'>
               {issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase()}
             </div>

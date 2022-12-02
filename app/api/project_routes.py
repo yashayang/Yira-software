@@ -60,7 +60,22 @@ def create_issue(phase_id):
   # print("---CREATE ISSUE---PHASE_ID:", form.data["phase_id"])
   # print("---CREATE ISSUE---OWNER_ID:", form.data["owner_id"])
   if "image" not in request.files:
-      return {"errors": "image required"}, 400
+    print("===========create_issue without image==============", request.files)
+    print("===========form.data without image==============", form.data)
+    if form.validate_on_submit():
+      print("==========form.validate_on_submit=====")
+      new_issue = Issue(
+        summary = form.data["summary"],
+        description = form.data["description"],
+        phase_id = form.data["phase_id"],
+        owner_id = form.data["owner_id"],
+        created_at= datetime.now()
+      )
+      print("---CREATE ISSUE---new_issue:", new_issue)
+      db.session.add(new_issue)
+      db.session.commit()
+
+      return new_issue.to_dict(), 201
 
   image = request.files["image"]
 
@@ -83,8 +98,9 @@ def create_issue(phase_id):
   # db.session.add(new_image)
   # db.session.commit()
   # return {"url": url}
-
+  print("---CREATE ISSUE with image---before---form.data", form.data)
   if form.validate_on_submit():
+    print("---CREATE ISSUE with image---after---form.data", form.data)
     new_issue = Issue(
       summary = form.data["summary"],
       description = form.data["description"],
@@ -93,7 +109,7 @@ def create_issue(phase_id):
       attachment = url,
       created_at= datetime.now()
     )
-    # print("---CREATE ISSUE---new_issue:", new_issue)
+    print("---CREATE ISSUE with image---new_issue:", new_issue)
     db.session.add(new_issue)
     db.session.commit()
 
@@ -127,13 +143,45 @@ def update_issue(issue_id):
   issue = Issue.query.get(issue_id)
   if issue is None:
     return {"errors" : "Issue couldn't be found"}, 404
-  # print("---UPDATE ISSUE---new_issue:", issue)
-  # print("---UPDATE ISSUE---phase_id/onwer_id:", form.data['phase_id'], form.data["owner_id"])
+
+  if "image" not in request.files:
+    print("===========UPDATE ISSUE with image==============", request.files)
+    print("===========form.data with image==============", form.data)
+    if form.validate_on_submit():
+      print("==========form.validate_on_submit=====")
+      issue.summary = form.data['summary']
+      issue.description = form.data['description']
+      issue.phase_id = form.data['phase_id']
+      issue.owner_id = form.data["owner_id"]
+      issue.updated_at = datetime.now()
+      db.session.commit()
+      return issue.to_dict(), 200
+    else:
+      # print("---UPDATE ISSUE---FORM ERRORS:", form.errors)
+      return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+  image = request.files["image"]
+
+  if not allowed_file(image.filename):
+      return {"errors": "file type not permitted"}, 400
+
+  image.filename = get_unique_filename(image.filename)
+
+  upload = upload_file_to_s3(image)
+
+  if "url" not in upload:
+      return upload, 400
+
+  url = upload["url"]
+
+  print("---UPDATE ISSUE with image---new_issue:", issue)
+  print("---UPDATE ISSUE with image---form.data:", form.data)
   if form.validate_on_submit():
     issue.summary = form.data['summary']
     issue.description = form.data['description']
     issue.phase_id = form.data['phase_id']
     issue.owner_id = form.data["owner_id"]
+    issue.attachment = url
     issue.updated_at = datetime.now()
     db.session.commit()
     return issue.to_dict(), 200
