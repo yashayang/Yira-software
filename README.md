@@ -41,6 +41,9 @@ This is the main page for your project. User can start managing their project us
 
 ![Screen Shot 2022-12-01 at 2 22 28 PM](https://user-images.githubusercontent.com/1794317/205171666-5049dc93-6d29-49b9-b508-f227713d8872.png)
 
+### Create Issue
+
+![Screen Shot 2022-12-01 at 2 23 36 PM](https://user-images.githubusercontent.com/1794317/205172227-df7e84c9-eb51-4279-b635-ac4f3c731b53.png)
 
 
 
