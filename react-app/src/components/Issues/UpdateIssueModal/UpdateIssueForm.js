@@ -53,6 +53,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     setDescription(currIssue.description)
     setDescriptionInput(false)
     setSummaryInput(true)
+    setAttachErrors([])
   }
 
   const handleSummary = async (e) => {
@@ -137,6 +138,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     e.preventDefault()
     setDescriptionErrors([])
     setSummaryInput(false)
+
     const issue = {
       summary: currSummary,
       description,
@@ -164,6 +166,8 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     setAssigneeId(e.target.value)
     setDescriptionInput(false)
     setSummaryInput(false)
+    setAttachErrors([])
+
     const issue = {
       summary: currSummary,
       description: currDescription,
@@ -179,6 +183,8 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     e.preventDefault()
     setDescriptionInput(false)
     setSummaryInput(false)
+    setAttachErrors([])
+
     const issue = {
       summary: currSummary,
       description: currDescription,
@@ -228,12 +234,12 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
           </div>
         }
 
-          <div className="update-issue-summary-errors" id="update-issue-attachment-errors">
-            {
-            attachErrors &&
-            attachErrors.map((error)=>(<div key={error}>{error}</div>))
-            }
-          </div>
+        <div className="update-issue-attachment-errors" id="update-issue-attachment-errors">
+          {
+          attachErrors &&
+          attachErrors.map((error)=>(<div key={error}>{error}</div>))
+          }
+        </div>
         {!currAttachment && <form onSubmit={handleAttachment} className="update-issue-attachment-upload-container">
           {/* <label for="file-upload" className="custom-file-upload">
             <div><i className="fa-solid fa-paperclip" id="update-issue-paperclip"></i></div>
@@ -266,6 +272,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
             <div onClick={() => {
               setDescriptionInput(true)
               setSummaryInput(false)
+              setAttachErrors([])
               }}
               className="update-issue-description-placeholder"
             >

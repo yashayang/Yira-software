@@ -17,7 +17,6 @@
 .update-issue-summary-errors {
   color: #EF476F;
   font-size: 0.8rem;
-
 }
 
 .update-issue-right-container,
@@ -354,4 +353,10 @@
 .fa-solid.fa-paperclip {
   font-size: 20px;
   color: #888888;
+}
+
+.update-issue-attachment-errors {
+  color: #EF476F;
+  font-size: 0.8rem;
+  margin-left: 10px;
 }
