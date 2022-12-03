@@ -32,13 +32,13 @@
 }
 
 .logo {
-  margin-top: 0px;
+  margin-top: 2px;
 }
 
 .logo-name {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 350;
-  margin: 8px 0px 0px 10px;
+  margin: 9px 0px 0px 10px;
 }
 
 
@@ -81,6 +81,8 @@
 
 .navbar-right-container {
   margin: 10px 30px 12px 30px;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .navBar-signup-entry {

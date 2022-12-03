@@ -47,7 +47,7 @@ const CreateIssueInPhase = ({phaseId, assigneeId}) => {
       {summaryInput &&
         <div className="card-container">
 
-          <div className="create-issue-validation-errors">
+          <div className="create-issue-inphase-validation-errors">
             {
             errors &&
             errors.map((error)=>(<div key={error}>{error}</div>))

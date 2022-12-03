@@ -76,11 +76,14 @@ def create_issue(phase_id):
       db.session.commit()
 
       return new_issue.to_dict(), 201
+    else:
+      # print("---CREATE ISSUE---FORM ERRORS:", form.errors)
+      return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
   image = request.files["image"]
 
   if not allowed_file(image.filename):
-      return {"errors": "file type not permitted"}, 400
+      return {"errors": "File type not permitted. Please choose again."}, 400
 
   image.filename = get_unique_filename(image.filename)
 
@@ -163,7 +166,7 @@ def update_issue(issue_id):
   image = request.files["image"]
 
   if not allowed_file(image.filename):
-      return {"errors": "file type not permitted"}, 400
+      return {"errors": "File type not permitted. Please choose again."}, 400
 
   image.filename = get_unique_filename(image.filename)
 

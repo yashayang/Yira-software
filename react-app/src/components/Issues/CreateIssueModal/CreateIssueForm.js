@@ -30,7 +30,6 @@ const CreateIssue = ({setModal}) => {
 
   const handleSubmit = async(e) => {
     console.log("!!!!!!!!!!")
-    e.stopPropagation()
     e.preventDefault()
     setErrors([])
     // const issueInfo = { summary, description, phaseId, assigneeId }
@@ -45,7 +44,7 @@ const CreateIssue = ({setModal}) => {
 
       setAttachLoading(true)
       console.log("CREATEISSUE FORM-formData:", formData)
-      const response = await dispatch(thunkCreateIssue(phaseId, formData))
+      const response = await dispatch(thunkCreateIssue(phaseId, formData, attachment))
       console.log("!!!!!!!", response)
       let errorsArr = []
       if(response.errors) {
@@ -57,85 +56,41 @@ const CreateIssue = ({setModal}) => {
         } else {
           errorsArr.push(response.errors[0])
         }
+        setErrors(errorsArr)
+      } else {
+        setModal(false)
+        await dispatch(thunkGetAllPhasesIssues())
+      }
+    } else {
+      const issueInfo = {
+        summary,
+        description: "",
+        attachment: "",
+        phase_id: parseInt(phaseId),
+        owner_id: parseInt(assigneeId)
+      }
+      console.log("CREATE ISSUE IN PHASE -issueInfo", issueInfo)
+      const response = await dispatch(thunkCreateIssue(phaseId, issueInfo))
 
+      console.log("CREATE ISSUE IN PHASE -response", response)
+
+      let errorsArr = []
+      if(response.errors) {
+        let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
+        errorsArr.push(errorMsg)
+        // console.log("!!!!!!!", errorsArr)
         setErrors(errorsArr)
       } else {
         setModal(false)
         await dispatch(thunkGetAllPhasesIssues())
       }
     }
-
-    const issueInfo = {
-      summary,
-      description: "",
-      attachment: "",
-      phase_id: parseInt(phaseId),
-      owner_id: parseInt(assigneeId)
-    }
-    console.log("CREATE ISSUE IN PHASE -issueInfo", issueInfo)
-    const response = await dispatch(thunkCreateIssue(phaseId, issueInfo))
-
-    console.log("CREATE ISSUE IN PHASE -response", response)
-
-    let errorsArr = []
-    if(response.errors) {
-      let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
-      errorsArr.push(errorMsg)
-      // console.log("!!!!!!!", errorsArr)
-      setErrors(errorsArr)
-    } else {
-      setModal(false)
-      await dispatch(thunkGetAllPhasesIssues())
-    }
   }
-
 
   const handleCancel = async(e) => {
     e.preventDefault()
     setModal(false)
   }
-
-  const updateAttachment = (e) => {
-    e.stopPropagation()
-    const file = e.target.files[0];
-    setAttachment(file);
-  }
-
-
-  const handleAttachment = async(e) => {
-    e.stopPropagation()
-    e.preventDefault()
-    setErrors([])
-    // console.log("update-issue-upload-attachment__currIssue.summary/attachment", currIssue.summary, attachment)
-
-    const formData = new FormData()
-    formData.append("summary", summary)
-    formData.append("description", description)
-    formData.append("phase_id", parseInt(phaseId))
-    formData.append("owner_id", parseInt(assigneeId))
-    formData.append("image", attachment)
-    // console.log("update-issue-upload-attachment__formData-PHASEID", parseInt(phaseId))
-
-    setAttachLoading(true)
-    const response = await dispatch(thunkCreateIssue(phaseId, formData))
-    // console.log("update-issue-upload-attachment__response", response)
-    let errorsArr = []
-    if(response.errors) {
-      if(response.errors[0].length > 40) {
-        let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
-        errorsArr.push(errorMsg)
-      } else if(!Array.isArray(response)) {
-        errorsArr.push(response.errors)
-      } else {
-        errorsArr.push(response.errors[0])
-      }
-
-      setErrors(errorsArr)
-    }
-    if(response.issueId) {
-      setAttachLoading(false)
-    }
-}
 
 
   if (!allPhases) return null;
@@ -222,35 +177,21 @@ const CreateIssue = ({setModal}) => {
       <div>
         <input
           type="file"
-          accept="image/*"
-          onChange={updateAttachment}
+          accept="image/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          onChange={(e) => setAttachment(e.target.files[0])}
         />
       </div>
 
       <div className="create-issue-footer">
         <div className="create-issue-button-container">
         <div className="create-issue-cancel" onClick={handleCancel}>Cancel</div>
-        <button className="create-issue-create-button" type="submit" onClick={handleSubmit}>Create</button>
+        <button className="create-issue-create-button" type="submit">Create</button>
         {/* {(attachLoading)&& <p>Loading...</p>} */}
         </div>
       </div>
 
     </form>
 
-    {/* <form onSubmit={handleAttachment} className="update-issue-attachment-upload-container">
-          <label for="file-upload" className="custom-file-upload">
-            <i className="fa-solid fa-paperclip" id="update-issue-paperclip"></i>
-            <span className="upload-issue-attach-label">Attach</span>
-          </label>
-            {(attachLoading)&& <p>Loading...</p>}
-          <input
-            id="file-upload"
-            type="file"
-            accept="image/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            onChange={(e) => setAttachment(e.target.files[0])}
-          />
-          <button type="submit"> Upload</button>
-        </form> */}
   </div>
   )
 }
