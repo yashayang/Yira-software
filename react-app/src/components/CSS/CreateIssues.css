@@ -1,6 +1,6 @@
 .create-issue-main-container {
   width: 400px;
-  height: 600px;
+  height: 700px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,9 +8,8 @@
   font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
 }
 
-
 .create-issue-form {
-  margin-top: 20px;
+  margin-top: 15px;
   z-index: 999;
   position: absolute;
 }
@@ -114,15 +113,19 @@
   border: 2px solid #d7d7d7;
 }
 
+.create-issue-attachment-container {
+  margin-top: 10px;
+  height: 60px;
+}
+
 .create-issue-footer {
-  height: 42px;
+  height: 40px;
   width: 335px;
   display: flex;
   justify-content: end;
 }
 
 .create-issue-button-container {
-
   display: flex;
   justify-content: space-between;
 }

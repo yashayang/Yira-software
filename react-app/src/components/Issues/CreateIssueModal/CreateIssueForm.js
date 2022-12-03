@@ -174,11 +174,15 @@ const CreateIssue = ({setModal}) => {
         </select>
       </div>
 
-      <div>
+      <div className="create-issue-label-container">
+        <label>(Attach file in .pdf .png .jpg .jpeg .gif .docx .xlsx)</label>
+      </div>
+      <div className="create-issue-attachment-container">
         <input
           type="file"
           accept="image/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           onChange={(e) => setAttachment(e.target.files[0])}
+          className="file-input-button"
         />
       </div>
 

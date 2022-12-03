@@ -303,7 +303,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
           {currAttachment &&
             <>
               <div className="update-issue-attachment-label">Attachment</div>
-              {(currAttachment?.includes("jpeg") || currAttachment?.includes("png") || currAttachment?.attachment?.includes("jpg") || currAttachment?.attachment?.includes("gif"))
+              {(currAttachment?.includes("jpeg") || currAttachment?.includes("png") || currAttachment?.includes("jpg") || currAttachment?.includes("gif"))
                 ? <img src={`${currAttachment}`} alt={currAttachment} className="update-issue-attachment-img"/>
                 : <i class="fa-regular fa-file-word"></i>
               }
