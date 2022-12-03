@@ -35,8 +35,8 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const [attachLoading, setAttachLoading] = useState(false);
   const [attachErrors, setAttachErrors] = useState([]);
 
-  console.log("UPDATE ISSUE- singleIssue:", singleIssue)
-  console.log("UPDATE ISSUE- currAttachment:", currAttachment)
+  // console.log("UPDATE ISSUE- singleIssue:", singleIssue)
+  // console.log("UPDATE ISSUE- currAttachment:", currAttachment)
   // console.log("Update Issue Form- currDescription", currDescription)
 
   useEffect(() => {
@@ -87,6 +87,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     e.stopPropagation()
     e.preventDefault()
     setAttachErrors([])
+    setAttachment(e.target.files[0])
     // console.log("update-issue-upload-attachment__currIssue.summary/attachment", currIssue.summary, attachment)
 
     const formData = new FormData()
@@ -216,20 +217,20 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
           </div>
         }
 
-        <form onSubmit={handleAttachment} className="update-issue-attachment-upload-container">
-          {/* <label for="file-upload" className="custom-file-upload">
+        {/* <form onSubmit={handleAttachment} className="update-issue-attachment-upload-container"> */}
+          <label for="file-upload" className="custom-file-upload">
             <i className="fa-solid fa-paperclip" id="update-issue-paperclip"></i>
             <span className="upload-issue-attach-label">Attach</span>
-          </label> */}
+          </label>
             {(attachLoading)&& <p>Loading...</p>}
           <input
             id="file-upload"
             type="file"
             accept="image/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            onChange={(e) => setAttachment(e.target.files[0])}
+            onChange={handleAttachment}
           />
-          <button type="submit"> Upload</button>
-        </form>
+          {/* <button type="submit"> Upload</button>
+        </form> */}
 
         <div className="update-issue-description">
           <label className="update-issue-description-label">Description</label>

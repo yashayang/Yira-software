@@ -8,8 +8,11 @@
   font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
 }
 
+
 .create-issue-form {
   margin-top: 20px;
+  z-index: 999;
+  position: absolute;
 }
 
 .create-issue-title {

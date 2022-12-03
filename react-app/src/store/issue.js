@@ -79,9 +79,9 @@ export const thunkGetOneIssue = (issueId) => async (dispatch) => {
 
 
 export const thunkCreateIssue = (phaseId, issue, attachment) => async (dispatch) => {
-  console.log("CREATE ISSUES - phaseId/THUNK_issue:", phaseId, issue)
+  // console.log("CREATE ISSUES - phaseId/THUNK_issue:", phaseId, issue)
   if (attachment) {
-    console.log("CREATE ISSUES THUNK_issue.attachment:", issue.attachment)
+    // console.log("CREATE ISSUES THUNK_issue.attachment:", issue.attachment)
     try {
       const response = await fetch(`/api/projects/phases/${phaseId}/issues`, {
         method: "POST",
@@ -115,7 +115,7 @@ export const thunkCreateIssue = (phaseId, issue, attachment) => async (dispatch)
     }
   }
 
-  console.log("CREATE ISSUES THUNK_withoutImage_JSON.stringify(issue):", JSON.stringify(issue))
+  // console.log("CREATE ISSUES THUNK_withoutImage_JSON.stringify(issue):", JSON.stringify(issue))
 
   try {
     const response = await fetch(`/api/projects/phases/${phaseId}/issues`, {
@@ -125,7 +125,7 @@ export const thunkCreateIssue = (phaseId, issue, attachment) => async (dispatch)
           },
       body: JSON.stringify(issue)
     })
-    console.log("CREATE ISSUES THUNK_without image_response:", response)
+    // console.log("CREATE ISSUES THUNK_without image_response:", response)
     if (!response.ok) {
       let error;
       if (response.status === 401 || 400) {
@@ -158,15 +158,15 @@ export const thunkCreateIssue = (phaseId, issue, attachment) => async (dispatch)
 
 export const thunkUpdateIssue = (issueId, issue, phaseId, attachment) => async (dispatch) => {
   const { summary, description, phaseId, assigneeId } = issue
-  console.log("UPDATE ISSUES THUNK_issue:", issueId, summary, description, phaseId, assigneeId, attachment)
+  // console.log("UPDATE ISSUES THUNK_issue:", issueId, summary, description, phaseId, assigneeId, attachment)
   if (attachment) {
-    console.log("UPDATE ISSUES THUNK_issue.attachment:", issue.attachment)
+    // console.log("UPDATE ISSUES THUNK_issue.attachment:", issue.attachment)
     try {
       const response = await fetch(`/api/projects/issues/${issueId}`, {
         method: "PUT",
         body: issue
       })
-      console.log("CREATE ISSUES THUNK_response:", response)
+      // console.log("CREATE ISSUES THUNK_response:", response)
       if (!response.ok) {
         let error;
         if (response.status === 401 || 400) {
@@ -230,11 +230,11 @@ export const thunkUpdateIssue = (issueId, issue, phaseId, attachment) => async (
 }
 
 export const thunkDeleteIssue = (issueId, phaseId) => async (dispatch) => {
-  console.log("DELETE ISSUES THUNK_issueId_phaseId:", issueId, phaseId)
+  // console.log("DELETE ISSUES THUNK_issueId_phaseId:", issueId, phaseId)
   const response = await fetch(`/api/projects/issues/${issueId}`, {
     method: "DELETE"
   })
-  console.log("DELETE ISSUES_response:", response)
+  // console.log("DELETE ISSUES_response:", response)
   if (response.ok) {
     dispatch(removeOneIssue(issueId, phaseId));
     return response

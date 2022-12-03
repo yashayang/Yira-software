@@ -102,6 +102,41 @@ const CreateIssue = ({setModal}) => {
   }
 
 
+  const handleAttachment = async(e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    setErrors([])
+    // console.log("update-issue-upload-attachment__currIssue.summary/attachment", currIssue.summary, attachment)
+
+    const formData = new FormData()
+    formData.append("summary", summary)
+    formData.append("description", description)
+    formData.append("phase_id", parseInt(phaseId))
+    formData.append("owner_id", parseInt(assigneeId))
+    formData.append("image", attachment)
+    // console.log("update-issue-upload-attachment__formData-PHASEID", parseInt(phaseId))
+
+    setAttachLoading(true)
+    const response = await dispatch(thunkCreateIssue(phaseId, formData))
+    // console.log("update-issue-upload-attachment__response", response)
+    let errorsArr = []
+    if(response.errors) {
+      if(response.errors[0].length > 40) {
+        let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
+        errorsArr.push(errorMsg)
+      } else if(!Array.isArray(response)) {
+        errorsArr.push(response.errors)
+      } else {
+        errorsArr.push(response.errors[0])
+      }
+
+      setErrors(errorsArr)
+    }
+    if(response.issueId) {
+      setAttachLoading(false)
+    }
+}
+
 
   if (!allPhases) return null;
 
@@ -201,6 +236,21 @@ const CreateIssue = ({setModal}) => {
       </div>
 
     </form>
+
+    {/* <form onSubmit={handleAttachment} className="update-issue-attachment-upload-container">
+          <label for="file-upload" className="custom-file-upload">
+            <i className="fa-solid fa-paperclip" id="update-issue-paperclip"></i>
+            <span className="upload-issue-attach-label">Attach</span>
+          </label>
+            {(attachLoading)&& <p>Loading...</p>}
+          <input
+            id="file-upload"
+            type="file"
+            accept="image/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            onChange={(e) => setAttachment(e.target.files[0])}
+          />
+          <button type="submit"> Upload</button>
+        </form> */}
   </div>
   )
 }

@@ -277,7 +277,7 @@
   visibility: hidden;
 }
 
-/* #file-upload {
+#file-upload {
   display: none;
 }
 
@@ -290,7 +290,7 @@
   font-size: 15px;
   font-weight: 500;
   color: #2F2F2F;
-} */
+}
 
 .upload-issue-attach-label {
   margin-left: 3px;

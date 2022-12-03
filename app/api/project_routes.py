@@ -145,10 +145,10 @@ def update_issue(issue_id):
     return {"errors" : "Issue couldn't be found"}, 404
 
   if "image" not in request.files:
-    print("===========UPDATE ISSUE with image==============", request.files)
-    print("===========form.data with image==============", form.data)
+    # print("===========UPDATE ISSUE with image==============", request.files)
+    # print("===========form.data with image==============", form.data)
     if form.validate_on_submit():
-      print("==========form.validate_on_submit=====")
+      # print("==========form.validate_on_submit=====")
       issue.summary = form.data['summary']
       issue.description = form.data['description']
       issue.phase_id = form.data['phase_id']
@@ -174,8 +174,8 @@ def update_issue(issue_id):
 
   url = upload["url"]
 
-  print("---UPDATE ISSUE with image---new_issue:", issue)
-  print("---UPDATE ISSUE with image---form.data:", form.data)
+  # print("---UPDATE ISSUE with image---new_issue:", issue)
+  # print("---UPDATE ISSUE with image---form.data:", form.data)
   if form.validate_on_submit():
     issue.summary = form.data['summary']
     issue.description = form.data['description']
