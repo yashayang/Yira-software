@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import { thunkUpdateIssue, thunkGetOneIssue, thunkGetAllPhasesIssues, cleanState } from "../../../store/issue";
 import { loadAllUsers } from '../../../store/session';
 import "../../CSS/UpdateIssues.css"
