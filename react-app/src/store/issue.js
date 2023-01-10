@@ -158,12 +158,15 @@ export const thunkCreateIssue = (phaseId, issue, attachment) => async (dispatch)
 
 export const thunkUpdateIssue = (issueId, issue, phaseId, attachment) => async (dispatch) => {
   const { summary, description, phaseId, assigneeId } = issue
-  console.log("UPDATE ISSUES THUNK_issue:", issueId, summary, description, phaseId, assigneeId, attachment)
+  console.log("UPDATE ISSUES THUNK_issue:", issue)
   if (attachment) {
-    console.log("UPDATE ISSUES THUNK_issue.attachment:", issue.attachment)
+    console.log("UPDATE ISSUES THUNK_issue:", issue)
     try {
       const response = await fetch(`/api/projects/issues/${issueId}`, {
         method: "PUT",
+        headers: {
+          'Content-Type': 'application/json'
+          },
         body: issue
       })
       // console.log("CREATE ISSUES THUNK_response:", response)
@@ -187,6 +190,7 @@ export const thunkUpdateIssue = (issueId, issue, phaseId, attachment) => async (
 
       const updatedIssue = await response.json();
       dispatch(updateOneIssue(updatedIssue, phaseId));
+      console.log("UPDATE ISSUES THUNK_updatedIssue:", updatedIssue)
       return updatedIssue
 
     } catch(error) {
