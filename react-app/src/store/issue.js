@@ -164,9 +164,6 @@ export const thunkUpdateIssue = (issueId, issue, phaseId, attachment) => async (
     try {
       const response = await fetch(`/api/projects/issues/${issueId}`, {
         method: "PUT",
-        headers: {
-          'Content-Type': 'application/json'
-          },
         body: issue
       })
       // console.log("CREATE ISSUES THUNK_response:", response)

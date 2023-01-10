@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
+// import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import { thunkUpdateIssue, thunkGetOneIssue, thunkGetAllPhasesIssues, cleanState } from "../../../store/issue";
 import { loadAllUsers } from '../../../store/session';
 import "../../CSS/UpdateIssues.css"
@@ -28,11 +28,10 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const currAssigneeId = singleIssue?.ownerId;
   const currAttachment = singleIssue?.attachment;
 
-  const docs = [
-    { uri: currAttachment}
-  ]
-
-  console.log("UpdateIssueForm-doc-viewer----docs", docs)
+  // const docs = [
+  //   { uri: currAttachment}
+  // ]
+  // console.log("UpdateIssueForm-doc-viewer----docs", docs)
 
   const [summary, setSummary] = useState(currSummary);
   const [summaryInput, setSummaryInput] = useState(false);
@@ -114,8 +113,8 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     formData.append("description", currDescription)
     formData.append("phase_id", parseInt(currPhaseId))
     formData.append("owner_id", parseInt(currAssigneeId))
-    formData.append("image", attachment[0].name)
-    console.log("update-issue-upload-attachment__currIssue.summary/attachment", currIssue.summary, attachment[0].name)
+    formData.append("image", attachment)
+    console.log("update-issue-upload-attachment__currIssue.summary/attachment", currIssue.summary, attachment)
     console.log("update-issue-upload-attachment__formData-PHASEID", parseInt(currPhaseId))
 
     setAttachLoading(true)
@@ -269,7 +268,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
               accept="image/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
               onChange={(e) =>{
                 setAttachErrors([])
-                e.target.files?.length && setAttachment(Array.from(e.target.files))
+                setAttachment(e.target.files[0].name)
               }}
               required
             />
@@ -320,11 +319,11 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
           {currAttachment &&
             <>
               <div className="update-issue-attachment-label">Attachment</div>
-              {/* {(currAttachment?.includes("jpeg") || currAttachment?.includes("png") || currAttachment?.includes("jpg") || currAttachment?.includes("gif"))
+              {(currAttachment?.includes("jpeg") || currAttachment?.includes("png") || currAttachment?.includes("jpg") || currAttachment?.includes("gif"))
                 ? <img src={`${currAttachment}`} alt={currAttachment} className="update-issue-attachment-img"/>
                 : <i class="fa-regular fa-file-word"></i>
-              } */}
-              <DocViewer
+              }
+              {/* <DocViewer
               documents={
                 attachment ?
                 attachment?.map((file) => ({
@@ -334,7 +333,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
                 : docs
               }
               pluginRenderers={DocViewerRenderers}
-              />
+              /> */}
             </>
           }
         </div>
