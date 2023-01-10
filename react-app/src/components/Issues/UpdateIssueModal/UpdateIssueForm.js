@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import { thunkUpdateIssue, thunkGetOneIssue, thunkGetAllPhasesIssues, cleanState } from "../../../store/issue";
 import { loadAllUsers } from '../../../store/session';
 import "../../CSS/UpdateIssues.css"
 
 
 const UpdateIssueForm = ({currIssue, currPhase}) => {
+
+  // require('react-dom');
+  // window.React2 = require('react');
+  // console.log(window.React1 === window.React2);
+  // console.log('React1',window.React1);
+  // console.log('React2',window.React2);
+
   const dispatch = useDispatch();
   const currUser = useSelector(state => state.session.user)
   const allUsersArr = useSelector(state => state.session.AllUsers?.users)
@@ -20,6 +27,10 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const currPhaseId = singleIssue?.phaseId;
   const currAssigneeId = singleIssue?.ownerId;
   const currAttachment = singleIssue?.attachment;
+
+  const docs = [
+    { uri: currAttachment}
+  ]
 
   const [summary, setSummary] = useState(currSummary);
   const [summaryInput, setSummaryInput] = useState(false);
@@ -106,6 +117,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     setAttachLoading(true)
     const response = await dispatch(thunkUpdateIssue(issueId, formData, currPhaseId, attachment))
     console.log("update-issue-upload-attachment__response", response)
+
     let errorsArr = []
     if(response.errors) {
       setAttachLoading(false)
@@ -119,17 +131,17 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
       }
       setAttachErrors(errorsArr)
       // if (attachErrors) {
-      //   setTimeout(() => {
-      //     const errorsDiv = document.getElementById('update-issue-attachment-errors');
-      //     errorsDiv.style.display = 'none';
-      //   }, 3000);
-      //   setAttachment(null)
-      //   await dispatch(thunkGetOneIssue(parseInt(issueId)))
-      // }
-    }
-    if(response.issueId) {
-      setAttachLoading(false)
-      await dispatch(thunkGetOneIssue(parseInt(issueId)))
+        //   setTimeout(() => {
+          //     const errorsDiv = document.getElementById('update-issue-attachment-errors');
+          //     errorsDiv.style.display = 'none';
+          //   }, 3000);
+          //   setAttachment(null)
+          //   await dispatch(thunkGetOneIssue(parseInt(issueId)))
+          // }
+        }
+        if(response.issueId) {
+          setAttachLoading(false)
+          await dispatch(thunkGetOneIssue(parseInt(issueId)))
     }
 }
 
@@ -304,10 +316,11 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
           {currAttachment &&
             <>
               <div className="update-issue-attachment-label">Attachment</div>
-              {(currAttachment?.includes("jpeg") || currAttachment?.includes("png") || currAttachment?.includes("jpg") || currAttachment?.includes("gif"))
+              {/* {(currAttachment?.includes("jpeg") || currAttachment?.includes("png") || currAttachment?.includes("jpg") || currAttachment?.includes("gif"))
                 ? <img src={`${currAttachment}`} alt={currAttachment} className="update-issue-attachment-img"/>
                 : <i class="fa-regular fa-file-word"></i>
-              }
+              } */}
+              <DocViewer documents={docs} pluginRenderers={DocViewerRenderers}/>
             </>
           }
         </div>
