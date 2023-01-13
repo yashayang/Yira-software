@@ -7,12 +7,8 @@ import "../../CSS/UpdateIssues.css"
 
 
 const UpdateIssueForm = ({currIssue, currPhase}) => {
-
-  // require('react-dom');
-  // window.React2 = require('react');
-  // console.log(window.React1 === window.React2);
-  // console.log('React1',window.React1);
-  // console.log('React2',window.React2);
+  console.log("UpdateIssueForm----currIssue", currIssue)
+  console.log("UpdateIssueForm----currPhase", currPhase)
 
   const dispatch = useDispatch();
   const currUser = useSelector(state => state.session.user)
@@ -29,9 +25,11 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const currAttachment = singleIssue?.attachment;
 
   const docs = [
-    { uri: currAttachment}
+    {
+      uri: currAttachment,
+      // fileName: "https://yiraawsbucket.s3.amazonaws.com/13ccace7a5ae4c0babb1a6f41cffb675.pdf"
+    }
   ]
-
   console.log("UpdateIssueForm-doc-viewer----docs", docs)
 
   const [summary, setSummary] = useState(currSummary);
@@ -43,23 +41,23 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const [phaseId, setPhaseId] = useState();
   const [assigneeId, setAssigneeId] = useState(currIssue.ownerId)
 
-  const [attachment, setAttachment] = useState(currAttachment);
+  const [attachment, setAttachment] = useState(currIssue.attachment);
   const [attachLoading, setAttachLoading] = useState(false);
   const [attachErrors, setAttachErrors] = useState([]);
   const [uploadBtn, setUploadBtn] = useState(false);
 
-  // console.log("UPDATE ISSUE- singleIssue:", singleIssue)
-  console.log("UPDATE ISSUE- currAttachment:", currAttachment)
-  console.log("UPDATE ISSUE- attachment:", attachment)
+  // console.log("UpdateIssueForm---singleIssue:", singleIssue)
+  console.log("UpdateIssueForm---currAttachment:", currAttachment)
+  console.log("UpdateIssueForm---attachment:", attachment)
   // console.log("Update Issue Form- currDescription", currDescription)
 
   useEffect(() => {
     dispatch(thunkGetOneIssue(parseInt(issueId)))
     dispatch(loadAllUsers())
     dispatch(thunkGetAllPhasesIssues())
-    return () => {
-      dispatch(cleanState())
-    }
+    // return () => {
+    //   dispatch(cleanState())
+    // }
   }, [dispatch, issueId, currIssue.attachment])
 
 
@@ -97,10 +95,6 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
       // dispatch(thunkGetAllPhasesIssues())
     }
   }
-  // const uploadAttachment = (e) => {
-  //   setAttachment(e.target.files[0])
-  //   return handleAttachment()
-  // }
 
   const handleAttachment = async(e) => {
     console.log("UpdateIssueForm-handleAttachment-enter!!!!")
@@ -110,17 +104,22 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     setAttachErrors([])
 
     const formData = new FormData()
-    formData.append("summary", currIssue.summary)
-    formData.append("description", currDescription)
-    formData.append("phase_id", parseInt(currPhaseId))
-    formData.append("owner_id", parseInt(currAssigneeId))
-    formData.append("image", attachment[0].name)
-    console.log("update-issue-upload-attachment__currIssue.summary/attachment", currIssue.summary, attachment[0].name)
-    console.log("update-issue-upload-attachment__formData-PHASEID", parseInt(currPhaseId))
+    // formData.append("summary", currIssue.summary)
+    // formData.append("description", currDescription)
+    // formData.append("phase_id", parseInt(currPhaseId))
+    // formData.append("owner_id", parseInt(currAssigneeId))
+    formData.append("image", attachment[0])
+    for(let value of formData.values()) {
+      console.log("UpdateIssueForm-handleAttachment---value", value)
+    }
+    console.log("UpdateIssueForm-handleAttachment---attachment[0]", attachment[0], Array.isArray(attachment))
+    console.log("UpdateIssueForm-handleAttachment---formData.image", formData.image)
+    console.log("UpdateIssueForm-handleAttachment---currIssue.summary/attachment", currIssue.summary, currIssue.attachment)
+    console.log("UpdateIssueForm-handleAttachment---formData-PHASEID", parseInt(currPhaseId))
 
     setAttachLoading(true)
     const response = await dispatch(thunkUpdateIssue(issueId, formData, currPhaseId, attachment))
-    console.log("update-issue-upload-attachment__response", response)
+    console.log("UpdateIssueForm-handleAttachment---response", response)
 
     let errorsArr = []
     if(response.errors) {
@@ -157,10 +156,14 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     setSummaryInput(false)
 
     const issue = {
-      summary: currSummary,
+      // summary: currSummary,
+      // description,
+      // phaseId: currPhaseId,
+      // assigneeId: currAssigneeId
       description,
-      phaseId: currPhaseId,
-      assigneeId: currAssigneeId
+      "owner_id": parseInt(currIssue.ownerId),
+      "phase_id": parseInt(currIssue.phaseId),
+      "summary" : currIssue.summary
     }
 
     const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
@@ -326,7 +329,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
               } */}
               <DocViewer
               documents={
-                attachment ?
+                !currAttachment ?
                 attachment?.map((file) => ({
                   uri: window.URL.createObjectURL(file),
                   fileName: file.name,
