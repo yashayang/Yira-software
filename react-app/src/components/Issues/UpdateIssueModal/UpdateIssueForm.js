@@ -24,12 +24,22 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const currAssigneeId = singleIssue?.ownerId;
   const currAttachment = singleIssue?.attachment;
 
-  const docs = [
-    {
-      uri: currAttachment,
-      // fileName: "https://yiraawsbucket.s3.amazonaws.com/13ccace7a5ae4c0babb1a6f41cffb675.pdf"
+  const getExtension = (fileName) =>{
+    if (fileName){
+       const urlArr = fileName.split('.');
+       const ext=  urlArr[urlArr.length-1];
+       console.log('file ext---- ',ext)
+       return ext
     }
-  ]
+    return "jpg"
+ }
+ const docs = [
+   {uri: currAttachment,
+   fileName : currAttachment,
+   fileType: getExtension(currAttachment)
+   //Access-Control-Allow-Origin :"*"
+ },]
+
   console.log("UpdateIssueForm-doc-viewer----docs", docs)
 
   const [summary, setSummary] = useState(currSummary);
@@ -328,15 +338,26 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
                 : <i class="fa-regular fa-file-word"></i>
               } */}
               <DocViewer
-              documents={
-                !currAttachment ?
-                attachment?.map((file) => ({
-                  uri: window.URL.createObjectURL(file),
-                  fileName: file.name,
-                }))
-                : docs
-              }
+              // documents={
+              //   !currAttachment ?
+              //   attachment?.map((file) => ({
+              //     uri: window.URL.createObjectURL(file),
+              //     fileName: file.name,
+              //   }))
+              //   : docs
+              // }
+              documents={docs}
               pluginRenderers={DocViewerRenderers}
+              config={{
+                header: {
+                  disableHeader: false,
+                  disableFileName: false,
+                  retainURLParams: false,
+                  mode: 'cors'
+
+                },
+                mode: 'cors'
+              }}
               />
             </>
           }
