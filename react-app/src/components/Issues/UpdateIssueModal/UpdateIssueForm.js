@@ -107,7 +107,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   }
 
   const handleAttachment = async(e) => {
-    console.log("UpdateIssueForm-handleAttachment-enter!!!!")
+    // console.log("UpdateIssueForm-handleAttachment-enter!!!!")
     e.stopPropagation()
     e.preventDefault()
     // setAttachment(e.target.files[0])
@@ -120,16 +120,16 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     // formData.append("owner_id", parseInt(currAssigneeId))
     formData.append("image", attachment[0])
     for(let value of formData.values()) {
-      console.log("UpdateIssueForm-handleAttachment---value", value)
+      // console.log("UpdateIssueForm-handleAttachment---value", value)
     }
-    console.log("UpdateIssueForm-handleAttachment---attachment[0]", attachment[0], Array.isArray(attachment))
-    console.log("UpdateIssueForm-handleAttachment---formData.image", formData.image)
-    console.log("UpdateIssueForm-handleAttachment---currIssue.summary/attachment", currIssue.summary, currIssue.attachment)
-    console.log("UpdateIssueForm-handleAttachment---formData-PHASEID", parseInt(currPhaseId))
+    // console.log("UpdateIssueForm-handleAttachment---attachment[0]", attachment[0], Array.isArray(attachment))
+    // console.log("UpdateIssueForm-handleAttachment---formData.image", formData.image)
+    // console.log("UpdateIssueForm-handleAttachment---currIssue.summary/attachment", currIssue.summary, currIssue.attachment)
+    // console.log("UpdateIssueForm-handleAttachment---formData-PHASEID", parseInt(currPhaseId))
 
     setAttachLoading(true)
     const response = await dispatch(thunkUpdateIssue(issueId, formData, currPhaseId, attachment))
-    console.log("UpdateIssueForm-handleAttachment---response", response)
+    // console.log("UpdateIssueForm-handleAttachment---response", response)
 
     let errorsArr = []
     if(response.errors) {
@@ -190,6 +190,23 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     }
   }
 
+  const handlePhaseId = async (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    setDescriptionInput(false)
+    setSummaryInput(false)
+    setAttachErrors([])
+
+    const issue = {
+      summary: currSummary,
+      description: currDescription,
+      phaseId: Number(e.target.value),
+      assigneeId: currAssigneeId
+    }
+    console.log("UpdateIssueForm-handlePhaseId---issue:", issue)
+    await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
+  }
+
   const handleAssigneeId = async (e) => {
     e.stopPropagation()
     e.preventDefault()
@@ -208,22 +225,6 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
   }
 
-  const handlePhaseId = async (e) => {
-    e.stopPropagation()
-    e.preventDefault()
-    setDescriptionInput(false)
-    setSummaryInput(false)
-    setAttachErrors([])
-
-    const issue = {
-      summary: currSummary,
-      description: currDescription,
-      phaseId: Number(e.target.value),
-      assigneeId: currAssigneeId
-    }
-    // console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
-    await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
-  }
 
   if(!singleIssue) return null;
 
@@ -370,6 +371,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
       </div>
 
       <div className="update-issue-right-container">
+
         <div>
           <select
             name="phaseId"

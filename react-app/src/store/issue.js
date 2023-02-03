@@ -187,7 +187,7 @@ export const thunkUpdateIssue = (issueId, issue, phaseId, attachment) => async (
 
       const updatedIssue = await response.json();
       dispatch(updateOneIssue(updatedIssue, phaseId));
-      console.log("UPDATE ISSUES THUNK_updatedIssue:", updatedIssue)
+      console.log("UPDATE ISSUES THUNK_WITH ATTACH_updatedIssue:", updatedIssue)
       return updatedIssue
 
     } catch(error) {
@@ -224,6 +224,7 @@ export const thunkUpdateIssue = (issueId, issue, phaseId, attachment) => async (
 
     const updatedIssue = await response.json();
     dispatch(updateOneIssue(updatedIssue, phaseId));
+    console.log("UPDATE ISSUES THUNK_NO ATTACH_updatedIssue:", updatedIssue)
     return updatedIssue
 
   } catch (error) {
