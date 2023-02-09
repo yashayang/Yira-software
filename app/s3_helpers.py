@@ -25,7 +25,7 @@ def get_unique_filename(filename):
     return f"{unique_filename}.{ext}"
 
 
-def upload_file_to_s3(file, acl="public-read"):
+def upload_file_to_s3(file, acl="public-read-write"):
     try:
         s3.upload_fileobj(
             file,

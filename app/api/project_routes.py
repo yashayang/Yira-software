@@ -140,18 +140,25 @@ def create_issue(phase_id):
 @project_routes.route("/issues/<int:issue_id>", methods=["PUT"])
 @login_required
 def update_issue(issue_id):
-  form = IssueForm()
-  form['csrf_token'].data = request.cookies['csrf_token']
+  print("===========UPDATE ISSUE ENTER!!!!==============")
+  issue = Issue.query.filter(Issue.id == issue_id).first()
+  print('issue-----',issue)
+  print('request.files------', request.files)
+  # print('request.files["image"]------', request.files["image"])
 
-  issue = Issue.query.get(issue_id)
   if issue is None:
+    print('issue- not existing----',issue)
     return {"errors" : "Issue couldn't be found"}, 404
 
+  form = IssueForm(obj=issue)
+  form['csrf_token'].data = request.cookies['csrf_token']
+
   if "image" not in request.files:
-    # print("===========UPDATE ISSUE with image==============", request.files)
-    # print("===========form.data with image==============", form.data)
+    print("===========UPDATE ISSUE NO image==============", request.files)
+    print("===========form.data NO image==============", form.data)
+    print("===========form.data NO image----phaseId==============", phaseId)
     if form.validate_on_submit():
-      # print("==========form.validate_on_submit=====")
+      print("==========form.validate_on_submit=====")
       issue.summary = form.data['summary']
       issue.description = form.data['description']
       issue.phase_id = form.data['phase_id']
@@ -160,30 +167,29 @@ def update_issue(issue_id):
       db.session.commit()
       return issue.to_dict(), 200
     else:
-      # print("---UPDATE ISSUE---FORM ERRORS:", form.errors)
+      print("---UPDATE ISSUE---FORM ERRORS:", form.errors)
       return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
   image = request.files["image"]
 
   if not allowed_file(image.filename):
-      return {"errors": "File type not permitted. Please choose again."}, 400
+    print("===========UPDATE ISSUE 400 - 1==============", form.errors)
+    return {"errors": "File type not permitted. Please choose again."}, 400
 
   image.filename = get_unique_filename(image.filename)
 
   upload = upload_file_to_s3(image)
 
   if "url" not in upload:
-      return upload, 400
+    print("===========UPDATE ISSUE 400 - 2==============", form.errors)
+    # return upload, 400
+    return {"errors": "File type not in upload."}, 400
 
   url = upload["url"]
 
   # print("---UPDATE ISSUE with image---new_issue:", issue)
-  # print("---UPDATE ISSUE with image---form.data:", form.data)
   if form.validate_on_submit():
-    issue.summary = form.data['summary']
-    issue.description = form.data['description']
-    issue.phase_id = form.data['phase_id']
-    issue.owner_id = form.data["owner_id"]
+    form.populate_obj(issue)
     issue.attachment = url
     issue.updated_at = datetime.now()
     db.session.commit()
@@ -191,6 +197,59 @@ def update_issue(issue_id):
   else:
     # print("---UPDATE ISSUE---FORM ERRORS:", form.errors)
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+  #---------------- OLD version ----------------#
+  # form = IssueForm()
+  # form['csrf_token'].data = request.cookies['csrf_token']
+
+  # issue = Issue.query.get(issue_id)
+  # if issue is None:
+  #   return {"errors" : "Issue couldn't be found"}, 404
+
+  # if "image" not in request.files:
+    # print("===========UPDATE ISSUE with image==============", request.files)
+    # print("===========form.data with image==============", form.data)
+    # if form.validate_on_submit():
+      # print("==========form.validate_on_submit=====")
+    #   issue.summary = form.data['summary']
+    #   issue.description = form.data['description']
+    #   issue.phase_id = form.data['phase_id']
+    #   issue.owner_id = form.data["owner_id"]
+    #   issue.updated_at = datetime.now()
+    #   db.session.commit()
+    #   return issue.to_dict(), 200
+    # else:
+      # print("---UPDATE ISSUE---FORM ERRORS:", form.errors)
+  #     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+  # image = request.files["image"]
+
+  # if not allowed_file(image.filename):
+  #     return {"errors": "File type not permitted. Please choose again."}, 400
+
+  # image.filename = get_unique_filename(image.filename)
+
+  # upload = upload_file_to_s3(image)
+
+  # if "url" not in upload:
+  #     return upload, 400
+
+  # url = upload["url"]
+
+  # print("---UPDATE ISSUE with image---new_issue:", issue)
+  # print("---UPDATE ISSUE with image---form.data:", form.data)
+  # if form.validate_on_submit():
+  #   issue.summary = form.data['summary']
+  #   issue.description = form.data['description']
+  #   issue.phase_id = form.data['phase_id']
+  #   issue.owner_id = form.data["owner_id"]
+  #   issue.attachment = url
+  #   issue.updated_at = datetime.now()
+  #   db.session.commit()
+  #   return issue.to_dict(), 200
+  # else:
+    # print("---UPDATE ISSUE---FORM ERRORS:", form.errors)
+    # return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
 # fetch("http://localhost:3000/api/projects/issues/6", {
