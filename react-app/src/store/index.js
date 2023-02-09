@@ -6,7 +6,7 @@ import issues from './issue';
 
 const rootReducer = combineReducers({
   session,
-  phases,
+  // phases,
   issues
 });
 

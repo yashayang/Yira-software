@@ -198,10 +198,11 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     setAttachErrors([])
 
     const issue = {
-      summary: currSummary,
-      description: currDescription,
-      phaseId: Number(e.target.value),
-      assigneeId: currAssigneeId
+      // summary: currSummary,
+      // description: currDescription,
+      // phaseId: Number(e.target.value),
+      // assigneeId: currAssigneeId
+      "phase_id": Number(e.target.value)
     }
     console.log("UpdateIssueForm-handlePhaseId---issue:", issue)
     await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
@@ -216,10 +217,11 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     setAttachErrors([])
 
     const issue = {
-      summary: currSummary,
-      description: currDescription,
-      phaseId: phaseId ? phaseId : currPhaseId,
-      assigneeId: Number(e.target.value)
+      // summary: currSummary,
+      // description: currDescription,
+      // phaseId: phaseId ? phaseId : currPhaseId,
+      // assigneeId: Number(e.target.value)
+      "owner_id": Number(e.target.value)
     }
     // console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
     await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
