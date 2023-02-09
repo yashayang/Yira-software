@@ -65,9 +65,9 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     dispatch(thunkGetOneIssue(parseInt(issueId)))
     dispatch(loadAllUsers())
     dispatch(thunkGetAllPhasesIssues())
-    // return () => {
-    //   dispatch(cleanState())
-    // }
+    return () => {
+      dispatch(cleanState())
+    }
   }, [dispatch, issueId, currIssue.attachment])
 
 
@@ -354,10 +354,9 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
               config={{
                 header: {
                   disableHeader: false,
-                  disableFileName: false,
+                  disableFileName: true,
                   retainURLParams: false,
                   mode: 'cors'
-
                 },
                 mode: 'cors'
               }}
