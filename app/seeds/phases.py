@@ -60,5 +60,9 @@ def seed_phases():
   db.session.commit()
 
 def undo_phases():
-    db.session.execute('TRUNCATE Phases RESTART IDENTITY CASCADE;')
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.phases RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute("DELETE FROM phases")
+
     db.session.commit()

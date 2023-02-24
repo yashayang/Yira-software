@@ -13,5 +13,9 @@ def seed_projects():
   db.session.commit()
 
 def undo_projects():
-    db.session.execute('TRUNCATE projects RESTART IDENTITY CASCADE;')
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.projects RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute("DELETE FROM projects")
+
     db.session.commit()

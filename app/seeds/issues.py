@@ -55,5 +55,9 @@ def seed_issues():
   db.session.commit()
 
 def undo_issues():
-    db.session.execute('TRUNCATE issues RESTART IDENTITY CASCADE;')
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.issues RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute("DELETE FROM issues")
+
     db.session.commit()
