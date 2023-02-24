@@ -19,10 +19,15 @@ const CreateIssueInPhase = ({phaseId, assigneeId}) => {
     const issueInfo = {
       summary,
       description: "",
-      phaseId,
-      assigneeId
+      attachment: "",
+      phase_id: parseInt(phaseId),
+      owner_id: parseInt(assigneeId)
     }
+    console.log("CREATE ISSUE IN PHASE -issueInfo", issueInfo)
     const response = await dispatch(thunkCreateIssue(phaseId, issueInfo))
+
+    console.log("CREATE ISSUE IN PHASE -response", response)
+
     let errorsArr = []
     if(response.errors) {
       let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
@@ -42,7 +47,7 @@ const CreateIssueInPhase = ({phaseId, assigneeId}) => {
       {summaryInput &&
         <div className="card-container">
 
-          <div className="create-issue-validation-errors">
+          <div className="create-issue-inphase-validation-errors">
             {
             errors &&
             errors.map((error)=>(<div key={error}>{error}</div>))

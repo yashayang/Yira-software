@@ -8,7 +8,7 @@ function CreateIssueModal() {
 
   return (
     <>
-      <div onClick={() => setShowModal(true)}>Create Issue</div>
+      <div className='navbar-create-issue-entry' onClick={() => setShowModal(true)}>Create Issue</div>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           {/* {console.log("CREATE ISSUE MODAL INDEX FILE ONCLOSE", showModal)} */}

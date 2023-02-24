@@ -11,16 +11,18 @@ const NavBar = () => {
 
   return (
     <nav className='navbar-main-container'>
-        <NavLink to='/' exact={true} activeClassName='active' style={{textDecoration: "none"}}>
+      <div className='navbar-left'>
+        <NavLink to='/' exact={true} style={{textDecoration: "none"}}>
           <div className='navbar-left-container'>
             <div className="logo"><img src={logo} alt="logo"/></div>
             <div className='logo-name'>Yira Software</div>
-            <div className='navbar-left-seletion'>
-              {curr_user && <div className='navbar-project'>Projects</div>}
-            </div>
-            {curr_user && <div className='navbar-create-issue-entry'><CreateIssueModal/></div>}
           </div>
         </NavLink>
+          <div className='navbar-menu-seletion' activeClassName='active'>
+            {curr_user && <div className='navbar-project'>Projects</div>}
+            {curr_user && <CreateIssueModal/>}
+          </div>
+      </div>
         {/* <div>
           <NavLink to='/login' exact={true} activeClassName='active' style={{textDecoration: "none"}}>
             Login

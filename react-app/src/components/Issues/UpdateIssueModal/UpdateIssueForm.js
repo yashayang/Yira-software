@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import { thunkUpdateIssue, thunkGetOneIssue, thunkGetAllPhasesIssues, cleanState } from "../../../store/issue";
 import { loadAllUsers } from '../../../store/session';
 import "../../CSS/UpdateIssues.css"
 
+
 const UpdateIssueForm = ({currIssue, currPhase}) => {
+  console.log("UpdateIssueForm----currIssue", currIssue)
+  console.log("UpdateIssueForm----currPhase", currPhase)
+
   const dispatch = useDispatch();
   const currUser = useSelector(state => state.session.user)
   const allUsersArr = useSelector(state => state.session.AllUsers?.users)
@@ -17,6 +22,25 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const currDescription = singleIssue?.description;
   const currPhaseId = singleIssue?.phaseId;
   const currAssigneeId = singleIssue?.ownerId;
+  const currAttachment = singleIssue?.attachment;
+
+  const getExtension = (fileName) =>{
+    if (fileName){
+       const urlArr = fileName.split('.');
+       const ext=  urlArr[urlArr.length-1];
+       console.log('file ext---- ',ext)
+       return ext
+    }
+    return "jpg"
+ }
+ const docs = [
+   {uri: currAttachment,
+   fileName : currAttachment,
+   fileType: getExtension(currAttachment)
+   //Access-Control-Allow-Origin :"*"
+ },]
+
+  console.log("UpdateIssueForm-doc-viewer----docs", docs)
 
   const [summary, setSummary] = useState(currSummary);
   const [summaryInput, setSummaryInput] = useState(false);
@@ -27,9 +51,15 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const [phaseId, setPhaseId] = useState();
   const [assigneeId, setAssigneeId] = useState(currIssue.ownerId)
 
-  // console.log("UPDATE ISSUE- currPhase:", currPhase)
-  console.log("UPDATE ISSUE- currIssue:", currIssue)
-  console.log("Update Issue Form- currDescription", currDescription)
+  const [attachment, setAttachment] = useState(currIssue.attachment);
+  const [attachLoading, setAttachLoading] = useState(false);
+  const [attachErrors, setAttachErrors] = useState([]);
+  const [uploadBtn, setUploadBtn] = useState(false);
+
+  // console.log("UpdateIssueForm---singleIssue:", singleIssue)
+  console.log("UpdateIssueForm---currAttachment:", currAttachment)
+  console.log("UpdateIssueForm---attachment:", attachment)
+  // console.log("Update Issue Form- currDescription", currDescription)
 
   useEffect(() => {
     dispatch(thunkGetOneIssue(parseInt(issueId)))
@@ -38,7 +68,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     return () => {
       dispatch(cleanState())
     }
-  }, [dispatch, issueId])
+  }, [dispatch, issueId, currIssue.attachment])
 
 
   const showSummary = async (e) => {
@@ -46,9 +76,11 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     setDescription(currIssue.description)
     setDescriptionInput(false)
     setSummaryInput(true)
+    setAttachErrors([])
   }
 
   const handleSummary = async (e) => {
+    e.stopPropagation()
     e.preventDefault()
     setSummaryErrors([])
 
@@ -74,16 +106,74 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     }
   }
 
+  const handleAttachment = async(e) => {
+    // console.log("UpdateIssueForm-handleAttachment-enter!!!!")
+    e.stopPropagation()
+    e.preventDefault()
+    // setAttachment(e.target.files[0])
+    setAttachErrors([])
+
+    const formData = new FormData()
+    // formData.append("summary", currIssue.summary)
+    // formData.append("description", currDescription)
+    // formData.append("phase_id", parseInt(currPhaseId))
+    // formData.append("owner_id", parseInt(currAssigneeId))
+    formData.append("image", attachment[0])
+    for(let value of formData.values()) {
+      // console.log("UpdateIssueForm-handleAttachment---value", value)
+    }
+    // console.log("UpdateIssueForm-handleAttachment---attachment[0]", attachment[0], Array.isArray(attachment))
+    // console.log("UpdateIssueForm-handleAttachment---formData.image", formData.image)
+    // console.log("UpdateIssueForm-handleAttachment---currIssue.summary/attachment", currIssue.summary, currIssue.attachment)
+    // console.log("UpdateIssueForm-handleAttachment---formData-PHASEID", parseInt(currPhaseId))
+
+    setAttachLoading(true)
+    const response = await dispatch(thunkUpdateIssue(issueId, formData, currPhaseId, attachment))
+    // console.log("UpdateIssueForm-handleAttachment---response", response)
+
+    let errorsArr = []
+    if(response.errors) {
+      setAttachLoading(false)
+      if(response.errors[0].length > 40) {
+        let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
+        errorsArr.push(errorMsg)
+      } else if(!Array.isArray(response)) {
+        errorsArr.push(response.errors)
+      } else {
+        errorsArr.push(response.errors[0])
+      }
+      setAttachErrors(errorsArr)
+      // if (attachErrors) {
+        //   setTimeout(() => {
+          //     const errorsDiv = document.getElementById('update-issue-attachment-errors');
+          //     errorsDiv.style.display = 'none';
+          //   }, 3000);
+          //   setAttachment(null)
+          //   await dispatch(thunkGetOneIssue(parseInt(issueId)))
+          // }
+        }
+        if(response.issueId) {
+          setAttachLoading(false)
+          await dispatch(thunkGetOneIssue(parseInt(issueId)))
+    }
+}
+
 
   const handleDescription = async (e) => {
+    e.stopPropagation()
     e.preventDefault()
     setDescriptionErrors([])
     setSummaryInput(false)
+
     const issue = {
-      summary: currSummary,
+      // summary: currSummary,
+      // description,
+      // phaseId: currPhaseId,
+      // assigneeId: currAssigneeId
       description,
-      phaseId: currPhaseId,
-      assigneeId: currAssigneeId
+      "owner_id": parseInt(currIssue.ownerId),
+      "phase_id": parseInt(currIssue.phaseId),
+      "summary" : currIssue.summary
     }
 
     const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
@@ -100,35 +190,43 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     }
   }
 
-  const handleAssigneeId = async (e) => {
-    e.preventDefault()
-    setAssigneeId(e.target.value)
-    setDescriptionInput(false)
-    setSummaryInput(false)
-    const issue = {
-      summary: currSummary,
-      description: currDescription,
-      phaseId: phaseId ? phaseId : currPhaseId,
-      assigneeId: Number(e.target.value)
-    }
-    // console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
-    await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
-  }
-
   const handlePhaseId = async (e) => {
     e.stopPropagation()
     e.preventDefault()
     setDescriptionInput(false)
     setSummaryInput(false)
+    setAttachErrors([])
+
     const issue = {
-      summary: currSummary,
-      description: currDescription,
-      phaseId: Number(e.target.value),
-      assigneeId: currAssigneeId
+      // summary: currSummary,
+      // description: currDescription,
+      // phaseId: Number(e.target.value),
+      // assigneeId: currAssigneeId
+      "phase_id": Number(e.target.value)
+    }
+    console.log("UpdateIssueForm-handlePhaseId---issue:", issue)
+    await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
+  }
+
+  const handleAssigneeId = async (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    setAssigneeId(e.target.value)
+    setDescriptionInput(false)
+    setSummaryInput(false)
+    setAttachErrors([])
+
+    const issue = {
+      // summary: currSummary,
+      // description: currDescription,
+      // phaseId: phaseId ? phaseId : currPhaseId,
+      // assigneeId: Number(e.target.value)
+      "owner_id": Number(e.target.value)
     }
     // console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
     await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
   }
+
 
   if(!singleIssue) return null;
 
@@ -169,6 +267,32 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
           </div>
         }
 
+        <div className="update-issue-attachment-errors" id="update-issue-attachment-errors">
+          {
+          attachErrors &&
+          attachErrors.map((error)=>(<div key={error}>{error}</div>))
+          }
+        </div>
+        {!currAttachment && <form onSubmit={handleAttachment} className="update-issue-attachment-upload-container">
+          {/* <label for="file-upload" className="custom-file-upload">
+            <div><i className="fa-solid fa-paperclip" id="update-issue-paperclip"></i></div>
+            <span className="upload-issue-attach-label">Attach</span>
+          </label> */}
+          <div className="file-upload-container">
+            <input
+              id="file-upload"
+              type="file"
+              accept="image/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              onChange={(e) =>{
+                setAttachErrors([])
+                e.target.files?.length && setAttachment(Array.from(e.target.files))
+              }}
+              required
+            />
+            <button type="submit" className="update-issue-upload-button">Submit</button>
+          </div>
+          </form>}
+
         <div className="update-issue-description">
           <label className="update-issue-description-label">Description</label>
           <div className="update-issue-description-errors">
@@ -181,6 +305,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
             <div onClick={() => {
               setDescriptionInput(true)
               setSummaryInput(false)
+              setAttachErrors([])
               }}
               className="update-issue-description-placeholder"
             >
@@ -206,6 +331,40 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
           </form>}
         </div>
 
+        <div className="update-issue-attachment-container">
+          {attachLoading && <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="Loading..." className="update-issue-attachment-loading"/>}
+          {currAttachment &&
+            <>
+              <div className="update-issue-attachment-label">Attachment</div>
+              {/* {(currAttachment?.includes("jpeg") || currAttachment?.includes("png") || currAttachment?.includes("jpg") || currAttachment?.includes("gif"))
+                ? <img src={`${currAttachment}`} alt={currAttachment} className="update-issue-attachment-img"/>
+                : <i class="fa-regular fa-file-word"></i>
+              } */}
+              <DocViewer
+              // documents={
+              //   !currAttachment ?
+              //   attachment?.map((file) => ({
+              //     uri: window.URL.createObjectURL(file),
+              //     fileName: file.name,
+              //   }))
+              //   : docs
+              // }
+              documents={docs}
+              pluginRenderers={DocViewerRenderers}
+              config={{
+                header: {
+                  disableHeader: false,
+                  disableFileName: true,
+                  retainURLParams: false,
+                  mode: 'cors'
+                },
+                mode: 'cors'
+              }}
+              />
+            </>
+          }
+        </div>
+
         <div className="update-issue-time-container">
           <div className="update-issue-time-inner">Created at: {new Date(currIssue.createdAt).toString().slice(3,-33)}</div>
           <div className="update-issue-time-inner">Updated at: {new Date(currIssue.updatedAt).toString().slice(3,-33)}</div>
@@ -213,6 +372,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
       </div>
 
       <div className="update-issue-right-container">
+
         <div>
           <select
             name="phaseId"

@@ -1,42 +1,65 @@
+/* .navbar-main-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top:5px;
+  min-width: 100vw;
+  border-bottom: 1px solid #d9d9d9;
+  box-shadow:0px 2px 0px #F5F4F4
+} */
+
 .navbar-main-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top:5px;
+  height: 58px;
   width: 100vw;
   width: 100%;
   border-bottom: 1px solid #d9d9d9;
   box-shadow:0px 2px 0px #F5F4F4
 }
 
+.navbar-left {
+  display: flex;
+}
+
 .navbar-left-container {
   display: flex;
   color: #2F2F2F;
-  margin: 0px 0px 10px 70px;
+  margin: 3px 0px 6px 70px;
+  width: 200px;
 }
 
 .logo {
-  margin-top: 3px;
+  margin-top: 2px;
 }
 
 .logo-name {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 350;
-  margin: 11px 0px 0px 10px;
+  margin: 9px 0px 0px 10px;
 }
 
 
+.navbar-menu-seletion {
+  display: flex;
+  margin-left: 30px;
+}
+
+.navbar-menu-seletion .dnavbar-projectiv:hover {
+  border-bottom: 3px solid #615DEC;
+  color: #615DEC;
+}
+
 .navbar-project {
-  margin: 17px 0px 0px 50px;
-  height: 82%;
+  margin: 17px 0px 0px 0px;
+  height: 66%;
+  font-size: 15px;
+  font-weight: 500;
   cursor: pointer;
   color: #2F2F2F;
   border-bottom: 3px solid #615DEC;
-}
-
-.navbar-left-seletion div:hover {
-  border-bottom: 3px solid #615DEC;
-  color: #615DEC;
 }
 
 .navbar-create-issue-entry {
@@ -52,8 +75,14 @@
   align-items: center;
 }
 
+.navbar-create-issue-entry:hover {
+  cursor: pointer;
+}
+
 .navbar-right-container {
   margin: 10px 30px 12px 30px;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .navBar-signup-entry {

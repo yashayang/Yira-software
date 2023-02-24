@@ -6,7 +6,7 @@ import { thunkGetAllPhasesIssues } from '../../store/issue';
 import { loadAllUsers } from '../../store/session';
 import "../CSS/CreateIssues.css"
 
-const CreateIssue = () => {
+const CreateIssuePage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const currUser = useSelector(state => state.session.user)
@@ -18,7 +18,10 @@ const CreateIssue = () => {
   const [description, setDescription] = useState("");
   const [assigneeId, setAssigneeId] = useState(currUser.id)
   const [errors, setErrors] = useState([]);
-  console.log("CREATE ISSUE - allPhasesArr", allPhasesArr)
+  // console.log("CREATE ISSUE - allPhasesArr", allPhasesArr)
+
+  const [attachment, setAttachment] = useState(null)
+  const [attachLoading, setAttachLoading] = useState(false)
 
   useEffect(() => {
     dispatch(thunkGetAllPhasesIssues())
@@ -30,10 +33,16 @@ const CreateIssue = () => {
   const handleSubmit = async(e) => {
     e.preventDefault()
     setErrors([])
-    const issueInfo = { summary, description, phaseId, assigneeId }
-    // console.log("CREATEISSUE FORM-issueInfo:", issueInfo)
-
-    const response = await dispatch(thunkCreateIssue(phaseId, issueInfo))
+    const formData = new FormData()
+    formData.append("summary", summary)
+    formData.append("description", description)
+    formData.append("phase_id", parseInt(phaseId))
+    formData.append("owner_id", parseInt(assigneeId))
+    formData.append("image", attachment)
+    console.log("CREATEISSUE FORM-issueInfo:", attachment)
+    setAttachLoading(true)
+    const response = await dispatch(thunkCreateIssue(phaseId, formData, attachment))
+    // console.log("!!!!!!!", response)
     let errorsArr = []
     if(response.errors) {
       let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
@@ -125,6 +134,15 @@ const CreateIssue = () => {
         </select>
       </div>
 
+      <div>
+        <input
+          type="file"
+          accept="image/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          onChange={(e) => setAttachment(e.target.files[0])}
+        />
+        {(attachLoading)&& <p>Loading...</p>}
+      </div>
+
       <div className="create-issue-footer">
         <div className="create-issue-button-container">
         <div className="create-issue-cancel" type="submit" onClick={handleCancel}>Cancel</div>
@@ -136,4 +154,4 @@ const CreateIssue = () => {
   )
 }
 
-export default CreateIssue;
+export default CreateIssuePage;
