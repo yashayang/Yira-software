@@ -7,8 +7,8 @@ import "../../CSS/UpdateIssues.css"
 
 
 const UpdateIssueForm = ({currIssue, currPhase}) => {
-  console.log("UpdateIssueForm----currIssue", currIssue)
-  console.log("UpdateIssueForm----currPhase", currPhase)
+  // console.log("UpdateIssueForm----currIssue", currIssue)
+  // console.log("UpdateIssueForm----currPhase", currPhase)
 
   const dispatch = useDispatch();
   const currUser = useSelector(state => state.session.user)
@@ -28,7 +28,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     if (fileName){
        const urlArr = fileName.split('.');
        const ext=  urlArr[urlArr.length-1];
-       console.log('file ext---- ',ext)
+      //  console.log('file ext---- ',ext)
        return ext
     }
     return "jpg"
@@ -40,7 +40,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
    //Access-Control-Allow-Origin :"*"
  },]
 
-  console.log("UpdateIssueForm-doc-viewer----docs", docs)
+  // console.log("UpdateIssueForm-doc-viewer----docs", docs)
 
   const [summary, setSummary] = useState(currSummary);
   const [summaryInput, setSummaryInput] = useState(false);
@@ -56,10 +56,6 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const [attachErrors, setAttachErrors] = useState([]);
   const [uploadBtn, setUploadBtn] = useState(false);
 
-  // console.log("UpdateIssueForm---singleIssue:", singleIssue)
-  console.log("UpdateIssueForm---currAttachment:", currAttachment)
-  console.log("UpdateIssueForm---attachment:", attachment)
-  // console.log("Update Issue Form- currDescription", currDescription)
 
   useEffect(() => {
     dispatch(thunkGetOneIssue(parseInt(issueId)))
@@ -224,7 +220,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
       "owner_id": Number(e.target.value)
     }
     // console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
-    await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
+    await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId, attachment))
   }
 
 

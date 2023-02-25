@@ -156,7 +156,7 @@ def update_issue(issue_id):
   if "image" not in request.files:
     print("===========UPDATE ISSUE NO image==============", request.files)
     print("===========form.data NO image==============", form.data)
-    print("===========form.data NO image----phaseId==============", phaseId)
+    print("===========form.data NO image----form.phase_id==============", form.phase_id)
     if form.validate_on_submit():
       print("==========form.validate_on_submit=====")
       issue.summary = form.data['summary']
@@ -173,7 +173,7 @@ def update_issue(issue_id):
   image = request.files["image"]
 
   if not allowed_file(image.filename):
-    print("===========UPDATE ISSUE 400 - 1==============", form.errors)
+    # print("===========UPDATE ISSUE 400 - 1==============", form.errors)
     return {"errors": "File type not permitted. Please choose again."}, 400
 
   image.filename = get_unique_filename(image.filename)
@@ -181,7 +181,7 @@ def update_issue(issue_id):
   upload = upload_file_to_s3(image)
 
   if "url" not in upload:
-    print("===========UPDATE ISSUE 400 - 2==============", form.errors)
+    # print("===========UPDATE ISSUE 400 - 2==============", form.errors)
     # return upload, 400
     return {"errors": "File type not in upload."}, 400
 
