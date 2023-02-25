@@ -211,7 +211,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     setDescriptionInput(false)
     setSummaryInput(false)
     setAttachErrors([])
-
+    // console.log("UPDATE ISSUE-handleAssigneeId-Assignee:", e.target.value)
     const issue = {
       // summary: currSummary,
       // description: currDescription,
@@ -219,8 +219,8 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
       // assigneeId: Number(e.target.value)
       "owner_id": Number(e.target.value)
     }
-    // console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
-    await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId, attachment))
+    console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
+    await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
   }
 
 

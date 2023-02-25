@@ -79,15 +79,15 @@ export const thunkGetOneIssue = (issueId) => async (dispatch) => {
 
 
 export const thunkCreateIssue = (phaseId, issue, attachment) => async (dispatch) => {
-  console.log("CREATE ISSUES - phaseId/THUNK_issue:", phaseId, issue)
+  // console.log("CREATE ISSUES - phaseId/THUNK_issue:", phaseId, issue)
   if (attachment) {
-    console.log("CREATE ISSUES THUNK_issue.attachment:", issue.attachment)
+    // console.log("CREATE ISSUES THUNK_issue.attachment:", issue.attachment)
     try {
       const response = await fetch(`/api/projects/phases/${phaseId}/issues`, {
         method: "POST",
         body: issue
       })
-      console.log("CREATE ISSUES THUNK_response:", response)
+      // console.log("CREATE ISSUES THUNK_response:", response)
       if (!response.ok) {
         let error;
         if (response.status === 401 || 400) {
@@ -158,20 +158,20 @@ export const thunkCreateIssue = (phaseId, issue, attachment) => async (dispatch)
 
 export const thunkUpdateIssue = (issueId, issue, phaseId, attachment) => async (dispatch) => {
   const { summary, description, phaseId, assigneeId } = issue
-  console.log("UPDATE ISSUES THUNK_issue:", issue)
+  // console.log("UPDATE ISSUES THUNK_issue:", issue)
+  // console.log("UPDATE ISSUES THUNK_attachment:", attachment)
   if (attachment) {
-    console.log("UPDATE ISSUES THUNK_issue.image:", issue.image)
+    // console.log("UPDATE ISSUES THUNK_WITH ATTACH_issue.image:", issue.image)
     try {
       const response = await fetch(`/api/projects/issues/${issueId}`, {
         method: "PUT",
         body: issue
       })
-      console.log("UPDATE ISSUES THUNK_response:", response)
+      // console.log("UPDATE ISSUES THUNK_response:", response)
       if (!response.ok) {
         let error;
         if (response.status === 401 || 400) {
           error = await response.json();
-          console.log("UPDATE ISSUES THUNK_error:", error)
           return error;
         } else {
           let errorJSON;
@@ -187,7 +187,7 @@ export const thunkUpdateIssue = (issueId, issue, phaseId, attachment) => async (
 
       const updatedIssue = await response.json();
       dispatch(updateOneIssue(updatedIssue, phaseId));
-      console.log("UPDATE ISSUES THUNK_WITH ATTACH_updatedIssue:", updatedIssue)
+      // console.log("UPDATE ISSUES THUNK_WITH ATTACH_updatedIssue:", updatedIssue)
       return updatedIssue
 
     } catch(error) {
@@ -208,7 +208,6 @@ export const thunkUpdateIssue = (issueId, issue, phaseId, attachment) => async (
       let error;
       if (response.status === 401) {
         error = await response.json();
-        // console.log("UPDATE ISSUES THUNK_error:", error)
         return error;
       } else {
         let errorJSON;
@@ -224,7 +223,7 @@ export const thunkUpdateIssue = (issueId, issue, phaseId, attachment) => async (
 
     const updatedIssue = await response.json();
     dispatch(updateOneIssue(updatedIssue, phaseId));
-    console.log("UPDATE ISSUES THUNK_NO ATTACH_updatedIssue:", updatedIssue)
+    // console.log("UPDATE ISSUES THUNK_NO ATTACH_updatedIssue:", updatedIssue)
     return updatedIssue
 
   } catch (error) {
