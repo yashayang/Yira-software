@@ -16,6 +16,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const allPhases = useSelector(state => state.issues.AllPhases)
   const allPhasesArr = Object.values(allPhases)
   const singleIssue = useSelector(state => state.issues.SingleIssue)
+  // console.log("UpdateIssueForm----singleIssue", singleIssue)
   const issueId = currIssue.issueId;
   const phaseTitle = currPhase.title
   const currSummary = singleIssue?.summary;
@@ -27,8 +28,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const getExtension = (fileName) =>{
     if (fileName){
        const urlArr = fileName.split('.');
-       const ext=  urlArr[urlArr.length-1];
-      //  console.log('file ext---- ',ext)
+       const ext = urlArr[urlArr.length-1];
        return ext
     }
     return "jpg"

@@ -35,7 +35,7 @@ const IssueCards = ({phase, issue}) => {
             <div className='project-name-icon'><i className="fa-solid fa-square-check"></i></div>
             <div className="project-name">{phase.Project.name}--{issue.issueId}</div>
           </div>
-          {issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase() === curr_user_init
+          {issue.User?.first_name[0].toUpperCase()+issue.User?.last_name[0].toUpperCase() === curr_user_init
           ?
           <>
             {(issue.attachment?.includes("pdf") || issue.attachment?.includes("docx") || issue.attachment?.includes("xlsx")) && <i className="fa-solid fa-paperclip"></i>}
@@ -47,7 +47,7 @@ const IssueCards = ({phase, issue}) => {
           <>
             {(issue.attachment?.includes("pdf") || issue.attachment?.includes("docx") || issue.attachment?.includes("xlsx")) && <i className="fa-solid fa-paperclip"></i>}
             <div className='other-user-circle-small'>
-              {issue.user?.first_name[0].toUpperCase()+issue.user?.last_name[0].toUpperCase()}
+              {issue.User?.first_name[0].toUpperCase()+issue.User?.last_name[0].toUpperCase()}
             </div>
           </>
           }

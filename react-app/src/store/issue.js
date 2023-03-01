@@ -261,38 +261,39 @@ const issues = (state = initialState, action) => {
       return newState;
 
     case CREATE_ISSUE:
-      newState = {...state, ...state.AllPhases, ...state.SingleIssue}
+      newState = { ...state, SingleIssue: {...state.SingleIssue}, AllPhases: {...state.AllPhases}}
       newState.NewIssue = action.issue
       newState.AllPhases[action.phaseId].Issues[action.issue.issueId] = action.issue
       return newState
 
     case LOAD_ONE_ISSUE:
-      newState = {...state}
+      newState = { ...state, SingleIssue: {...state.SingleIssue}, AllPhases: {...state.AllPhases}}
       newState.SingleIssue = action.issue
       return newState
       // return { ...state, ...state.AllPhases, singleIssue: { ...state.singleIssue, ...action.issue }};
 
     case UPDATE_ISSUE:
-      newState = {...state, ...state.AllPhases, ...state.SingleIssue}
+      newState = { ...state, SingleIssue: {...state.SingleIssue}, AllPhases: {...state.AllPhases}}
       newState.SingleIssue = action.issue
       newState.AllPhases[action.issue.phaseId].Issues[action.issue.issueId] = action.issue
       return newState
 
     case DELETE_ISSUE:
-      newState = { ...state, ...state.AllPhases, SingleIssue: { ...state.SingleIssue } }
-        delete newState.AllPhases[action.phaseId].Issues[action.issueId]
-        delete newState.SingleIssue
+      newState = { ...state, SingleIssue: {...state.SingleIssue}, AllPhases: {...state.AllPhases}}
+      delete newState.AllPhases[action.phaseId].Issues[action.issueId]
+      delete newState.SingleIssue
+      delete newState.NewIssue
       return newState
 
     case RESET_PROJECT:
-      newState = {...state}
-      newState.AllPhases = {}
+      newState = { ...state, SingleIssue: {...state.SingleIssue}, AllPhases: {...state.AllPhases}}
+      // newState.AllPhases = {}
       newState.SingleIssue = {}
       newState.NewIssue = {}
       return newState
 
     case DELETE_PHASE:
-      newState = { ...state, ...state.AllPhases }
+      newState = { ...state, SingleIssue: {...state.SingleIssue}, AllPhases: {...state.AllPhases}}
       delete newState.AllPhases[action.phaseId]
       return newState
 
