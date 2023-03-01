@@ -15,7 +15,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const allUsersArr = useSelector(state => state.session.AllUsers?.users)
   const allPhases = useSelector(state => state.issues.AllPhases)
   const allPhasesArr = Object.values(allPhases)
-  const singleIssue = useSelector(state => state.issues.singleIssue)
+  const singleIssue = useSelector(state => state.issues.SingleIssue)
   const issueId = currIssue.issueId;
   const phaseTitle = currPhase.title
   const currSummary = singleIssue?.summary;

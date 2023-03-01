@@ -1,8 +1,8 @@
+const LOAD_ALL_PHASES_ISSUES = 'issues/LOAD_ALL_PHASES_ISSUES';
 const LOAD_ONE_ISSUE = 'issues/LOAD_ONE_ISSUE'
 const CREATE_ISSUE = 'issues/CREATE_ISSUE';
 const UPDATE_ISSUE = 'issues/UPDATE_ISSUE';
 const DELETE_ISSUE = 'issues/DELETE_ISSUE';
-const LOAD_ALL_PHASES_ISSUES = 'phases/LOAD_ALL_PHASES_ISSUES';
 const RESET_PROJECT = 'issues/RESET_PROJECT'
 const DELETE_PHASE = 'issues/DELETE_PHASE';
 
@@ -245,8 +245,8 @@ export const thunkDeleteIssue = (issueId, phaseId) => async (dispatch) => {
 
 const initialState = {
   AllPhases:{},
-  newIssue: {},
-  singleIssue: {}
+  NewIssue: {},
+  SingleIssue: {}
 }
 
 const issues = (state = initialState, action) => {
@@ -254,38 +254,41 @@ const issues = (state = initialState, action) => {
   switch(action.type) {
 
     case LOAD_ALL_PHASES_ISSUES:
-      newState = { ...state, ...state.singleIssue, AllPhases: {...state.AllPhases}}
+      newState = { ...state, SingleIssue: {...state.SingleIssue}, AllPhases: {...state.AllPhases}}
       action.phasesIssues.AllPhases.forEach(phase => {
         newState.AllPhases[phase.id] = phase
       })
       return newState;
 
     case CREATE_ISSUE:
-      newState = {...state, ...state.AllPhases, ...state.singleIssue}
-      newState.newIssue = action.issue
+      newState = {...state, ...state.AllPhases, ...state.SingleIssue}
+      newState.NewIssue = action.issue
       newState.AllPhases[action.phaseId].Issues[action.issue.issueId] = action.issue
       return newState
 
     case LOAD_ONE_ISSUE:
-      return { ...state, ...state.AllPhases, singleIssue: { ...state.singleIssue, ...action.issue }};
+      newState = {...state}
+      newState.SingleIssue = action.issue
+      return newState
+      // return { ...state, ...state.AllPhases, singleIssue: { ...state.singleIssue, ...action.issue }};
 
     case UPDATE_ISSUE:
-      newState = {...state, ...state.AllPhases, ...state.singleIssue}
-      newState.singleIssue = action.issue
+      newState = {...state, ...state.AllPhases, ...state.SingleIssue}
+      newState.SingleIssue = action.issue
       newState.AllPhases[action.issue.phaseId].Issues[action.issue.issueId] = action.issue
       return newState
 
     case DELETE_ISSUE:
-      newState = { ...state, ...state.AllPhases, singleIssue: { ...state.singleIssue } }
+      newState = { ...state, ...state.AllPhases, SingleIssue: { ...state.SingleIssue } }
         delete newState.AllPhases[action.phaseId].Issues[action.issueId]
-        delete newState.singleIssue
+        delete newState.SingleIssue
       return newState
 
     case RESET_PROJECT:
       newState = {...state}
-      newState.allPhases = {}
-      newState.singleIssue = {}
-      newState.newIssue = {}
+      newState.AllPhases = {}
+      newState.SingleIssue = {}
+      newState.NewIssue = {}
       return newState
 
     case DELETE_PHASE:
