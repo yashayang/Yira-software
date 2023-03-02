@@ -41,18 +41,18 @@ function Phases(){
       ?
       <div className='sidebar-show-container'>
         <div className='sidebar-project-name-container'>
-          <div className='sidebar-project-project-logo'><i class="fa-solid fa-list-check"></i></div>
+          <div className='sidebar-project-project-logo'><i className="fa-solid fa-list-check"></i></div>
           <div>
             <div className='sidebar-project-name'>Project 1</div>
             <div className='sidebar-project-subtitle'>software project</div>
           </div>
-          <div className='sidebar-collapse-button' onClick={() => setShowSideBar(false)}><i class="fa-solid fa-less-than"></i></div>
+          <div className='sidebar-collapse-button' onClick={() => setShowSideBar(false)}><i className="fa-solid fa-less-than"></i></div>
         </div>
 
         <div className='sidebar-project-planning-container'>
           <div className='sidebar-project-planning-title'>PLANNING</div>
           <div className='sidebar-project-planning-board'>
-            <div className='sidebar-project-project-logo'><i class="fa-sharp fa-solid fa-folder-open"></i></div>
+            <div className='sidebar-project-project-logo'><i className="fa-sharp fa-solid fa-folder-open"></i></div>
             <div className='sidebar-project-planning-board-title'>Board</div>
           </div>
         </div>
@@ -63,14 +63,14 @@ function Phases(){
             </div>
             <div className="sidebar-social-link-container">
               <a href='https://github.com/yashayang' className="sidebar-social-link" target="_blank" rel="noreferrer" ><span><i className="fa-brands fa-github"></i></span></a>
-              <a href='https://www.linkedin.com/in/yashayang/' className="sidebar-social-link" target="_blank" rel="noreferrer" ><span><i class="fa-brands fa-linkedin"></i></span></a>
+              <a href='https://www.linkedin.com/in/yashayang/' className="sidebar-social-link" target="_blank" rel="noreferrer" ><span><i className="fa-brands fa-linkedin"></i></span></a>
             </div>
         </div>
       </div>
       :
       <div className='Sidebar-close-container'>
         <div className='sidebar-project-name-container'>
-          <div className='sidebar-collapse-button' onClick={() => setShowSideBar(true)}><i class="fa-solid fa-greater-than"></i></div>
+          <div className='sidebar-collapse-button' onClick={() => setShowSideBar(true)}><i className="fa-solid fa-greater-than"></i></div>
         </div>
       </div>
       }
@@ -79,7 +79,7 @@ function Phases(){
         <div className='project-path'>Projects  /  Project 1</div>
         <div className='project-title'>{projectName}</div>
         <div className='user-circle-container'>
-          {all_users?.users.map((user, i) => currUserId === user.id ? <div className='curr-user-circle' key={i}>{user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase()}</div> : <div className='other-user-circle'>{user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase()}</div>)}
+          {all_users?.users.map((user, i) => currUserId === user.id ? <div className='curr-user-circle' key={i}>{user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase()}</div> : <div className='other-user-circle' key={i}>{user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase()}</div>)}
         </div>
         <div className="phase-main-container">
           {phasesArr?.map((phase, i) => {
@@ -90,7 +90,7 @@ function Phases(){
                 <DeletePhase phaseId={phase.id}/>
               </div>
                 {phase.Issues && Object.values(phase.Issues).map((issue) => {
-                  return < IssueCards issue={issue} phase={phase}/>
+                  return <IssueCards issue={issue} phase={phase}/>
                 })}
                 <CreateIssueInPhase phaseId={phase.id} assigneeId={currUserId}/>
             </div>

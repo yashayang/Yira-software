@@ -23,7 +23,8 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const currDescription = singleIssue?.description;
   const currPhaseId = singleIssue?.phaseId;
   const currAssigneeId = singleIssue?.ownerId;
-  const currAttachment = singleIssue?.attachment;
+  // const currAttachment = singleIssue?.attachment;
+  const currAttachment = currIssue.attachment;
 
   const getExtension = (fileName) =>{
     if (fileName){

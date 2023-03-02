@@ -44,7 +44,7 @@ const DeleteIssue = ({issueId, phaseId}) => {
 
   return (
     <div className='issue-ellipsis-outter'>
-      <div className='issue-delete-container' onClick={handleIssueDelete}><i class="fa-solid fa-xmark"></i></div>
+      <div className='issue-delete-container' onClick={handleIssueDelete}><i className="fa-solid fa-xmark"></i></div>
       {/* <div className='issue-ellipsis-container' onClick={openMenu} ><i className="fa-solid fa-ellipsis"></i></div>
         {showMenu && <div className='issue-delete-container'>
         <div className='issue-ellipsis-dropDown' onClick={handleIssueDelete}>DELETE</div>

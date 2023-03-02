@@ -18,7 +18,7 @@ const NavBar = () => {
             <div className='logo-name'>Yira Software</div>
           </div>
         </NavLink>
-          <div className='navbar-menu-seletion' activeClassName='active'>
+          <div className='navbar-menu-seletion' activeclassname='active'>
             {curr_user && <div className='navbar-project'>Projects</div>}
             {curr_user && <CreateIssueModal/>}
           </div>

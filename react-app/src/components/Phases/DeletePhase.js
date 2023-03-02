@@ -46,7 +46,7 @@ const DeletePhase = ({phaseId}) => {
 
   return (
     <>
-      <div className='phase-delete-icon-container' onClick={handlePhaseDelete}><i class="fa-solid fa-xmark"></i></div>
+      <div className='phase-delete-icon-container' onClick={handlePhaseDelete}><i className="fa-solid fa-xmark"></i></div>
       {/* <div className='phase-ellipsis-container' onClick={openMenu}><i className="fa-solid fa-ellipsis"></i></div> */}
       {/* {console.log("DELETEPHASE:", showMenu)} */}
       {/* {showMenu && <div className='phase-delete-container'>
