@@ -40,8 +40,8 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
    fileType: getExtension(currAttachment)
    //Access-Control-Allow-Origin :"*"
  },]
-
-  // console.log("UpdateIssueForm-doc-viewer----docs", docs)
+ console.log("UpdateIssueForm-doc-viewer----currAttachment", currAttachment)
+ console.log("UpdateIssueForm-doc-viewer----docs", docs)
 
   const [summary, setSummary] = useState(currSummary);
   const [summaryInput, setSummaryInput] = useState(false);
@@ -59,13 +59,17 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
 
 
   useEffect(() => {
-    dispatch(thunkGetOneIssue(parseInt(issueId)))
-    dispatch(loadAllUsers())
-    dispatch(thunkGetAllPhasesIssues())
+    let isMounted = true;
+    if(isMounted) {
+      dispatch(thunkGetOneIssue(parseInt(issueId)))
+      dispatch(loadAllUsers())
+      dispatch(thunkGetAllPhasesIssues())
+    }
     return () => {
+      isMounted = false;
       dispatch(cleanState())
     }
-  }, [dispatch, issueId, currIssue.attachment])
+  }, [dispatch])
 
 
   const showSummary = async (e) => {
@@ -333,31 +337,30 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
           {currAttachment &&
             <>
               <div className="update-issue-attachment-label">Attachment</div>
-              {/* {(currAttachment?.includes("jpeg") || currAttachment?.includes("png") || currAttachment?.includes("jpg") || currAttachment?.includes("gif"))
+              {(currAttachment?.includes("jpeg") || currAttachment?.includes("png") || currAttachment?.includes("jpg") || currAttachment?.includes("gif"))
                 ? <img src={`${currAttachment}`} alt={currAttachment} className="update-issue-attachment-img"/>
-                : <i class="fa-regular fa-file-word"></i>
-              } */}
-              <DocViewer
-              // documents={
-              //   !currAttachment ?
-              //   attachment?.map((file) => ({
-              //     uri: window.URL.createObjectURL(file),
-              //     fileName: file.name,
-              //   }))
-              //   : docs
-              // }
-              documents={docs}
-              pluginRenderers={DocViewerRenderers}
-              config={{
-                header: {
-                  disableHeader: false,
-                  disableFileName: true,
-                  retainURLParams: false,
+                : <DocViewer
+                // documents={
+                //   !currAttachment ?
+                //   attachment?.map((file) => ({
+                //     uri: window.URL.createObjectURL(file),
+                //     fileName: file.name,
+                //   }))
+                //   : docs
+                // }
+                documents={docs}
+                pluginRenderers={DocViewerRenderers}
+                config={{
+                  header: {
+                    disableHeader: false,
+                    disableFileName: true,
+                    retainURLParams: false,
+                    mode: 'cors'
+                  },
                   mode: 'cors'
-                },
-                mode: 'cors'
-              }}
-              />
+                }}
+                />
+              }
             </>
           }
         </div>
