@@ -40,7 +40,7 @@ const CreateIssue = ({setModal}) => {
       formData.append("description", description)
       formData.append("phase_id", parseInt(phaseId))
       formData.append("owner_id", parseInt(assigneeId))
-      formData.append("image", attachment)
+      formData.append("attachment", attachment)
 
       setAttachLoading(true)
       console.log("CREATEISSUE FORM-formData:", formData)
@@ -180,7 +180,7 @@ const CreateIssue = ({setModal}) => {
       <div className="create-issue-attachment-container">
         <input
           type="file"
-          accept="image/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          accept="attachment/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           onChange={(e) => setAttachment(e.target.files[0])}
           className="file-input-button"
         />

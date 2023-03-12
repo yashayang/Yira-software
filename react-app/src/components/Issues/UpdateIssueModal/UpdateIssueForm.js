@@ -119,12 +119,12 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     // formData.append("description", currDescription)
     // formData.append("phase_id", parseInt(currPhaseId))
     // formData.append("owner_id", parseInt(currAssigneeId))
-    formData.append("image", attachment[0])
+    formData.append("attachment", attachment[0])
     for(let value of formData.values()) {
       // console.log("UpdateIssueForm-handleAttachment---value", value)
     }
     // console.log("UpdateIssueForm-handleAttachment---attachment[0]", attachment[0], Array.isArray(attachment))
-    // console.log("UpdateIssueForm-handleAttachment---formData.image", formData.image)
+    // console.log("UpdateIssueForm-handleAttachment---formData.attachment", formData.attachment)
     // console.log("UpdateIssueForm-handleAttachment---currIssue.summary/attachment", currIssue.summary, currIssue.attachment)
     // console.log("UpdateIssueForm-handleAttachment---formData-PHASEID", parseInt(currPhaseId))
 
@@ -283,7 +283,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
             <input
               id="file-upload"
               type="file"
-              accept="image/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              accept="attachment/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
               onChange={(e) =>{
                 setAttachErrors([])
                 e.target.files?.length && setAttachment(Array.from(e.target.files))
