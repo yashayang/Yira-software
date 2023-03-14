@@ -3,7 +3,7 @@ from datetime import datetime
 
 def seed_projects():
   project1 = Project(
-    name='RD Sprint 23',
+    name='KANBAN STYLE PROJECT',
     owner_id=1,
     created_at=datetime.now(),
     updated_at=datetime.now()

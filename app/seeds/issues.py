@@ -3,45 +3,43 @@ from datetime import datetime
 
 def seed_issues():
   issue1 = Issue(
-    summary="FB Ads - Check for review errors",
-    description="Bobby has approved the Ad, only need to check for review errors. THX!",
+    summary="Yira Software is a web application inspired by the Jira Software.",
+    project_id=1,
     phase_id=1,
     owner_id=1,
+    assignee_id=2,
     created_at=datetime.now(),
     updated_at=datetime.now()
   )
 
   issue2 = Issue(
-    summary="Use OpenAI to tech check a AI-written emails feature",
+    summary="This is the 1st interation of Yira.",
     description="See attachment for details",
+    project_id=1,
     phase_id=1,
     owner_id=1,
+    assignee_id=3,
     created_at=datetime.now(),
     updated_at=datetime.now()
   )
 
   issue3 = Issue(
-    summary="Use ML to find most popular times of day for our emails to be sent, opened, and replied to",
+    summary="1st interation including full CRUD of Projects, Phases, Issues, Issue Attachments.",
+    project_id=1,
     phase_id=1,
     owner_id=2,
+    assignee_id=1,
     created_at=datetime.now(),
     updated_at=datetime.now()
   )
 
   issue4 = Issue(
-    summary="Finalize Scheduled Send QA + Code review",
+    summary="The attachment is using AWS S3 for file uploading, doc-viewer npm package for previewing files.",
     description="schedule sent",
+    project_id=1,
     phase_id=1,
     owner_id=3,
-    created_at=datetime.now(),
-    updated_at=datetime.now()
-  )
-
-  issue5 = Issue(
-    summary="When looking at a list, sorting by location returns no results.",
-    description="Yasha is on this task",
-    phase_id=2,
-    owner_id=2,
+    assignee_id=1,
     created_at=datetime.now(),
     updated_at=datetime.now()
   )
@@ -51,7 +49,6 @@ def seed_issues():
   db.session.add(issue2)
   db.session.add(issue3)
   db.session.add(issue4)
-  db.session.add(issue5)
   db.session.commit()
 
 def undo_issues():

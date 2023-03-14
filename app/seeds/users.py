@@ -5,14 +5,14 @@ from app.models import db, User, environment, SCHEMA
 def seed_users():
     demo = User(
         first_name='yasha', last_name='yang', email='yasha@gmail.com', is_admin=True, password='password')
-    marnie = User(
-        first_name='marnie', last_name='may', email='marnie@gmail.com', is_admin=False, password='password')
-    bobbie = User(
-        first_name='bobbie', last_name='brin', email='bobbie@gmail.com', is_admin=False, password='password')
+    fubao = User(
+        first_name='fubao', last_name='b', email='fubao@gmail.com', is_admin=False, password='password')
+    huahua = User(
+        first_name='huahua', last_name='b', email='huahua@gmail.com', is_admin=False, password='password')
 
     db.session.add(demo)
-    db.session.add(marnie)
-    db.session.add(bobbie)
+    db.session.add(fubao)
+    db.session.add(huahua)
     db.session.commit()
 
 
