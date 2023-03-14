@@ -15,7 +15,7 @@ const HomePage = () => {
         </ul>
         <div className="social-container">Created By <span className="my-name">Yasha Yang</span>
           <a href='https://github.com/yashayang' className="social-link" target="_blank" rel="noreferrer" ><span><i className="fa-brands fa-github"></i></span></a>
-          <a href='https://www.linkedin.com/in/yashayang/' className="social-link" target="_blank" rel="noreferrer" ><span><i class="fa-brands fa-linkedin"></i></span></a>
+          <a href='https://www.linkedin.com/in/yashayang/' className="social-link" target="_blank" rel="noreferrer" ><span><i className="fa-brands fa-linkedin"></i></span></a>
         </div>
       </div>
 
