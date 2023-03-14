@@ -38,7 +38,8 @@ class Issue(db.Model):
       "createdAt": self.created_at,
       "updatedAt": self.updated_at,
       "Attachment": [attachment.to_dict() for attachment in self.attachments],
-      "user": self.user.to_dict()
+      "Owner": self.owner.to_dict(),
+      "Assignee": self.assignee.to_dict()
     }
 
   def to_dict(self):
@@ -53,7 +54,8 @@ class Issue(db.Model):
       "createdAt": self.created_at,
       "updatedAt": self.updated_at,
       "Phase": self.phase.to_dict(),
-      "User": self.user.to_dict(),
       "Attachment": [attachment.to_dict() for attachment in self.attachments],
-      "Comments": [comment.to_dict() for comment in self.comments]
+      "Comments": [comment.to_dict() for comment in self.comments],
+      "Owner": self.owner.to_dict(),
+      "Assignee": self.assignee.to_dict()
     }
