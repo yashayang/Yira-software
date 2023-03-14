@@ -9,7 +9,7 @@ class Attachment(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
-  issue_id = db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("tasks.id")),nullable=False)
+  issue_id = db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("issues.id")),nullable=False)
   name = db.Column(db.String(60))
   url = db.Column(db.String(2000))
   created_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.func.now())

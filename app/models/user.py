@@ -17,8 +17,8 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
 
     #relationship
-    issues_owner = db.relationship("Issue", back_populates="owner", cascade="all, delete")
-    issues_assignee = db.relationship("Issue", back_populates="assignee", cascade="all, delete")
+    issues_owner = db.relationship("Issue", back_populates="owner", cascade="all, delete", primaryjoin="Issue.owner_id==User.id")
+    issues_assignee = db.relationship("Issue", back_populates="assignee", cascade="all, delete", primaryjoin="Issue.assignee_id==User.id")
     phases = db.relationship("Phase", back_populates="user", cascade="all, delete")
     projects = db.relationship("Project", back_populates="user", cascade="all, delete")
     comments = db.relationship("Comment", back_populates="user", cascade="all, delete")

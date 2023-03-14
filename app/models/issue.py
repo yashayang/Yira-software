@@ -20,10 +20,10 @@ class Issue(db.Model):
   #relationship
   project = db.relationship("Project", back_populates="issues")
   phase = db.relationship("Phase", back_populates="issues")
-  owner = db.relationship("User", back_populates="issues_owner")
-  assignee = db.relationship("User", back_populates="issues_assignee")
+  owner = db.relationship("User", back_populates="issues_owner", primaryjoin="Issue.owner_id==User.id")
+  assignee = db.relationship("User", back_populates="issues_assignee", primaryjoin="Issue.assignee_id==User.id")
   comments = db.relationship("Comment", back_populates="issue", cascade="all, delete")
-  attachments = db.relationship("Attachment", back_populates="user", cascade="all, delete")
+  attachments = db.relationship("Attachment", back_populates="issue", cascade="all, delete")
 
   #instance methods
   def to_dict_all_issues(self):

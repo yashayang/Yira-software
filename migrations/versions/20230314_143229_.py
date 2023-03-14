@@ -1,19 +1,16 @@
 """empty message
 
-Revision ID: 6c24263c9666
-Revises:
-Create Date: 2023-01-14 10:56:04.414387
+Revision ID: 972706f4af46
+Revises: 
+Create Date: 2023-03-14 14:32:29.249070
 
 """
 from alembic import op
 import sqlalchemy as sa
 
-import os
-environment = os.getenv("FLASK_ENV")
-SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
-revision = '6c24263c9666'
+revision = '972706f4af46'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,10 +28,6 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
-
-    if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
-
     op.create_table('projects',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=100), nullable=False),
@@ -44,10 +37,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
-    if environment == "projects":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
-
     op.create_table('phases',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=100), nullable=False),
@@ -59,27 +48,22 @@ def upgrade():
     sa.ForeignKeyConstraint(['project_id'], ['projects.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
-    if environment == "phases":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
-
     op.create_table('issues',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('summary', sa.String(length=255), nullable=False),
     sa.Column('description', sa.String(length=500), nullable=True),
-    sa.Column('attachment', sa.String(length=2000), nullable=True),
+    sa.Column('project_id', sa.Integer(), nullable=True),
     sa.Column('phase_id', sa.Integer(), nullable=True),
     sa.Column('owner_id', sa.Integer(), nullable=True),
+    sa.Column('assignee_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
     sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
+    sa.ForeignKeyConstraint(['assignee_id'], ['users.id'], ),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
     sa.ForeignKeyConstraint(['phase_id'], ['phases.id'], ),
+    sa.ForeignKeyConstraint(['project_id'], ['projects.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
-    if environment == "issues":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
-
     op.create_table('comments',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('comment', sa.String(length=500), nullable=False),
@@ -91,9 +75,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
-    if environment == "comments":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 
