@@ -10,7 +10,7 @@ import IssueCards from './Issues/IssueCards'
 import "./CSS/Phases.css"
 
 
-function Phases(){
+function Boards(){
   const dispatch = useDispatch();
   const [showSideBar, setShowSideBar] = useState(true);
 
@@ -102,4 +102,4 @@ function Phases(){
   )
 }
 
-export default Phases;
+export default Boards;

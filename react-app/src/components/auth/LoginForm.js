@@ -40,7 +40,7 @@ const LoginForm = () => {
   };
 
   if (user) {
-    return <Redirect to='/projects' />;
+    return <Redirect to='/boards' />;
   }
 
   const DemoUser = (e) => {

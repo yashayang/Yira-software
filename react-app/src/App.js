@@ -8,7 +8,7 @@ import NavBar from './components/NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
-import Phases from './components/Phases';
+import Boards from './components/Boards';
 import CreateIssuePage from './components/Issues/CreateIssuePage';
 import UpdateIssue from './components/Issues/UpdateIssue';
 import HomePage from './components/SplashPage';
@@ -44,8 +44,8 @@ function App() {
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
         </ProtectedRoute>
-        <ProtectedRoute path='/projects' exact={true} >
-          <Phases />
+        <ProtectedRoute path='/boards' exact={true} >
+          <Boards />
         </ProtectedRoute>
         <ProtectedRoute path='/issues' exact={true} >
           <CreateIssuePage />
