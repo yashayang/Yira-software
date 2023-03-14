@@ -10,34 +10,36 @@ class Issue(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   summary = db.Column(db.String(255), nullable=False)
   description = db.Column(db.String(500))
-  attachment = db.Column(db.String(2000))
   phase_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('phases.id')))
   owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
+  assignee_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
   created_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.func.now())
   updated_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.func.now())
 
   #relationship
-  user = db.relationship("User", back_populates="issues")
+  owner = db.relationship("User", back_populates="issues_owner")
+  assignee = db.relationship("User", back_populates="issues_assignee")
   phase = db.relationship("Phase", back_populates="issues")
   comments = db.relationship("Comment", back_populates="issue", cascade="all, delete")
+  attachments = db.relationship("Attachment", back_populates="user", cascade="all, delete")
 
   #instance methods
   def to_dict_all_issues(self):
     return {
-      "issueId":self.id,
+      "issueId": self.id,
       "summary": self.summary,
       "description": self.description,
       "phaseId": self.phase_id,
       "ownerId": self.owner_id,
-      "attachment": self.attachment,
       'createdAt': self.created_at,
       'updatedAt': self.updated_at,
+      "attachment": self.attachment,
       'user': self.user.to_dict()
     }
 
   def to_dict(self):
     return {
-      "issueId":self.id,
+      "issueId": self.id,
       "summary": self.summary,
       "description": self.description,
       "phaseId": self.phase_id,
