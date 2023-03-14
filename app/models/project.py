@@ -16,6 +16,7 @@ class Project(db.Model):
   #relationship
   user = db.relationship("User", back_populates="projects")
   phases = db.relationship("Phase", back_populates="project", cascade="all, delete")
+  issues = db.relationship("Issue", back_populates="project", cascade="all, delete")
 
   #instance methods
   def to_dict(self):

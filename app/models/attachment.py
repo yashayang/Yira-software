@@ -24,7 +24,7 @@ class Attachment(db.Model):
     return {
       "attachmentId": self.id,
       "ownerId": self.owner_id,
-      "issueId": self.task_id,
+      "issueId": self.issue_id,
       "name": self.name,
       "url": self.url,
       'createdAt': self.created_at,
@@ -32,4 +32,4 @@ class Attachment(db.Model):
     }
 
   def __repr__(self):
-    return f'<Attachment model: id={self.id},ownerId={self.owner_id},name={self.name},url={self.url},created_at={self.created_at},updated_at={self.updated_at}>'
+    return f'<Attachment model: id={self.id}, ownerId={self.owner_id}, issueId={self.issue_id}, name={self.name}, url={self.url}, created_at={self.created_at}, updated_at={self.updated_at}>'
