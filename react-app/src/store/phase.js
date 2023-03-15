@@ -32,7 +32,7 @@ export const removeOnePhase = (phaseId) => {
 }
 
 export const thunkGetAllPhasesIssues = () => async (dispatch) => {
-  const response = await fetch('/api/projects/');
+  const response = await fetch('/api/phases/');
 
   if (response.ok) {
     const phasesIssues = await response.json();
@@ -45,7 +45,7 @@ export const thunkCreatePhase = (projectId, phase) => async (dispatch) => {
   // console.log("CREATE ISSUES THUNK_issue:", issue)
   // console.log("CREATE ISSUES THUNK_issue:", summary, description, phaseId, assigneeId)
   try {
-    const response = await fetch(`/api/projects/${projectId}/phases`, {
+    const response = await fetch(`/api/phases/${projectId}/new`, {
       method: "POST",
       headers: {
           'Content-Type': 'application/json'
@@ -84,7 +84,7 @@ export const thunkUpdatePhase = (phaseId, phase) => async (dispatch) => {
   // const { summary, description, phaseId, assigneeId } = issue
   // console.log("UPDATE ISSUES THUNK_issue:", issueId, summary, description, phaseId, assigneeId)
   try {
-    const response = await fetch(`/api/projects/phases/${phaseId}`, {
+    const response = await fetch(`/api/phases/${phaseId}`, {
       method: "PUT",
       headers: {
           'Content-Type': 'application/json'
@@ -120,7 +120,7 @@ export const thunkUpdatePhase = (phaseId, phase) => async (dispatch) => {
 
 export const thunkDeletePhase = (phaseId) => async (dispatch) => {
   // console.log("DELETE ISSUES THUNK_issueId_phaseId:", phaseId)
-  const response = await fetch(`/api/projects/phases/${phaseId}`, {
+  const response = await fetch(`/api/phases/${phaseId}`, {
     method: "DELETE"
   })
   console.log("DELETE ISSUES_response:", response)
