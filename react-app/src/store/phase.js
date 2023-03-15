@@ -145,19 +145,18 @@ const phases = (state = initialState, action) => {
       return newState
 
     case CREATE_PHASE:
-      newState = { ...state, ...state.AllPhases }
+      newState = { ...state, AllPhases: {...state.AllPhases} }
       newState.AllPhases[action.phase.id] = action.phase
       return newState
 
     case UPDATE_PHASE:
-      newState = { ...state, ...state.AllPhases }
+      newState = { ...state, AllPhases: {...state.AllPhases} }
       newState.AllPhases[action.phase.id] = action.phase
       return newState
 
     case DELETE_PHASE:
-      newState = { ...state, ...state.AllPhases }
+      newState = { ...state, AllPhases: {...state.AllPhases} }
       delete newState.AllPhases[action.phaseId]
-      delete newState[action.phaseId]
       return newState
 
     default:

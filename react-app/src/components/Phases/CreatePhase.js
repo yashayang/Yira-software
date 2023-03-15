@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { thunkCreatePhase, thunkGetAllPhasesIssues } from "../../store/phase";
+import { thunkCreatePhase } from "../../store/phase";
+import { thunkGetAllPhasesIssues } from "../../store/issue";
 import '../CSS/CreatePhase.css';
 
 const CreatePhase = ({projectId, ownerId}) => {

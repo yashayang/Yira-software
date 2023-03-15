@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { thunkUpdatePhase, thunkGetAllPhasesIssues } from "../../store/phase";
+import { thunkUpdatePhase } from "../../store/phase";
+import { thunkGetAllPhasesIssues } from "../../store/issue";
 import '../CSS/CreatePhase.css';
 
 const UpdatedPhase = ({phaseId, phaseTitle, projectId, ownerId}) => {
@@ -67,7 +68,7 @@ const UpdatedPhase = ({phaseId, phaseTitle, projectId, ownerId}) => {
                 <i className="fa-sharp fa-solid fa-xmark"></i></button>
             </div>
           </form>
-          
+
         </div>
       }
     </>

@@ -12,6 +12,7 @@ const IssueCards = ({phase, issue, projectNameInit}) => {
   const curr_user = useSelector(state => state.session.user);
   const curr_user_init = curr_user.first_name[0].toUpperCase() + curr_user.last_name[0].toUpperCase();
   const assigneeNameInit = issue?.Assignee?.first_name[0].toUpperCase() + issue?.Assignee?.last_name[0].toUpperCase();
+  // console.log("Issue Cards ---- issue:", issue)
 
   return (
     <div className="issue-card-container" onClick={(e) => {
@@ -48,9 +49,9 @@ const IssueCards = ({phase, issue, projectNameInit}) => {
           :
           <>
             {(issue.attachment?.includes("pdf") || issue.Attachment[0]?.url?.includes("docx") || issue.Attachment[0]?.url?.includes("xlsx") || issue.Attachment[0]?.url?.includes("ppt") || issue.Attachment[0]?.url?.includes("pptx")) && <i className="fa-solid fa-paperclip"></i>}
-            <div className='other-user-circle-small'>
+            {issue.Assignee && <div className='other-user-circle-small'>
               {assigneeNameInit}
-            </div>
+            </div>}
           </>
           }
         </div>
