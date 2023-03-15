@@ -16,15 +16,14 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const allPhases = useSelector(state => state.issues.AllPhases)
   const allPhasesArr = Object.values(allPhases)
   const singleIssue = useSelector(state => state.issues.SingleIssue)
-  // console.log("UpdateIssueForm----singleIssue", singleIssue)
   const issueId = currIssue.issueId;
   const phaseTitle = currPhase.title
   const currSummary = singleIssue?.summary;
   const currDescription = singleIssue?.description;
   const currPhaseId = singleIssue?.phaseId;
-  const currAssigneeId = singleIssue?.ownerId;
-  // const currAttachment = singleIssue?.attachment;
-  const currAttachment = currIssue.attachment;
+  const currAssigneeId = currIssue.Assignee?.id;
+  const currAttachment = currIssue.Attachment[0]?.url;
+  console.log("UpdateIssueForm----currAssigneeId", currAssigneeId)
 
   const getExtension = (fileName) =>{
     if (fileName){
@@ -40,8 +39,8 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
    fileType: getExtension(currAttachment)
    //Access-Control-Allow-Origin :"*"
  },]
- console.log("UpdateIssueForm-doc-viewer----currAttachment", currAttachment)
- console.log("UpdateIssueForm-doc-viewer----docs", docs)
+//  console.log("UpdateIssueForm-doc-viewer----currAttachment", currAttachment)
+//  console.log("UpdateIssueForm-doc-viewer----docs", docs)
 
   const [summary, setSummary] = useState(currSummary);
   const [summaryInput, setSummaryInput] = useState(false);
@@ -50,9 +49,9 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const [descriptionInput, setDescriptionInput] = useState(false);
   const [descriptionErrors, setDescriptionErrors] = useState([]);
   const [phaseId, setPhaseId] = useState();
-  const [assigneeId, setAssigneeId] = useState(currIssue.ownerId)
+  const [assigneeId, setAssigneeId] = useState(currAssigneeId)
 
-  const [attachment, setAttachment] = useState(currIssue.attachment);
+  const [attachment, setAttachment] = useState(currAttachment);
   const [attachLoading, setAttachLoading] = useState(false);
   const [attachErrors, setAttachErrors] = useState([]);
   const [uploadBtn, setUploadBtn] = useState(false);
