@@ -5,11 +5,15 @@ import DeleteIssue from './DeleteIssue';
 import { Modal } from '../../context/Modal';
 import UpdateIssueForm from './UpdateIssueModal/UpdateIssueForm';
 
-const IssueCards = ({phase, issue}) => {
+const IssueCards = ({phase, issue, projectNameInit}) => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
+
   const curr_user = useSelector(state => state.session.user);
   const curr_user_init = curr_user.first_name[0].toUpperCase() + curr_user.last_name[0].toUpperCase();
+  const assigneeNameInit = issue.Assignee.first_name[0].toUpperCase() + issue.Assignee.last_name[0].toUpperCase();
+
+  console.log("ISSUE CARD --- issue.Attachment", issue.Attachment[0]?.url)
 
   return (
     <div className="issue-card-container" onClick={(e) => {
@@ -25,7 +29,7 @@ const IssueCards = ({phase, issue}) => {
       }
 
       <div className="issue-card-outer" key={issue.issueId}>
-        {(issue.attachment?.includes("jpeg") || issue.attachment?.includes("png") || issue.attachment?.includes("jpg") || issue.attachment?.includes("gif")) && <img src={`${issue.attachment}`} alt={issue.attachment} className="issue-card-attachment-img"/>}
+        {issue.Attachment?.length >= 1 && (issue.Attachment[0]?.url?.includes("jpeg") || issue.Attachment[0]?.url?.includes("png") || issue.Attachment[0]?.url?.includes("jpg") || issue.Attachment[0]?.url?.includes("gif")) && <img src={`${issue.Attachment[0]?.url}`} alt={issue.Attachment} className="issue-card-attachment-img"/>}
         <div className="issue-card-title">
           <div className="issue-summary">{issue.summary}</div>
           <DeleteIssue issueId={issue.issueId} phaseId={phase.id}/>
@@ -33,21 +37,21 @@ const IssueCards = ({phase, issue}) => {
         <div className="project-name-outer">
           <div className="project-name-left">
             <div className='project-name-icon'><i className="fa-solid fa-square-check"></i></div>
-            <div className="project-name">{phase.Project.name}--{issue.issueId}</div>
+            <div className="project-name">{projectNameInit}--{issue.issueId}</div>
           </div>
-          {issue.User?.first_name[0].toUpperCase()+issue.User?.last_name[0].toUpperCase() === curr_user_init
+          {assigneeNameInit === curr_user_init
           ?
           <>
-            {(issue.attachment?.includes("pdf") || issue.attachment?.includes("docx") || issue.attachment?.includes("xlsx")) && <i className="fa-solid fa-paperclip"></i>}
+            {(issue.attachment?.includes("pdf") || issue.Attachment[0]?.url?.includes("docx") || issue.Attachment[0]?.url?.includes("xlsx") || issue.Attachment[0]?.url?.includes("ppt") || issue.Attachment[0]?.url?.includes("pptx")) && <i className="fa-solid fa-paperclip"></i>}
             <div className='curr-user-circle-small'>
               {curr_user_init}
             </div>
           </>
           :
           <>
-            {(issue.attachment?.includes("pdf") || issue.attachment?.includes("docx") || issue.attachment?.includes("xlsx")) && <i className="fa-solid fa-paperclip"></i>}
+            {(issue.attachment?.includes("pdf") || issue.Attachment[0]?.url?.includes("docx") || issue.Attachment[0]?.url?.includes("xlsx") || issue.Attachment[0]?.url?.includes("ppt") || issue.Attachment[0]?.url?.includes("pptx")) && <i className="fa-solid fa-paperclip"></i>}
             <div className='other-user-circle-small'>
-              {issue.User?.first_name[0].toUpperCase()+issue.User?.last_name[0].toUpperCase()}
+              {assigneeNameInit}
             </div>
           </>
           }

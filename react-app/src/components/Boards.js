@@ -7,7 +7,7 @@ import CreatePhase from './Phases/CreatePhase';
 import UpdatedPhase from './Phases/UpdatePhase';
 import DeletePhase from './Phases/DeletePhase';
 import IssueCards from './Issues/IssueCards'
-import "./CSS/Phases.css"
+import "./CSS/Boards.css"
 
 
 function Boards(){
@@ -17,6 +17,7 @@ function Boards(){
   const phases = useSelector(state => state.issues.AllPhases);
   const phasesArr = Object.values(phases);
   const projectName = phasesArr[0]?.Project?.name;
+  const projectNameInit = projectName?.split(" ").map(word => word[0].toUpperCase())
   const projectId = phasesArr[0]?.Project?.id;
 
   const curr_user = useSelector(state => state.session.user);
@@ -43,7 +44,7 @@ function Boards(){
         <div className='sidebar-project-name-container'>
           <div className='sidebar-project-project-logo'><i className="fa-solid fa-list-check"></i></div>
           <div>
-            <div className='sidebar-project-name'>Project 1</div>
+            <div className='sidebar-project-name'>{projectName}</div>
             <div className='sidebar-project-subtitle'>software project</div>
           </div>
           <div className='sidebar-collapse-button' onClick={() => setShowSideBar(false)}><i className="fa-solid fa-less-than"></i></div>
@@ -76,8 +77,8 @@ function Boards(){
       }
 
       <div className="project-main-container">
-        <div className='project-path'>Projects  /  Project 1</div>
-        <div className='project-title'>{projectName}</div>
+        <div className='project-path'>Projects  /  {projectName}</div>
+        <div className='project-title'>{projectNameInit} board</div>
         <div className='user-circle-container'>
           {all_users?.users.map((user, i) => currUserId === user.id ? <div className='curr-user-circle' key={i}>{user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase()}</div> : <div className='other-user-circle' key={i}>{user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase()}</div>)}
         </div>
@@ -90,7 +91,7 @@ function Boards(){
                 <DeletePhase phaseId={phase.id}/>
               </div>
                 {phase.Issues && Object.values(phase.Issues).map((issue) => {
-                  return <IssueCards issue={issue} phase={phase}/>
+                  return <IssueCards issue={issue} phase={phase} projectNameInit={projectNameInit}/>
                 })}
                 <CreateIssueInPhase phaseId={phase.id} assigneeId={currUserId}/>
             </div>

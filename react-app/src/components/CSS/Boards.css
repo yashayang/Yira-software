@@ -53,12 +53,14 @@
 }
 
 .sidebar-project-name {
-  width: 180px;
+  width: 200px;
   margin-top: 10px;
   margin-bottom: 2px;
   padding-left: 10px;
   font-size: 1rem;
   color: #2F2F2F;
+  white-space: nowrap;
+  /* background-color: #FFD166; */
 }
 
 .sidebar-project-subtitle {
@@ -123,7 +125,7 @@
 .sidebar-footer {
   color: #888888;
   font-size: 0.9rem;
-  margin-left: 10px;
+  margin-left: 18px;
   margin-bottom: 30px;
 }
 
@@ -131,7 +133,7 @@
   /* margin-top: 90px; */
   font-size: 1rem;
   color: #888888;
-  margin-left: 40px;
+  margin-left: 48px;
 }
 
 .sidebar-my-name {
@@ -139,12 +141,12 @@
 }
 
 .sidebar-social-link-container {
-  margin: 10px 0px 20px 95px;
+  margin: 20px 0px 0px 92px;
 }
 
 .sidebar-social-link {
   color: #888888;
-  font-size: 1rem;
+  font-size: 2rem;
   margin-left: 10px;
   margin-top: 50px;
 }
