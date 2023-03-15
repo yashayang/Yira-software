@@ -23,7 +23,6 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
   const currPhaseId = singleIssue?.phaseId;
   const currAssigneeId = currIssue.Assignee?.id;
   const currAttachment = currIssue.Attachment[0]?.url;
-  console.log("UpdateIssueForm----currAssigneeId", currAssigneeId)
 
   const getExtension = (fileName) =>{
     if (fileName){
