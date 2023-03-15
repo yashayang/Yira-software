@@ -21,13 +21,9 @@ function Boards(){
   const projectId = phasesArr[0]?.Project?.id;
 
   const curr_user = useSelector(state => state.session.user);
-  const curr_user_init = curr_user.first_name[0].toUpperCase() + curr_user.last_name[0].toUpperCase();
   const currUserId = curr_user?.id;
-
   const all_users = useSelector(state => state.session.AllUsers);
-  const all_users_init = all_users?.users.map(user => user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase());
 
-  // console.log("PHASE BROWSING-phasesArr:", phasesArr)
 
   useEffect(() => {
     dispatch(thunkGetAllPhasesIssues())
