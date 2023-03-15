@@ -11,7 +11,7 @@ const IssueCards = ({phase, issue, projectNameInit}) => {
 
   const curr_user = useSelector(state => state.session.user);
   const curr_user_init = curr_user.first_name[0].toUpperCase() + curr_user.last_name[0].toUpperCase();
-  const assigneeNameInit = issue.Assignee.first_name[0].toUpperCase() + issue.Assignee.last_name[0].toUpperCase();
+  const assigneeNameInit = issue?.Assignee?.first_name[0].toUpperCase() + issue?.Assignee?.last_name[0].toUpperCase();
 
   return (
     <div className="issue-card-container" onClick={(e) => {

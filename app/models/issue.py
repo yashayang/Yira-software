@@ -11,8 +11,8 @@ class Issue(db.Model):
   summary = db.Column(db.String(255), nullable=False)
   description = db.Column(db.String(500))
   project_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('projects.id')))
-  phase_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('phases.id')))
   owner_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
+  phase_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('phases.id')))
   assignee_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')))
   created_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.func.now())
   updated_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.func.now())
@@ -39,7 +39,7 @@ class Issue(db.Model):
       "updatedAt": self.updated_at,
       "Attachment": [attachment.to_dict() for attachment in self.attachments],
       "Owner": self.owner.to_dict(),
-      "Assignee": self.assignee.to_dict()
+      "Assignee": self.assignee.to_dict() if self.assignee_id else None
     }
 
   def to_dict(self):
@@ -57,5 +57,5 @@ class Issue(db.Model):
       "Attachment": [attachment.to_dict() for attachment in self.attachments],
       "Comments": [comment.to_dict() for comment in self.comments],
       "Owner": self.owner.to_dict(),
-      "Assignee": self.assignee.to_dict()
+      "Assignee": self.assignee.to_dict() if self.assignee_id else None
     }

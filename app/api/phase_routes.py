@@ -12,12 +12,11 @@ phase_routes = Blueprint('phases', __name__)
 @login_required
 def get_all_phases_issues():
   all_phases = Phase.query.all()
-  # phases = [phase.to_dict_all() for phase in all_phases]
-  # print("====GETALLPHASESISSUES=====", all_phases)
+  print("=======GET ALL PHASES & ISSUES=======", all_phases)
   if all_phases:
     return {"AllPhases":[phase.to_dict_all_phase() for phase in all_phases]}, 200
 
-# fetch("http://localhost:3000/api/projects/", {
+# fetch("http://localhost:3000/api/phases/", {
 #   method: 'GET',
 #   headers: {
 #     'Content-type': 'application/json'
@@ -123,7 +122,7 @@ def delete_phase(phase_id):
       "errors": "Unauthorized! You are not the admin of this board!"
     }), 403
 
-# fetch("http://localhost:3000/api/projects/phases/7", {
+# fetch("http://localhost:3000/api/phases/4", {
 #   method: 'DELETE',
 #   headers: {
 #     'Content-type': 'application/json'
