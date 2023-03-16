@@ -1,63 +1,105 @@
 from flask import Blueprint, jsonify, session, request
 from flask_login import current_user, login_required
 from datetime import datetime
-from app.models import Phase, Issue, db
-from app.forms import PhaseForm, IssueForm
+from app.models import Attachment, Issue, db
+from app.forms import AttachmentForm
 from .auth_routes import validation_errors_to_error_messages
 from app.s3_helpers import (
     upload_file_to_s3, allowed_file, get_unique_filename, delete_file_from_s3, download_file_from_s3)
 
 attachment_routes = Blueprint('attachments', __name__)
 
-def validation_errors_to_error_messages(validation_errors):
-    """
-    Simple function that turns the WTForms validation errors into a simple list
-    """
-    errorMessages = []
-    for field in validation_errors:
-        for error in validation_errors[field]:
-            errorMessages.append(f'{field} : {error}')
-    return errorMessages
 
-@attachment_routes.route("/<int:issue_id>", methods=["PUT"])
+@attachment_routes.route("/new", methods=["PUT"])
 @login_required
-def delete_attachment(issue_id):
-  issue = Issue.query.get(issue_id)
-  curr_attachment = issue.attachment
-  attachment_name = curr_attachment.split(".com/")[1]
-  print("---DELETE ATTACHMENT---curr_attachment:", curr_attachment, type(curr_attachment))
-  print("---DELETE ATTACHMENT---attachment_name:", attachment_name)
-
-  form = IssueForm(obj=issue)
+def upload_attachment():
+  form = AttachmentForm()
   form['csrf_token'].data = request.cookies['csrf_token']
 
-  if current_user.is_admin == True:
-    if curr_attachment:
-      if form.validate_on_submit():
-      # db.session.delete(curr_attachment)
-        issue.attachment = None
-        issue.updated_at = datetime.now()
-        db.session.commit()
-        deleted = delete_file_from_s3(attachment_name)
-        return {
-          "message": "Attachment is successfully deleted!",
-          "status_code": 200
-        }, 200
-      else:
-        return {
-          "errors": "Attachment could not be found!"
-        }, 404
+  if "attachment" not in request.file:
+    return {"errors": "file required"}, 400
 
+  attachment = request.files["attachment"]
+
+  if not allowed_file(attachment.filename):
+      return {"errors": "File type not permitted. Please choose again."}, 400
+
+  attachment.filename = get_unique_filename(attachment.filename)
+
+  upload = upload_file_to_s3(attachment)
+
+  if "url" not in upload:
+    # if the dictionary doesn't have a url key it means that there was an error when we tried to upload so we send back that error message
+    return upload, 400
+
+  url = upload["url"]
+  # print("---CREATE ISSUE with attachment---before---form.data", form.data)
+  if form.validate_on_submit():
+    # print("---CREATE ISSUE with attachment---after---form.data", form.data)
+    new_attachment = Attachment(
+      owner_id=current_user.id,
+      issue_id=form.data["issueId"],
+      name=form.data["name"],
+      url=url,
+      created_at = datetime.now()
+    )
+    # print("---CREATE ISSUE with attachment---new_issue:", new_issue)
+    db.session.add(new_attachment)
+    db.session.commit()
+
+    return new_attachment.to_dict(), 201
   else:
-    return {
-      "errors": "Unauthorized! You are not the admin of this board!"
-    }, 403
+    # print("---CREATE ISSUE---FORM ERRORS:", form.errors)
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+
+@attachment_routes.route("/<int:attachment_id>", methods=["PUT"])
+@login_required
+def update_attachment(attachment_id):
+  new_attachment = None
+  if "attachment" in request.files:
+    new_attachment = request.files["attachment"]
+    new_attachment.filename = get_unique_filename(new_attachment.filename)
+  attachment = Attachment.query.get(attachment_id)
+  url = attachment.url
+  if current_user.id == attachment.owner_id:
+    form = AttachmentForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+      if new_attachment:
+        upload = upload_file_to_s3(new_attachment)
+        if "url" not in upload:
+            return upload, 400
+        deleted = delete_file_from_s3(attachment.url.split(".com/")[1])
+        url = upload["url"]
+      attachment.task_id = form.data['issueId']
+      attachment.name = form.data['name']
+      attachment.url = url
+      db.session.add(attachment)
+      db.session.commit()
+      return attachment.to_dict()
+    else:
+      return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+  else:
+    return {'errors': ['Sorry, you are not the owner']}
+
+
+@attachment_routes.route("/<int:attachment_id>", methods=["DELETE"])
+@login_required
+def delete_attachment(attachment_id):
+  attachment = Attachment.query.get(attachment_id)
+  if current_user.id == attachment.owner_id:
+    if attachment:
+      db.session.delete(attachment)
+      db.session.commit()
+      return {'Message':'Successfully deleted'}
+    else:
+      return{"Message":'Attachment could not be found'},404
+  else:
+      return {'errors': ['Sorry, you are not the owner']}
 
 # fetch("http://localhost:3000/api/attachments/6", {
-#   method: 'PUT',
-#   body: JSON.stringify({
-#    "attachment": " "
-#   }),
+#   method: 'DELETE',
 #   headers: {
 #     'Content-type': 'application/json'
 #   }
@@ -65,14 +107,12 @@ def delete_attachment(issue_id):
 # .then(res => res.json())
 # .then(console.log)
 
-@attachment_routes.route('/<int:issue_id>/download')
+@attachment_routes.route('/<int:attachment_id>/download')
 @login_required
-def download_attachment(issue_id):
-  issue = Issue.query.get(issue_id)
-  curr_attachment = issue.attachment
-  attachment_name  = curr_attachment.split(".com/")[1]
-
-  data = download_file_from_s3(attachment_name)
+def download_attachment(attachment_id):
+  attachment = Attachment.query.get(attachment_id)
+  url = attachment.url.split(".com/")[1]
+  data = download_file_from_s3(url)
   return {"data": data}
 
 # fetch("http://localhost:3000/api/attachments//10/download", {
