@@ -10,13 +10,13 @@ from app.s3_helpers import (
 attachment_routes = Blueprint('attachments', __name__)
 
 
-@attachment_routes.route("/new", methods=["PUT"])
+@attachment_routes.route("/new", methods=["POST"])
 @login_required
 def upload_attachment():
   form = AttachmentForm()
   form['csrf_token'].data = request.cookies['csrf_token']
-
-  if "attachment" not in request.file:
+  print("-----upload_attachment-----:", request.files)
+  if "attachment" not in request.files:
     return {"errors": "file required"}, 400
 
   attachment = request.files["attachment"]
@@ -33,9 +33,10 @@ def upload_attachment():
     return upload, 400
 
   url = upload["url"]
-  # print("---CREATE ISSUE with attachment---before---form.data", form.data)
+  print("---CREATE ISSUE with attachment---before---url", url)
+  print("---CREATE ISSUE with attachment---before---form.data", form.data)
   if form.validate_on_submit():
-    # print("---CREATE ISSUE with attachment---after---form.data", form.data)
+    print("---CREATE ISSUE with attachment---after---ENTER!!!!")
     new_attachment = Attachment(
       owner_id=current_user.id,
       issue_id=form.data["issueId"],
@@ -43,7 +44,7 @@ def upload_attachment():
       url=url,
       created_at = datetime.now()
     )
-    # print("---CREATE ISSUE with attachment---new_issue:", new_issue)
+    print("---CREATE ISSUE with attachment---new_issue:", new_attachment)
     db.session.add(new_attachment)
     db.session.commit()
 
@@ -52,6 +53,20 @@ def upload_attachment():
     # print("---CREATE ISSUE---FORM ERRORS:", form.errors)
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
+# fetch("http://localhost:3000/api/attachments/new", {
+#   method: 'POST',
+#   body: JSON.stringify(attachment = {
+#    "owner_id": 1,
+#    "issue_id": 1,
+#    "name": "TESTER",
+#    "url": "https://yiraawsbucket.s3.us-west-1.amazonaws.com/27137209667f48d6a8fd9bab9c87fd23.jpeg"
+#   }),
+#   headers: {
+#     'Content-type': 'application/json'
+#   }
+# })
+# .then(res => res.json())
+# .then(console.log)
 
 @attachment_routes.route("/<int:attachment_id>", methods=["PUT"])
 @login_required

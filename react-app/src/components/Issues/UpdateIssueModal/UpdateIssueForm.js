@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import { thunkUpdateIssue, thunkGetOneIssue, thunkGetAllPhasesIssues, cleanState } from "../../../store/issue";
 import { loadAllUsers } from '../../../store/session';
+import UploadAttachment from '../../Attachments/UploadAttachment';
 import "../../CSS/UpdateIssues.css"
 
 
@@ -105,57 +106,57 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
     }
   }
 
-  const handleAttachment = async(e) => {
-    // console.log("UpdateIssueForm-handleAttachment-enter!!!!")
-    e.stopPropagation()
-    e.preventDefault()
-    // setAttachment(e.target.files[0])
-    setAttachErrors([])
+//   const handleAttachment = async(e) => {
+//     // console.log("UpdateIssueForm-handleAttachment-enter!!!!")
+//     e.stopPropagation()
+//     e.preventDefault()
+//     // setAttachment(e.target.files[0])
+//     setAttachErrors([])
 
-    const formData = new FormData()
-    // formData.append("summary", currIssue.summary)
-    // formData.append("description", currDescription)
-    // formData.append("phase_id", parseInt(currPhaseId))
-    // formData.append("owner_id", parseInt(currAssigneeId))
-    formData.append("attachment", attachment[0])
-    for(let value of formData.values()) {
-      // console.log("UpdateIssueForm-handleAttachment---value", value)
-    }
-    // console.log("UpdateIssueForm-handleAttachment---attachment[0]", attachment[0], Array.isArray(attachment))
-    // console.log("UpdateIssueForm-handleAttachment---formData.attachment", formData.attachment)
-    // console.log("UpdateIssueForm-handleAttachment---currIssue.summary/attachment", currIssue.summary, currIssue.attachment)
-    // console.log("UpdateIssueForm-handleAttachment---formData-PHASEID", parseInt(currPhaseId))
+//     const formData = new FormData()
+//     // formData.append("summary", currIssue.summary)
+//     // formData.append("description", currDescription)
+//     // formData.append("phase_id", parseInt(currPhaseId))
+//     // formData.append("owner_id", parseInt(currAssigneeId))
+//     formData.append("attachment", attachment[0])
+//     for(let value of formData.values()) {
+//       // console.log("UpdateIssueForm-handleAttachment---value", value)
+//     }
+//     // console.log("UpdateIssueForm-handleAttachment---attachment[0]", attachment[0], Array.isArray(attachment))
+//     // console.log("UpdateIssueForm-handleAttachment---formData.attachment", formData.attachment)
+//     // console.log("UpdateIssueForm-handleAttachment---currIssue.summary/attachment", currIssue.summary, currIssue.attachment)
+//     // console.log("UpdateIssueForm-handleAttachment---formData-PHASEID", parseInt(currPhaseId))
 
-    setAttachLoading(true)
-    const response = await dispatch(thunkUpdateIssue(issueId, formData, currPhaseId, attachment))
-    // console.log("UpdateIssueForm-handleAttachment---response", response)
+//     setAttachLoading(true)
+//     const response = await dispatch(thunkUpdateIssue(issueId, formData, currPhaseId, attachment))
+//     // console.log("UpdateIssueForm-handleAttachment---response", response)
 
-    let errorsArr = []
-    if(response.errors) {
-      setAttachLoading(false)
-      if(response.errors[0].length > 40) {
-        let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
-        errorsArr.push(errorMsg)
-      } else if(!Array.isArray(response)) {
-        errorsArr.push(response.errors)
-      } else {
-        errorsArr.push(response.errors[0])
-      }
-      setAttachErrors(errorsArr)
-      // if (attachErrors) {
-        //   setTimeout(() => {
-          //     const errorsDiv = document.getElementById('update-issue-attachment-errors');
-          //     errorsDiv.style.display = 'none';
-          //   }, 3000);
-          //   setAttachment(null)
-          //   await dispatch(thunkGetOneIssue(parseInt(issueId)))
-          // }
-        }
-        if(response.issueId) {
-          setAttachLoading(false)
-          await dispatch(thunkGetOneIssue(parseInt(issueId)))
-    }
-}
+//     let errorsArr = []
+//     if(response.errors) {
+//       setAttachLoading(false)
+//       if(response.errors[0].length > 40) {
+//         let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
+//         errorsArr.push(errorMsg)
+//       } else if(!Array.isArray(response)) {
+//         errorsArr.push(response.errors)
+//       } else {
+//         errorsArr.push(response.errors[0])
+//       }
+//       setAttachErrors(errorsArr)
+//       // if (attachErrors) {
+//         //   setTimeout(() => {
+//           //     const errorsDiv = document.getElementById('update-issue-attachment-errors');
+//           //     errorsDiv.style.display = 'none';
+//           //   }, 3000);
+//           //   setAttachment(null)
+//           //   await dispatch(thunkGetOneIssue(parseInt(issueId)))
+//           // }
+//         }
+//         if(response.issueId) {
+//           setAttachLoading(false)
+//           await dispatch(thunkGetOneIssue(parseInt(issueId)))
+//     }
+// }
 
 
   const handleDescription = async (e) => {
@@ -265,19 +266,19 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
             </form>
           </div>
         }
-
-        <div className="update-issue-attachment-errors" id="update-issue-attachment-errors">
+        <UploadAttachment issueId={issueId}/>
+        {/* <div className="update-issue-attachment-errors" id="update-issue-attachment-errors">
           {
           attachErrors &&
           attachErrors.map((error)=>(<div key={error}>{error}</div>))
           }
         </div>
-        {!currAttachment && <form onSubmit={handleAttachment} className="update-issue-attachment-upload-container">
+        {!currAttachment && <form onSubmit={handleAttachment} className="update-issue-attachment-upload-container"> */}
           {/* <label for="file-upload" className="custom-file-upload">
             <div><i className="fa-solid fa-paperclip" id="update-issue-paperclip"></i></div>
             <span className="upload-issue-attach-label">Attach</span>
           </label> */}
-          <div className="file-upload-container">
+          {/* <div className="file-upload-container">
             <input
               id="file-upload"
               type="file"
@@ -290,7 +291,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
             />
             <button type="submit" className="update-issue-upload-button">Submit</button>
           </div>
-          </form>}
+          </form> */}
 
         <div className="update-issue-description">
           <label className="update-issue-description-label">Description</label>

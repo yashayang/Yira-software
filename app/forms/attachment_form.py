@@ -11,7 +11,7 @@ def valid_url(form, field):
 
 
 class AttachmentForm(FlaskForm):
-  issue_Id = IntegerField("issueId", validators=[DataRequired()])
+  issueId = IntegerField("issueId", validators=[DataRequired()])
   url = StringField("url", validators=[valid_url])
-  # name = StringField("name",validators=[DataRequired()])
+  name = StringField("name",validators=[DataRequired()])
   # submit = SubmitField('Upload')

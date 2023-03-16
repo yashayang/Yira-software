@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import session from './session';
 import phases from './phase';
 import issues from './issue';
+import attachments from './attachment';
 
 const rootReducer = combineReducers({
   session,
-  // phases,
-  issues
+  phases,
+  issues,
+  attachments
 });
 
 
