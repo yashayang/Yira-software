@@ -137,10 +137,11 @@ def update_issue(issue_id):
     print("===========form.data NO attachment----form.phase_id==============", form.phase_id)
     if form.validate_on_submit():
       print("==========form.validate_on_submit=====")
-      issue.summary = form.data['summary']
-      issue.description = form.data['description']
-      issue.phase_id = form.data['phase_id']
+      issue.summary = form.data["summary"]
+      issue.description = form.data["description"]
+      issue.phase_id = form.data["phase_id"]
       issue.owner_id = form.data["owner_id"]
+      issue.assignee_id = form.data["assignee_id"]
       issue.updated_at = datetime.now()
       db.session.commit()
       return issue.to_dict(), 200

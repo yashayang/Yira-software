@@ -23,10 +23,10 @@ const CreateIssueInPhase = ({phaseId, assigneeId}) => {
       phase_id: parseInt(phaseId),
       owner_id: parseInt(assigneeId)
     }
-    console.log("CREATE ISSUE IN PHASE -issueInfo", issueInfo)
+    // console.log("CREATE ISSUE IN PHASE -issueInfo", issueInfo)
     const response = await dispatch(thunkCreateIssue(phaseId, issueInfo))
 
-    console.log("CREATE ISSUE IN PHASE -response", response)
+    // console.log("CREATE ISSUE IN PHASE -response", response)
 
     let errorsArr = []
     if(response.errors) {

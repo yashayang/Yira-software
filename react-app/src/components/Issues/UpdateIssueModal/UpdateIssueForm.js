@@ -7,7 +7,7 @@ import "../../CSS/UpdateIssues.css"
 
 
 const UpdateIssueForm = ({currIssue, currPhase}) => {
-  // console.log("UpdateIssueForm----currIssue", currIssue)
+  console.log("UpdateIssueForm----currIssue", currIssue)
   // console.log("UpdateIssueForm----currPhase", currPhase)
 
   const dispatch = useDispatch();
@@ -220,7 +220,7 @@ const UpdateIssueForm = ({currIssue, currPhase}) => {
       // description: currDescription,
       // phaseId: phaseId ? phaseId : currPhaseId,
       // assigneeId: Number(e.target.value)
-      "owner_id": Number(e.target.value)
+      "assignee_id": Number(e.target.value)
     }
     console.log("UPDATE ISSUE-handleAssigneeId-issue:", issue)
     await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
