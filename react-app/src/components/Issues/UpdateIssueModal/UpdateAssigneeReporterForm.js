@@ -6,7 +6,6 @@ import "../../CSS/UpdateIssues.css"
 
 const UpdateAssigneeReporterForm = ({currIssue}) => {
   const dispatch = useDispatch();
-  const currUser = useSelector(state => state.session.user)
   const allUsersArr = useSelector(state => state.session.AllUsers?.users)
 
   const issueId = currIssue.issueId
@@ -25,20 +24,19 @@ const UpdateAssigneeReporterForm = ({currIssue}) => {
     let issue
     if (e.target.value === "") {
       issue = {
-        "assignee_id": null,
+        "assignee_id": 0,
         "summary": currIssue.summary,
         "phase_id": currPhaseId,
-        "owner_id": currReportorId
+        "owner_id": currReportorId ? currReportorId : 0
       }
     } else {
       issue = {
         "assignee_id": Number(e.target.value),
         "summary": currIssue.summary,
         "phase_id": currPhaseId,
-        "owner_id": currReportorId
+        "owner_id": currReportorId ? currReportorId : 0
       }
     }
-    console.log("UpdateAssigneeReportorForm ---- issue", issue)
     await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
   }
 
@@ -47,11 +45,19 @@ const UpdateAssigneeReporterForm = ({currIssue}) => {
     e.preventDefault()
     setReportorId(e.target.value)
 
-    const issue = {
-      "summary": currIssue.summary,
-      "owner_id": Number(e.target.value),
-      "phase_id": currPhaseId,
-      "owner_id": currReportorId
+    let issue
+    if (e.target.value === "") {
+      issue = {
+        "owner_id": 0,
+        "summary": currIssue.summary,
+        "phase_id": currPhaseId
+      }
+    } else {
+      issue = {
+        "owner_id": Number(e.target.value),
+        "summary": currIssue.summary,
+        "phase_id": currPhaseId
+      }
     }
 
     await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))

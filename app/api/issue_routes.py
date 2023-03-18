@@ -131,7 +131,7 @@ def update_issue(issue_id):
   if formdata.get("assignee_id") == "":
       formdata["assignee_id"] = None
   print("Form data:", formdata)
-  
+
   form = IssueForm(formdata=formdata)
   print("Form errors:", form.errors)
   form['csrf_token'].data = request.cookies['csrf_token']
@@ -142,8 +142,8 @@ def update_issue(issue_id):
     issue.summary = form.summary.data
     issue.description = form.description.data
     issue.phase_id = form.phase_id.data
-    issue.owner_id = form.owner_id.data
-    issue.assignee_id = form.assignee_id.data if form.assignee_id.data != "" else None
+    issue.owner_id = form.owner_id.data if form.assignee_id.data != "" else 0
+    issue.assignee_id = form.assignee_id.data if form.assignee_id.data != "" else 0
     issue.updated_at = datetime.now()
     db.session.commit()
     return issue.to_dict(), 200
