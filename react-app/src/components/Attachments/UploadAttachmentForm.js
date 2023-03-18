@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import { thunkGetOneIssue } from "../../store/issue";
-// import { loadAllUsers } from '../../../store/session';
 import { thunkUploadAttachment } from "../../store/attachment";
 import "../CSS/UpdateIssues.css"
 
-const UploadAttachment = ({issueId}) => {
+const UploadAttachmentFrom = ({issueId, currIssue}) => {
   const dispatch = useDispatch();
   const currAttachment = useSelector(state => state.issues.SingleIssue.Attachment)
   const [attachment, setAttachment] = useState(null);
@@ -89,4 +87,4 @@ const UploadAttachment = ({issueId}) => {
   )
 }
 
-export default UploadAttachment;
+export default UploadAttachmentFrom;

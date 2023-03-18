@@ -4,6 +4,7 @@ from datetime import datetime
 from app.models import Phase, Issue, db
 from app.forms import PhaseForm, IssueForm
 from .auth_routes import validation_errors_to_error_messages
+from werkzeug.datastructures import MultiDict
 
 issue_routes = Blueprint('issues', __name__)
 
@@ -120,34 +121,54 @@ def create_issue(phase_id):
 def update_issue(issue_id):
   print("===========UPDATE ISSUE ENTER!!!!==============")
   issue = Issue.query.filter(Issue.id == issue_id).first()
-  print('issue-----',issue)
-  print('request.files------', request.files)
-  # print('request.files["attachment"]------', request.files["attachment"])
 
   if issue is None:
     print('issue- not existing----',issue)
     return {"errors" : "Issue couldn't be found"}, 404
 
-  form = IssueForm(obj=issue)
+  json_data = request.get_json()
+  formdata = MultiDict(json_data)
+  if formdata.get("assignee_id") == "":
+      formdata["assignee_id"] = None
+  print("Form data:", formdata)
+  
+  form = IssueForm(formdata=formdata)
+  print("Form errors:", form.errors)
   form['csrf_token'].data = request.cookies['csrf_token']
+  print("===========UPDATE ISSUE NO attachment==============form.assignee_id", form.assignee_id)
 
-  # if "attachment" not in request.files:
-  print("===========UPDATE ISSUE NO attachment==============", request.files)
-  print("===========form.data NO attachment==============", form.data)
-  print("===========form.data NO attachment----form.phase_id==============", form.phase_id)
   if form.validate_on_submit():
     print("==========form.validate_on_submit=====")
-    issue.summary = form.data["summary"]
-    issue.description = form.data["description"]
-    issue.phase_id = form.data["phase_id"]
-    issue.owner_id = form.data["owner_id"]
-    issue.assignee_id = form.data["assignee_id"]
+    issue.summary = form.summary.data
+    issue.description = form.description.data
+    issue.phase_id = form.phase_id.data
+    issue.owner_id = form.owner_id.data
+    issue.assignee_id = form.assignee_id.data if form.assignee_id.data != "" else None
     issue.updated_at = datetime.now()
     db.session.commit()
     return issue.to_dict(), 200
   else:
     print("---UPDATE ISSUE---FORM ERRORS:", form.errors)
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+  # form = IssueForm()
+  # form['csrf_token'].data = request.cookies['csrf_token']
+
+  # print("===========UPDATE ISSUE NO attachment==============form.assignee_id", form.assignee_id)
+
+  # if form.validate_on_submit():
+  #   print("==========form.validate_on_submit=====")
+  #   issue.summary = form.data["summary"]
+  #   issue.description = form.data["description"]
+  #   issue.phase_id = form.data["phase_id"]
+  #   issue.owner_id = form.data["owner_id"]
+  #   issue.assignee_id = form.data["assignee_id"] if form.data["assignee_id"] != "" else None
+  #   issue.updated_at = datetime.now()
+  #   db.session.commit()
+  #   return issue.to_dict(), 200
+  # else:
+  #   print("---UPDATE ISSUE---FORM ERRORS:", form.errors)
+  #   return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
   # attachment = request.files["attachment"]
 

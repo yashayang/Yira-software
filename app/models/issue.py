@@ -56,6 +56,6 @@ class Issue(db.Model):
       "Phase": self.phase.to_dict(),
       "Attachment": [attachment.to_dict() for attachment in self.attachments],
       "Comments": [comment.to_dict() for comment in self.comments],
-      "Owner": self.owner.to_dict(),
+      "Owner": self.owner.to_dict() if self.owner_id else None,
       "Assignee": self.assignee.to_dict() if self.assignee_id else None
     }

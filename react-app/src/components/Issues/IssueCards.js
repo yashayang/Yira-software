@@ -3,7 +3,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import { thunkGetAllPhasesIssues } from "../../store/issue";
 import DeleteIssue from './DeleteIssue';
 import { Modal } from '../../context/Modal';
-import UpdateIssueForm from './UpdateIssueModal/UpdateIssueForm';
+import UpdateIssueMainForm from './UpdateIssueModal/UpdateIssueMainForm';
 
 const IssueCards = ({phase, issue, projectNameInit}) => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const IssueCards = ({phase, issue, projectNameInit}) => {
           dispatch(thunkGetAllPhasesIssues())
           setShowModal(false)
           }}>
-          <UpdateIssueForm currIssue={issue} currPhase={phase}/>
+          <UpdateIssueMainForm currIssue={issue} currPhase={phase}/>
         </Modal>)
       }
 

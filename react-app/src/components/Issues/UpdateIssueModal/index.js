@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal } from '../../../context/Modal';
-import UpdateIssueForm from './UpdateIssueForm.js';
+import UpdateIssueMainForm from './UpdateIssueMainForm.js';
 import '../../CSS/UpdateIssues.css';
 
 function UpdateIssueModal({currIssue}) {
@@ -12,7 +12,7 @@ function UpdateIssueModal({currIssue}) {
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           {/* {console.log("did it get here? this is EditCommentModal", showModal)} */}
-          <UpdateIssueForm currIssue={currIssue} setShowModal={setShowModal}/>
+          <UpdateIssueMainForm currIssue={currIssue} setShowModal={setShowModal}/>
         </Modal>
       )}
 

@@ -160,41 +160,7 @@ export const thunkUpdateIssue = (issueId, issue, phaseId, attachment) => async (
   const { summary, description, phaseId, assigneeId } = issue
   // console.log("UPDATE ISSUES THUNK_issue:", issue)
   // console.log("UPDATE ISSUES THUNK_attachment:", attachment)
-  if (attachment) {
-    // console.log("UPDATE ISSUES THUNK_WITH ATTACH_issue.image:", issue.image)
-    try {
-      const response = await fetch(`/api/issues/${issueId}`, {
-        method: "PUT",
-        body: issue
-      })
-      // console.log("UPDATE ISSUES THUNK_response:", response)
-      if (!response.ok) {
-        let error;
-        if (response.status === 401 || 400) {
-          error = await response.json();
-          return error;
-        } else {
-          let errorJSON;
-          error = await response.text();
-          try {
-            errorJSON = JSON.parse(error);
-          } catch {
-            throw new Error(error);
-          }
-          throw new Error(`${errorJSON.title}: ${errorJSON.message}`)
-        }
-      }
-
-      const updatedIssue = await response.json();
-      dispatch(updateOneIssue(updatedIssue, phaseId));
-      // console.log("UPDATE ISSUES THUNK_WITH ATTACH_updatedIssue:", updatedIssue)
-      return updatedIssue
-
-    } catch(error) {
-      throw error
-    }
-  }
-
+  console.log("thunkUpdateIssue ---- issueId", issueId)
   try {
     const response = await fetch(`/api/issues/${issueId}`, {
       method: "PUT",
