@@ -25,7 +25,7 @@
   flex-direction: column;
   justify-content: space-between;
   margin-top: 30px;
-  width: 370px;
+  width: 400px;
 }
 
 .update-issue-left-container {
@@ -186,10 +186,17 @@
   margin: 10px 0px 0px 10px;
 }
 
-.update-issue-time-container {
+.update-issue-left-footer {
   padding-left: 10px;
   margin-top: 30px;
   margin-bottom: 40px;
+  font-size: 0.7rem;
+  color: #888888;
+}
+
+.update-issue-time-container {
+  padding-left: 10px;
+  margin-bottom: 230px;
   font-size: 0.7rem;
   color: #888888;
 }
@@ -199,8 +206,9 @@
 }
 
 .update-issue-right-container {
+  margin-left: 15px;
   margin-top: 67px;
-  margin-right: 28px;
+  margin-right: -10px;
 }
 
 .update-issue-right-phase-selector {
@@ -330,18 +338,45 @@
 
 .update-issue-attachment-container {
   margin-left: 10px;
-  margin-top: 40px;
+  margin-top: 10px;
+  width: 325px;
+  height: 200px;
 }
 
 .update-issue-attachment-label {
   font-weight: 600;
   font-size: 1rem;
-  margin-bottom: 10px;
 }
 
 .update-issue-attachment-loading {
-  margin-top: -50px;
+  margin-top: 0px;
   height: fit-content;
+}
+
+.doc-viewer-style #header-bar {
+  min-height: 35px;
+  font-size: 12px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.doc-viewer-style #header-bar #file-name {
+  font-size: 10px;
+  margin: 0px 10px 0px 0px;
+}
+
+.doc-viewer-style #header-bar #doc-nav {
+  margin: 0px 0px 0px 10px;
+}
+
+.doc-viewer-style #header-bar #doc-nav #doc-nav-prev,
+.doc-viewer-style #header-bar #doc-nav #doc-nav-next {
+  width: 23px;
+  height: 23px;
+  margin: 0px 3px 0px 3px;
+}
+.doc-viewer-style #header-bar #doc-nav #doc-nav-info {
+  margin: 5px;
 }
 
 .issue-card-attachment-img {

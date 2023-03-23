@@ -65,49 +65,49 @@ const UpdateAssigneeReporterForm = ({currIssue}) => {
 
   return (
     <div className="update-issue-right-assignee-reporter">
-    <div className="update-issue-assignee">
-      <div className="update-issue-label-container">
-        <label>Assignee</label>
+      <div className="update-issue-assignee">
+        <div className="update-issue-label-container">
+          <label>Assignee</label>
+        </div>
+        <div>
+          <select
+            name="assigneeId"
+            value={assigneeId}
+            className="update-issue-assignee-select"
+            onChange={handleAssigneeId}
+          >
+            <option value="">
+              Unassigned
+            </option>
+            {allUsersArr?.map((user, i) => (
+              <option value={Number(user.id)} key={i}>
+                {user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
-      <div>
-        <select
-          name="assigneeId"
-          value={assigneeId}
-          className="update-issue-assignee-select"
-          onChange={handleAssigneeId}
-        >
-          <option value="">
-            Unassigned
-          </option>
-          {allUsersArr?.map((user, i) => (
-            <option value={Number(user.id)} key={i}>
+
+      <div className="update-issue-reporter">
+        <div className="update-issue-label-container">
+          <label>Reporter</label><i className="fa-solid fa-asterisk"></i>
+        </div>
+        <div>
+          <select
+            name="reporter"
+            className="update-issue-assignee-select"
+            value={reportorId}
+            onChange={handleReportor}
+          >
+          {allUsersArr?.map((user, i) =>
+            <option value={user.id} key={i}>
               {user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}
             </option>
-          ))}
-        </select>
+          )}
+          </select>
+        </div>
       </div>
     </div>
-
-    <div className="update-issue-reporter">
-      <div className="update-issue-label-container">
-        <label>Reporter</label><i className="fa-solid fa-asterisk"></i>
-      </div>
-      <div>
-        <select
-          name="reporter"
-          className="update-issue-assignee-select"
-          value={reportorId}
-          onChange={handleReportor}
-        >
-        {allUsersArr?.map((user, i) =>
-          <option value={user.id} key={i}>
-            {user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}
-          </option>
-        )}
-        </select>
-      </div>
-    </div>
-  </div>
   )
 }
 

@@ -5,10 +5,9 @@ import { thunkGetOneIssue } from "../../store/issue";
 import { thunkLoadAttachments } from "../../store/attachment";
 import "../CSS/UpdateIssues.css"
 
-const ViewAttachmentsForm = ({attachments}) => {
+const ViewAttachmentsForm = ({attachments, attachLoading, setAttachLoading}) => {
   const dispatch = useDispatch();
-  const [attachLoading, setAttachLoading] = useState(false);
-  const [attachErrors, setAttachErrors] = useState([]);
+  // const [attachLoading, setAttachLoading] = useState(false);
   const currAttachment = attachments[0]?.url;
   const attachmentObj = useSelector(state => state.attachments.Attachments);
   const attachmentArr = Object.values(attachmentObj);
@@ -45,7 +44,7 @@ const ViewAttachmentsForm = ({attachments}) => {
       {currAttachment &&
         <>
           <div className="update-issue-attachment-label">Attachments{" "}({docs.length})</div>
-          {(currAttachment?.includes("jpeg") || currAttachment?.includes("png") || currAttachment?.includes("jpg") || currAttachment?.includes("gif"))
+          {/* {(currAttachment?.includes("jpeg") || currAttachment?.includes("png") || currAttachment?.includes("jpg") || currAttachment?.includes("gif"))
             ? <img src={`${currAttachment}`} alt={currAttachment} className="update-issue-attachment-img"/>
             : <DocViewer
               documents={docs}
@@ -60,7 +59,31 @@ const ViewAttachmentsForm = ({attachments}) => {
                 mode: 'cors'
               }}
               />
-          }
+          } */}
+          <DocViewer
+            className="doc-viewer-style"
+            documents={docs}
+            pluginRenderers={DocViewerRenderers}
+            prefetchMethod="GET"
+            config={{
+              header: {
+                disableHeader: false,
+                disableFileName: false,
+                retainURLParams: false,
+                mode: 'cors'
+              },
+              mode: 'cors'
+            }}
+            theme={{
+              // primary: "#5296d8",
+              secondary: "#615DEC",
+              // tertiary: "#5296d899",
+              textPrimary: "#888888",
+              textSecondary: "#5296d8",
+              textTertiary: "#00000099",
+              // disableThemeScrollbar: false,
+            }}
+            />
         </>
       }
     </div>

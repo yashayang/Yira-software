@@ -4,10 +4,10 @@ import { thunkGetOneIssue, thunkGetAllPhasesIssues, cleanState } from "../../../
 import { loadAllUsers } from '../../../store/session';
 import { thunkLoadAttachments } from "../../../store/attachment";
 import UpdateSummaryForm from './UpdateSummaryForm';
-import UpdateDescriptionForm from './UpdateDescriptionForm';
 import UploadAttachmentFrom from '../../Attachments/UploadAttachmentForm';
+// import UpdateDescriptionForm from './UpdateDescriptionForm';
+// import ViewAttachmentsForm from '../../Attachments/ViewAttachmentsForm';
 import UpdatePhaseForm from './UpdatePhaseForm';
-import ViewAttachmentsForm from '../../Attachments/ViewAttachmentsForm';
 import UpdateAssigneeReporterForm from './UpdateAssigneeReporterForm';
 import "../../CSS/UpdateIssues.css"
 
@@ -44,12 +44,10 @@ const UpdateIssueMainForm = ({currIssue, currPhase}) => {
         <div className="update-issue-title">{phaseTitle}<span>{" / "}</span><span>Issue #{issueId}</span></div>
         <UpdateSummaryForm currIssue={currIssue} />
         <UploadAttachmentFrom issueId={issueId} currIssue={currIssue}/>
-        <UpdateDescriptionForm currIssue={currIssue} />
-        <ViewAttachmentsForm attachments = {currIssue.Attachment}/>
+        {/* <UpdateDescriptionForm currIssue={currIssue} />
+        <ViewAttachmentsForm attachments = {currIssue.Attachment}/> */}
 
-        <div className="update-issue-time-container">
-
-        </div>
+        <div className="update-issue-left-footer"></div>
 
       </div>
 

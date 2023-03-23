@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetOneIssue } from "../../store/issue";
 import { thunkUploadAttachment, thunkLoadAttachments } from "../../store/attachment";
+import UpdateDescriptionForm from '../Issues/UpdateIssueModal/UpdateDescriptionForm';
+import ViewAttachmentsForm from './ViewAttachmentsForm';
 import "../CSS/UpdateIssues.css"
 
 const UploadAttachmentFrom = ({issueId, currIssue}) => {
@@ -84,6 +86,8 @@ const UploadAttachmentFrom = ({issueId, currIssue}) => {
         <button type="submit" className="update-issue-upload-button">Submit</button>
       </div>
       </form>}
+      <UpdateDescriptionForm currIssue={currIssue} />
+      <ViewAttachmentsForm attachments = {currIssue.Attachment} attachLoading={attachLoading} setAttachLoading={setAttachLoading}/>
     </>
   )
 }
