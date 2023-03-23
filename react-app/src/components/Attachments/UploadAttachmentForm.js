@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetOneIssue } from "../../store/issue";
-import { thunkUploadAttachment } from "../../store/attachment";
+import { thunkUploadAttachment, thunkLoadAttachments } from "../../store/attachment";
 import "../CSS/UpdateIssues.css"
 
 const UploadAttachmentFrom = ({issueId, currIssue}) => {
@@ -20,7 +20,7 @@ const UploadAttachmentFrom = ({issueId, currIssue}) => {
     setAttachErrors([])
 
 
-    console.log("UploadAttachmentForm ---- filename:", name)
+    // console.log("UploadAttachmentForm ---- filename:", name)
     const data = { issueId, name, attachment }
 
     setAttachLoading(true)
@@ -51,6 +51,7 @@ const UploadAttachmentFrom = ({issueId, currIssue}) => {
         if(response.issueId) {
           setAttachLoading(false)
           await dispatch(thunkGetOneIssue(parseInt(issueId)))
+          await dispatch(thunkLoadAttachments(issueId))
     }
 }
 
@@ -74,7 +75,7 @@ const UploadAttachmentFrom = ({issueId, currIssue}) => {
           accept="attachment/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           onChange={(e) =>{
             setAttachErrors([])
-            console.log("UploadAttachmentForm---- e.target.files", e.target.files)
+            // console.log("UploadAttachmentForm---- e.target.files", e.target.files)
             e.target.files?.length && setAttachment(Array.from(e.target.files)[0])
             e.target.files?.length && setName(Array.from(e.target.files)[0].name)
           }}

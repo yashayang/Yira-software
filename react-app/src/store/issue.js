@@ -160,7 +160,7 @@ export const thunkUpdateIssue = (issueId, issue, phaseId, attachment) => async (
   const { summary, description, phaseId, assigneeId } = issue
   // console.log("UPDATE ISSUES THUNK_issue:", issue)
   // console.log("UPDATE ISSUES THUNK_attachment:", attachment)
-  console.log("thunkUpdateIssue ---- issueId", issueId)
+  // console.log("thunkUpdateIssue ---- issueId", issueId)
   try {
     const response = await fetch(`/api/issues/${issueId}`, {
       method: "PUT",

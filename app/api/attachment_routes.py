@@ -9,6 +9,11 @@ from app.s3_helpers import (
 
 attachment_routes = Blueprint('attachments', __name__)
 
+@attachment_routes.route('/<int:issue_id>')
+@login_required
+def load_attachments(issue_id):
+  attachments = Attachment.query.filter_by(issue_id=issue_id)
+  return {"attachments": [attachment.to_dict() for attachment in attachments]}
 
 @attachment_routes.route("/new", methods=["POST"])
 @login_required
