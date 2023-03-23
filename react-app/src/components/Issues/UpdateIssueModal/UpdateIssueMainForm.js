@@ -47,7 +47,7 @@ const UpdateIssueMainForm = ({currIssue, currPhase}) => {
         {/* <UpdateDescriptionForm currIssue={currIssue} />
         <ViewAttachmentsForm attachments = {currIssue.Attachment}/> */}
 
-        <div className="update-issue-left-footer"></div>
+        <div className="update-issue-footer"></div>
 
       </div>
 
@@ -58,6 +58,7 @@ const UpdateIssueMainForm = ({currIssue, currPhase}) => {
           <div className="update-issue-time-inner">Created at: {new Date(currIssue.createdAt).toString().slice(3,-33)}</div>
           <div className="update-issue-time-inner">Updated at: {new Date(currIssue.updatedAt).toString().slice(3,-33)}</div>
         </div>
+        <div className="update-issue-footer"></div>
       </div>
 
     </div>
