@@ -12,12 +12,12 @@ const ViewAttachmentsForm = ({attachments}) => {
   const currAttachment = attachments[0]?.url;
   const attachmentObj = useSelector(state => state.attachments.Attachments);
   const attachmentArr = Object.values(attachmentObj);
-  const issueId = attachments.issueId;
+  const issueId = useSelector(state => state.issues.SingleIssue.issueId);
   console.log("ViewAttachmentsForm --- attachmentArr:", attachmentArr)
 
-  useEffect(() => {
-    dispatch(thunkLoadAttachments(issueId))
-  }, [dispatch, issueId])
+  // useEffect(() => {
+  //   dispatch(thunkLoadAttachments(issueId))
+  // }, [dispatch, issueId])
 
   const getExtension = (fileName) =>{
     if (fileName){
@@ -28,20 +28,23 @@ const ViewAttachmentsForm = ({attachments}) => {
       return "jpg"
     }
 
-    const docs = attachmentArr.map((file) => (
+    const docs = attachmentArr
+    .filter((file) => (issueId === file.issueId))
+    .map((file) => (
       {
-       uri: file.url,
-       fileName: file.name,
-       fileType: getExtension(file.url)
-      }
-    ))
+      uri: file.url,
+      fileName: file.name,
+      fileType: getExtension(file.url),
+    }));
+    console.log("ViewAttachmentsForm --- issueId:", issueId)
+    console.log("ViewAttachmentsForm --- docs:", docs)
 
   return (
     <div className="update-issue-attachment-container">
       {attachLoading && <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="Loading..." className="update-issue-attachment-loading"/>}
       {currAttachment &&
         <>
-          <div className="update-issue-attachment-label">Attachments{" "}({attachmentArr.length})</div>
+          <div className="update-issue-attachment-label">Attachments{" "}({docs.length})</div>
           {(currAttachment?.includes("jpeg") || currAttachment?.includes("png") || currAttachment?.includes("jpg") || currAttachment?.includes("gif"))
             ? <img src={`${currAttachment}`} alt={currAttachment} className="update-issue-attachment-img"/>
             : <DocViewer
