@@ -349,7 +349,8 @@
 }
 
 .update-issue-attachment-loading {
-  margin-top: 0px;
+  margin: 10px 0px 0px -20px;
+  width: 150px;
   height: fit-content;
 }
 
