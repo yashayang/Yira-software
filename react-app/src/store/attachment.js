@@ -64,7 +64,8 @@ export const thunkUploadAttachment = (data) => async (dispatch) => {
     }
 
     const newAttachment = await response.json();
-    dispatch(uploadAttachment(attachment));
+    console.log("----thunkUploadAttachment____newAttachment:", newAttachment)
+    dispatch(uploadAttachment(newAttachment));
     return newAttachment
 
   } catch(error) {
@@ -85,7 +86,7 @@ const attachments = (state = {Attachments:{}}, action) => {
 
     case UPLOAD_ATTACHMENT:
       newState = {...state, Attachments: { ...state.Attachments } }
-      newState.Attachments[action.attachment.id] = action.attachment
+      newState.Attachments[action.attachment.attachmentId] = action.attachment
       return newState
 
     default:

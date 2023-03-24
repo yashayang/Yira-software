@@ -209,7 +209,7 @@ export const thunkDeleteIssue = (issueId, phaseId) => async (dispatch) => {
 }
 
 const initialState = {
-  AllPhases:{},
+  AllPhases: {},
   NewIssue: {},
   SingleIssue: {}
 }

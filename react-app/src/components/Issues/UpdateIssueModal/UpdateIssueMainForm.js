@@ -33,7 +33,7 @@ const UpdateIssueMainForm = ({currIssue, currPhase}) => {
       isMounted = false;
       dispatch(cleanState())
     }
-  }, [dispatch])
+  }, [dispatch, issueId])
 
 
   if(!singleIssue) return null;
