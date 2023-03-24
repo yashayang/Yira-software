@@ -21,7 +21,7 @@ export const thunkLoadAttachments = (issueId) => async (dispatch) => {
   const res = await fetch(`/api/attachments/${issueId}`);
   if (res.ok) {
       const attachments = await res.json();
-      console.log("----thunkLoadAttachments____attachments:", attachments)
+      // console.log("----thunkLoadAttachments____attachments:", attachments)
       dispatch(loadAttachments(attachments));
       return attachments;
   }
@@ -33,12 +33,12 @@ export const thunkUploadAttachment = (data) => async (dispatch) => {
   formData.append("issueId", issueId)
   formData.append("name", name)
   formData.append("attachment", attachment)
-  for (var entry of formData.entries()) {
-    console.log("formData:", entry);
-  }
-  console.log("thunkUploadAttachment ---- issueId:", issueId)
-  console.log("thunkUploadAttachment ---- filename:", name)
-  console.log("thunkUploadAttachment ---- formData.issueId:", formData.issueId)
+  // for (var entry of formData.entries()) {
+  //   console.log("formData:", entry);
+  // }
+  // console.log("thunkUploadAttachment ---- issueId:", issueId)
+  // console.log("thunkUploadAttachment ---- filename:", name)
+  // console.log("thunkUploadAttachment ---- formData.issueId:", formData.issueId)
   try {
     const response = await fetch("/api/attachments/new", {
       method: "POST",
@@ -64,7 +64,7 @@ export const thunkUploadAttachment = (data) => async (dispatch) => {
     }
 
     const newAttachment = await response.json();
-    console.log("----thunkUploadAttachment____newAttachment:", newAttachment)
+    // console.log("----thunkUploadAttachment____newAttachment:", newAttachment)
     dispatch(uploadAttachment(newAttachment));
     return newAttachment
 

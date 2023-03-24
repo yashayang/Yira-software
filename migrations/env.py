@@ -28,7 +28,7 @@ logger = logging.getLogger('alembic.env')
 from flask import current_app
 config.set_main_option(
     'sqlalchemy.url',
-    str(current_app.extensions['migrate'].db.get_engine().url).replace(
+    str(current_app.extensions['migrate'].db.engine.url).replace(
         '%', '%%'))
 target_metadata = current_app.extensions['migrate'].db.metadata
 
@@ -94,7 +94,7 @@ def run_migrations_online():
         # Create a schema (only in production)
         if environment == "production":
             connection.execute(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
-            
+
         # Set search path to your schema (only in production)
         with context.begin_transaction():
             if environment == "production":
