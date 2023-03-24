@@ -19,7 +19,7 @@ const SignUpForm = () => {
 
   useEffect(() => {
     const errors=[];
-    if (!email.includes("@") && !email.includes(".") ) errors.push("Email: please enter a valid email address.")
+    if (email && (!email.includes("@") && !email.includes(".")) ) errors.push("Email: please enter a valid email address.")
     if (password !== repeatPassword) errors.push("Password: repeat password is not matching.")
     setErrors(errors)
   }, [email, password, repeatPassword])
