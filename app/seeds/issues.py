@@ -3,7 +3,7 @@ from datetime import datetime
 
 def seed_issues():
   issue1 = Issue(
-    summary="Yira Software is a web application inspired by the Jira Software.",
+    summary="Yira Software is a web APP inspired by the Jira Software.",
     project_id=1,
     phase_id=1,
     owner_id=1,

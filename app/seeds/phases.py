@@ -3,7 +3,7 @@ from datetime import datetime
 
 def seed_phases():
   Phase1 = Phase(
-    title="*INSTRUCTION*",
+    title="* USER INSTRUCTION *",
     project_id=1,
     owner_id=1,
     created_at=datetime.now(),
@@ -37,6 +37,7 @@ def seed_phases():
   db.session.add(Phase1)
   db.session.add(Phase2)
   db.session.add(Phase3)
+  db.session.add(Phase4)
   db.session.commit()
 
 def undo_phases():
