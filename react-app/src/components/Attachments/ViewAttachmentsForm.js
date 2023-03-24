@@ -10,8 +10,8 @@ const ViewAttachmentsForm = ({attachments, attachLoading, setAttachLoading}) => 
   const attachmentObj = useSelector(state => state.attachments.Attachments);
   const attachmentArr = Object.values(attachmentObj);
   const issueId = useSelector(state => state.issues.SingleIssue.issueId);
-  console.log("ViewAttachmentsForm --- currAttachment:", currAttachment)
-  console.log("ViewAttachmentsForm --- attachmentArr:", attachmentArr)
+  // console.log("ViewAttachmentsForm --- currAttachment:", currAttachment)
+  // console.log("ViewAttachmentsForm --- attachmentArr:", attachmentArr)
 
   const getExtension = (fileName) =>{
     if (fileName){
@@ -30,8 +30,8 @@ const ViewAttachmentsForm = ({attachments, attachLoading, setAttachLoading}) => 
     fileName: file.name,
     fileType: getExtension(file.url),
   }));
-  console.log("ViewAttachmentsForm --- issueId:", issueId)
-  console.log("ViewAttachmentsForm --- docs:", docs)
+  // console.log("ViewAttachmentsForm --- issueId:", issueId)
+  // console.log("ViewAttachmentsForm --- docs:", docs)
 
   return (
     <div className="update-issue-attachment-container">

@@ -5,8 +5,8 @@ def seed_attachments():
     attachment1 = Attachment(
         owner_id = 1,
         issue_id = 2,
-        name= "Panda.jpeg",
-        url = "https://yiraawsbucket.s3.us-west-1.amazonaws.com/27137209667f48d6a8fd9bab9c87fd23.jpeg",
+        name= "year-1861_256.gif",
+        url = "https://yiraawsbucket.s3.us-west-1.amazonaws.com/13c45fdd2f31497d83fe3c2107218797.gif",
         created_at= datetime.now(),
         updated_at= datetime.now(),
     )

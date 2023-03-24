@@ -24,7 +24,7 @@ def seed_issues():
   )
 
   issue3 = Issue(
-    summary="1st interation including full CRUD of Projects, Phases, Issues, Issue Attachments.",
+    summary="The 1st iteration comprises complete CRUD functionality for Projects, Phases, Issues, and Issue Attachments..",
     project_id=1,
     phase_id=1,
     owner_id=2,
@@ -34,7 +34,7 @@ def seed_issues():
   )
 
   issue4 = Issue(
-    summary="The attachment is using AWS S3 for file uploading, doc-viewer npm package for previewing files.",
+    summary="AWS S3 is utilized as the Cloud Storage for the attachments, while the previewing of files is handled by the npm package @cyntler/react-doc-viewer.",
     description="schedule sent",
     project_id=1,
     phase_id=1,

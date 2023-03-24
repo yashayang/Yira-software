@@ -3,7 +3,7 @@ from datetime import datetime
 
 def seed_phases():
   Phase1 = Phase(
-    title="TO DO",
+    title="*INSTRUCTION*",
     project_id=1,
     owner_id=1,
     created_at=datetime.now(),
@@ -11,7 +11,7 @@ def seed_phases():
   )
 
   Phase2 = Phase(
-    title="IN PROGRESS",
+    title="TO DO",
     project_id=1,
     owner_id=1,
     created_at=datetime.now(),
@@ -19,6 +19,14 @@ def seed_phases():
   )
 
   Phase3 = Phase(
+    title="IN PROGRESS",
+    project_id=1,
+    owner_id=1,
+    created_at=datetime.now(),
+    updated_at=datetime.now()
+  )
+
+  Phase4 = Phase(
     title="DONE",
     project_id=1,
     owner_id=1,
