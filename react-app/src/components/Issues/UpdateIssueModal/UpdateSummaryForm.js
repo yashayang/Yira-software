@@ -8,6 +8,8 @@ const UpdateSummaryForm = ({currIssue}) => {
   const issueId = currIssue.issueId
   const currPhaseId = currIssue.phaseId
   const currSummary = currIssue.summary
+  const currReportorId = currIssue.ownerId;
+  
   const [summary, setSummary] = useState(currSummary);
   const [summaryInput, setSummaryInput] = useState(false);
   const [summaryErrors, setSummaryErrors] = useState([]);
@@ -22,7 +24,11 @@ const UpdateSummaryForm = ({currIssue}) => {
     e.preventDefault()
     setSummaryErrors([])
 
-    const issue = { summary }
+    const issue = {
+      summary,
+      "phase_id": currPhaseId,
+      "owner_id": currReportorId ? currReportorId : 0
+    }
 
     const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
     let errorsArr = []

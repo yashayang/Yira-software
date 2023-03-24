@@ -8,6 +8,8 @@ const UpdateDescriptionForm = ({currIssue}) => {
   const issueId = currIssue.issueId
   const currPhaseId = currIssue.phaseId
   const currDescription = currIssue.description;
+  const currReportorId = currIssue.ownerId;
+
   const [description, setDescription] = useState(currDescription);
   const [descriptionInput, setDescriptionInput] = useState(false);
   const [descriptionErrors, setDescriptionErrors] = useState([]);
@@ -17,7 +19,12 @@ const UpdateDescriptionForm = ({currIssue}) => {
     e.preventDefault()
     setDescriptionErrors([])
 
-    const issue = { description }
+    const issue = {
+      description,
+      "summary": currIssue.summary,
+      "phase_id": currPhaseId,
+      "owner_id": currReportorId ? currReportorId : 0
+    }
 
     const response = await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
 

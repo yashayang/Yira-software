@@ -7,6 +7,8 @@ const UpdatePhaseForm = ({currIssue}) => {
   const dispatch = useDispatch();
   const issueId = currIssue.issueId
   const currPhaseId = currIssue.phaseId
+  const currReportorId = currIssue.ownerId;
+
   const allPhases = useSelector(state => state.issues.AllPhases)
   const allPhasesArr = Object.values(allPhases)
   const [phaseId, setPhaseId] = useState(currPhaseId)
@@ -16,7 +18,11 @@ const UpdatePhaseForm = ({currIssue}) => {
     e.preventDefault()
     setPhaseId(e.target.value)
 
-    const issue = { "phase_id": Number(e.target.value) }
+    const issue = {
+      "phase_id": Number(e.target.value),
+      "summary": currIssue.summary,
+      "owner_id": currReportorId ? currReportorId : 0
+    }
 
     await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
   }
