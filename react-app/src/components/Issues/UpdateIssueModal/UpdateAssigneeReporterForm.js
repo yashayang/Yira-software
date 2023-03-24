@@ -7,11 +7,12 @@ import "../../CSS/UpdateIssues.css"
 const UpdateAssigneeReporterForm = ({currIssue}) => {
   const dispatch = useDispatch();
   const allUsersArr = useSelector(state => state.session.AllUsers?.users)
-
   const issueId = currIssue.issueId
   const currPhaseId = currIssue.phaseId
   const currAssigneeId = currIssue.Assignee?.id;
   const currReportorId = currIssue.ownerId;
+  const currDescription = currIssue.description;
+  
   const [assigneeId, setAssigneeId] = useState(currAssigneeId)
   const [reportorId, setReportorId] = useState(currReportorId)
 
@@ -26,6 +27,7 @@ const UpdateAssigneeReporterForm = ({currIssue}) => {
       issue = {
         "assignee_id": 0,
         "summary": currIssue.summary,
+        "description": currDescription,
         "phase_id": currPhaseId,
         "owner_id": currReportorId ? currReportorId : 0
       }
@@ -33,6 +35,7 @@ const UpdateAssigneeReporterForm = ({currIssue}) => {
       issue = {
         "assignee_id": Number(e.target.value),
         "summary": currIssue.summary,
+        "description": currDescription,
         "phase_id": currPhaseId,
         "owner_id": currReportorId ? currReportorId : 0
       }

@@ -9,7 +9,9 @@ const UpdateSummaryForm = ({currIssue}) => {
   const currPhaseId = currIssue.phaseId
   const currSummary = currIssue.summary
   const currReportorId = currIssue.ownerId;
-  
+  const currDescription = currIssue.description;
+  const currAssigneeId = currIssue.Assignee?.id;
+
   const [summary, setSummary] = useState(currSummary);
   const [summaryInput, setSummaryInput] = useState(false);
   const [summaryErrors, setSummaryErrors] = useState([]);
@@ -26,7 +28,9 @@ const UpdateSummaryForm = ({currIssue}) => {
 
     const issue = {
       summary,
+      "description": currDescription,
       "phase_id": currPhaseId,
+      "assignee_id": currAssigneeId ? currAssigneeId : 0,
       "owner_id": currReportorId ? currReportorId : 0
     }
 

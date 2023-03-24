@@ -8,6 +8,8 @@ const UpdatePhaseForm = ({currIssue}) => {
   const issueId = currIssue.issueId
   const currPhaseId = currIssue.phaseId
   const currReportorId = currIssue.ownerId;
+  const currDescription = currIssue.description;
+  const currAssigneeId = currIssue.Assignee?.id;
 
   const allPhases = useSelector(state => state.issues.AllPhases)
   const allPhasesArr = Object.values(allPhases)
@@ -21,6 +23,8 @@ const UpdatePhaseForm = ({currIssue}) => {
     const issue = {
       "phase_id": Number(e.target.value),
       "summary": currIssue.summary,
+      "description": currDescription,
+      "assignee_id": currAssigneeId ? currAssigneeId : 0,
       "owner_id": currReportorId ? currReportorId : 0
     }
 
