@@ -33,12 +33,11 @@ export const thunkUploadAttachment = (data) => async (dispatch) => {
   formData.append("issueId", issueId)
   formData.append("name", name)
   formData.append("attachment", attachment)
+  
   for (var entry of formData.entries()) {
     console.log("formData:", entry);
   }
-  console.log("thunkUploadAttachment ---- issueId:", issueId)
-  console.log("thunkUploadAttachment ---- filename:", name)
-  console.log("thunkUploadAttachment ---- formData.issueId:", formData.issueId)
+
   try {
     const response = await fetch("/api/attachments/new", {
       method: "POST",

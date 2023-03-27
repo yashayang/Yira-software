@@ -5,13 +5,13 @@ import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 // import { thunkLoadAttachments } from "../../store/attachment";
 import "../CSS/UpdateIssues.css"
 
-const ViewAttachmentsForm = ({attachments, attachLoading, setAttachLoading}) => {
-  const currAttachment = attachments[0]?.url;
+const ViewAttachmentsForm = ({attachLoading, setAttachLoading}) => {
   const attachmentObj = useSelector(state => state.attachments.Attachments);
   const attachmentArr = Object.values(attachmentObj);
   const issueId = useSelector(state => state.issues.SingleIssue.issueId);
-  // console.log("ViewAttachmentsForm --- currAttachment:", currAttachment)
-  // console.log("ViewAttachmentsForm --- attachmentArr:", attachmentArr)
+  const currAttachmentUrl = attachmentArr.filter((file) => (issueId === file.issueId))[0]?.url;
+  console.log("ViewAttachmentsForm --- currAttachment:", currAttachmentUrl)
+  console.log("ViewAttachmentsForm --- attachmentArr:", attachmentArr)
 
   const getExtension = (fileName) =>{
     if (fileName){
@@ -30,12 +30,12 @@ const ViewAttachmentsForm = ({attachments, attachLoading, setAttachLoading}) => 
     fileName: file.name,
     fileType: getExtension(file.url),
   }));
-  // console.log("ViewAttachmentsForm --- issueId:", issueId)
-  // console.log("ViewAttachmentsForm --- docs:", docs)
+
+  console.log("ViewAttachmentsForm --- docs:", docs)
 
   return (
     <div className="update-issue-attachment-container">
-      {currAttachment &&
+      {currAttachmentUrl &&
         <>
           <div className="update-issue-attachment-label">Attachments{" "}({docs.length})</div>
           {attachLoading && <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="Loading..." className="update-issue-attachment-loading"/>}
