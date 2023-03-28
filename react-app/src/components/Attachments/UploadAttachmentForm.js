@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetOneIssue } from "../../store/issue";
-import { thunkUploadAttachment, thunkLoadAttachments } from "../../store/attachment";
+import { thunkUploadAttachment } from "../../store/attachment";
 import UpdateDescriptionForm from '../Issues/UpdateIssueModal/UpdateDescriptionForm';
 import ViewAttachmentsForm from './ViewAttachmentsForm';
 import "../CSS/UpdateIssues.css"
@@ -13,7 +12,7 @@ const UploadAttachmentFrom = ({issueId, currIssue}) => {
   const [name, setName] = useState(null);
   const [attachLoading, setAttachLoading] = useState(false);
   const [attachErrors, setAttachErrors] = useState([]);
-  console.log("UploadAttachmentFrom --- attachment", attachment)
+  // console.log("UploadAttachmentFrom --- attachment", attachment)
 
   const handleAttachment = async(e) => {
     e.stopPropagation()

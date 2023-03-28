@@ -104,7 +104,7 @@ def update_attachment(attachment_id):
     return {'errors': ['Sorry, you are not the owner']}
 
 
-@attachment_routes.route("/<int:attachment_id>", methods=["DELETE"])
+@attachment_routes.route("/delete/<int:attachment_id>", methods=["DELETE"])
 @login_required
 def delete_attachment(attachment_id):
   attachment = Attachment.query.get(attachment_id)
@@ -127,7 +127,7 @@ def delete_attachment(attachment_id):
 # .then(res => res.json())
 # .then(console.log)
 
-@attachment_routes.route('/<int:attachment_id>/download')
+@attachment_routes.route('/download/<int:attachment_id>')
 @login_required
 def download_attachment(attachment_id):
   attachment = Attachment.query.get(attachment_id)
