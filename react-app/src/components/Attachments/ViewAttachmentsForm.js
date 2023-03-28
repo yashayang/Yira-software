@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import DeleteAttachmentForm from './DeleteAttachmentFrom';
+import DownloadAttachmentForm from './DownloadAttachmentForm';
 import "../CSS/UpdateIssues.css"
 
 const ViewAttachmentsForm = ({attachLoading, setAttachLoading}) => {
@@ -39,12 +40,14 @@ const ViewAttachmentsForm = ({attachLoading, setAttachLoading}) => {
 
   const [activeDocument, setActiveDocument] = useState(docs[0]);
   const [activeDocId, setActiveDocId] = useState(currAttachmentId);
+  const [activeDocUrl, setActiveDocUrl] = useState(currAttachmentUrl);
   // console.log("ViewAttachmentsForm --- docs[0]:", docs[0])
   // console.log("ViewAttachmentsForm --- activeDocument:", activeDocument)
 
   const handleDocumentChange = (document) => {
     setActiveDocument(document);
     setActiveDocId(document.attachmentId)
+    setActiveDocUrl(document.uri)
   };
 
   return (
@@ -97,6 +100,7 @@ const ViewAttachmentsForm = ({attachLoading, setAttachLoading}) => {
             />
           }
           <DeleteAttachmentForm activeDocId={activeDocId} attachmentId={currAttachmentId}/>
+          <DownloadAttachmentForm activeDocUrl={activeDocUrl} attachmentUrl={currAttachmentUrl}/>
         </>
       }
     </div>
