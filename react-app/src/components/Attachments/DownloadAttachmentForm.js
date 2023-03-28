@@ -1,3 +1,6 @@
+import "../CSS/Attachments/DownloadAttachment.css"
+// import "../CSS//Attachments/ViewAttachments.css"
+
 const DownloadAttachmentForm = ({activeDocUrl, attachmentUrl}) => {
   let currAttachmentUrl
   if (activeDocUrl) {
@@ -9,7 +12,7 @@ const DownloadAttachmentForm = ({activeDocUrl, attachmentUrl}) => {
   return (
     <div className="attach-download-container">
       <a href={currAttachmentUrl} download target="_blank" rel="noreferrer">
-        <i class="fa-solid fa-cloud-arrow-down"></i>
+        <i className="fa-solid fa-cloud-arrow-down"></i>
       </a>
     </div>
   )

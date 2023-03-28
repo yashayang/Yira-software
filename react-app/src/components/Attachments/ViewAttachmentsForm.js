@@ -3,7 +3,9 @@ import { useSelector } from "react-redux";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import DeleteAttachmentForm from './DeleteAttachmentFrom';
 import DownloadAttachmentForm from './DownloadAttachmentForm';
-import "../CSS/UpdateIssues.css"
+import "../CSS//Attachments/ViewAttachments.css"
+import "../CSS/Attachments/DeleteAttachment.css"
+import "../CSS/Attachments/DownloadAttachment.css"
 
 const ViewAttachmentsForm = ({attachLoading, setAttachLoading}) => {
   const attachmentObj = useSelector(state => state.attachments.Attachments);
@@ -99,8 +101,10 @@ const ViewAttachmentsForm = ({attachLoading, setAttachLoading}) => {
             }}
             />
           }
-          <DeleteAttachmentForm activeDocId={activeDocId} attachmentId={currAttachmentId}/>
-          <DownloadAttachmentForm activeDocUrl={activeDocUrl} attachmentUrl={currAttachmentUrl}/>
+          <div className="attach-delete-download-container">
+            <DeleteAttachmentForm activeDocId={activeDocId} attachmentId={currAttachmentId}/>
+            <DownloadAttachmentForm activeDocUrl={activeDocUrl} attachmentUrl={currAttachmentUrl}/>
+          </div>
         </>
       }
     </div>

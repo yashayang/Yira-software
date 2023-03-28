@@ -1,0 +1,27 @@
+.attach-download-container {
+  display: none;
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  width: 13px;
+  height: 13px;
+  border-radius: 2px;
+  text-align: center;
+  float: left;
+  padding: 10px;
+  margin: 2px;
+  background-color: #F5F4F4;
+  z-index: 1;
+}
+
+.update-issue-attachment-container:hover .attach-download-container {
+  display: flex;
+}
+
+.fa-solid.fa-cloud-arrow-down {
+  color: #2F2F2F;
+}

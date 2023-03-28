@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { thunkDeleteAttachment } from "../../store/attachment";
+import "../CSS/Attachments/DeleteAttachment.css"
+// import "../CSS//Attachments/ViewAttachments.css"
 
 const DeleteAttachmentForm = ({activeDocId, attachmentId}) => {
   // console.log("!!!!!DELETE ATTACHMENT---activeDocId:", activeDocId)
