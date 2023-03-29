@@ -23,7 +23,7 @@ const IssueCards = ({phase, issue, projectNameInit}) => {
           dispatch(thunkGetAllPhasesIssues())
           setShowModal(false)
           }}>
-          <UpdateIssueMainForm currIssue={issue} currPhase={phase}/>
+          <UpdateIssueMainForm currIssue={issue} currPhase={phase}  showModal={showModal} setShowModal={setShowModal}/>
         </Modal>)
       }
 
@@ -41,14 +41,14 @@ const IssueCards = ({phase, issue, projectNameInit}) => {
           {assigneeNameInit === curr_user_init
           ?
           <>
-            {(issue.attachment?.includes("pdf") || issue.Attachment[0]?.url?.includes("docx") || issue.Attachment[0]?.url?.includes("xlsx") || issue.Attachment[0]?.url?.includes("ppt") || issue.Attachment[0]?.url?.includes("pptx")) && <i className="fa-solid fa-paperclip"></i>}
+            {(issue.attachment?.includes("pdf") || issue.Attachment[0]?.url?.includes("docx") || issue.Attachment[0]?.url?.includes("xlsx") || issue.Attachment[0]?.url?.includes("ppt") || issue.Attachment[0]?.url?.includes("pptx")  || issue.Attachment[0]?.url?.includes("pdf")) && <i className="fa-solid fa-paperclip"></i>}
             <div className='curr-user-circle-small'>
               {curr_user_init}
             </div>
           </>
           :
           <>
-            {(issue.attachment?.includes("pdf") || issue.Attachment[0]?.url?.includes("docx") || issue.Attachment[0]?.url?.includes("xlsx") || issue.Attachment[0]?.url?.includes("ppt") || issue.Attachment[0]?.url?.includes("pptx")) && <i className="fa-solid fa-paperclip"></i>}
+            {(issue.attachment?.includes("pdf") || issue.Attachment[0]?.url?.includes("docx") || issue.Attachment[0]?.url?.includes("xlsx") || issue.Attachment[0]?.url?.includes("ppt") || issue.Attachment[0]?.url?.includes("pptx") || issue.Attachment[0]?.url?.includes("pdf")) && <i className="fa-solid fa-paperclip"></i>}
             {issue.Assignee && <div className='other-user-circle-small'>
               {assigneeNameInit}
             </div>}

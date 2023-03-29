@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetOneIssue } from "../../store/issue";
-import { thunkUploadAttachment, thunkLoadAttachments } from "../../store/attachment";
+import { thunkUploadAttachment } from "../../store/attachment";
 import UpdateDescriptionForm from '../Issues/UpdateIssueModal/UpdateDescriptionForm';
 import ViewAttachmentsForm from './ViewAttachmentsForm';
 import "../CSS/UpdateIssues.css"
+import "../CSS/Attachments/ViewAttachments.css"
 
 const UploadAttachmentFrom = ({issueId, currIssue}) => {
   const dispatch = useDispatch();
@@ -13,9 +13,9 @@ const UploadAttachmentFrom = ({issueId, currIssue}) => {
   const [name, setName] = useState(null);
   const [attachLoading, setAttachLoading] = useState(false);
   const [attachErrors, setAttachErrors] = useState([]);
+  // console.log("UploadAttachmentFrom --- attachment", attachment)
 
   const handleAttachment = async(e) => {
-    // console.log("UpdateIssueForm-handleAttachment-enter!!!!")
     e.stopPropagation()
     e.preventDefault()
     // setAttachment(e.target.files[0])
@@ -52,8 +52,10 @@ const UploadAttachmentFrom = ({issueId, currIssue}) => {
         }
         if(response.issueId) {
           setAttachLoading(false)
-          await dispatch(thunkGetOneIssue(parseInt(issueId)))
-          await dispatch(thunkLoadAttachments(issueId))
+          setAttachment(null)
+          setName("")
+          // await dispatch(thunkGetOneIssue(parseInt(issueId)))
+          // await dispatch(thunkLoadAttachments(issueId))
     }
 }
 
@@ -78,6 +80,7 @@ const UploadAttachmentFrom = ({issueId, currIssue}) => {
           onChange={(e) =>{
             setAttachErrors([])
             // console.log("UploadAttachmentForm---- e.target.files", e.target.files)
+            // console.log("UploadAttachmentForm---- Array.from(e.target.files)[0]", Array.from(e.target.files)[0])
             e.target.files?.length && setAttachment(Array.from(e.target.files)[0])
             e.target.files?.length && setName(Array.from(e.target.files)[0].name)
           }}
@@ -87,7 +90,7 @@ const UploadAttachmentFrom = ({issueId, currIssue}) => {
       </div>
       </form>}
       <UpdateDescriptionForm currIssue={currIssue} />
-      <ViewAttachmentsForm attachments = {currIssue.Attachment} attachLoading={attachLoading} setAttachLoading={setAttachLoading}/>
+      <ViewAttachmentsForm attachLoading={attachLoading} setAttachLoading={setAttachLoading}/>
     </>
   )
 }

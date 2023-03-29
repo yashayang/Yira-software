@@ -1,0 +1,116 @@
+.update-issue-attachment-container {
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 325px;
+  height: 200px;
+}
+
+.update-issue-attachment-label {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.update-issue-attachment-loading {
+  margin: 10px 0px 0px -20px;
+  width: 150px;
+  height: fit-content;
+}
+
+.doc-viewer-style #header-bar {
+  min-height: 35px;
+  font-size: 12px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.doc-viewer-style #header-bar #file-name {
+  font-size: 10px;
+  margin: 0px 10px 0px 0px;
+}
+
+.doc-viewer-style #header-bar #doc-nav {
+  margin: 0px 0px 0px 10px;
+}
+
+.doc-viewer-style #header-bar #doc-nav #doc-nav-prev,
+.doc-viewer-style #header-bar #doc-nav #doc-nav-next {
+  width: 23px;
+  height: 23px;
+  margin: 0px 3px 0px 3px;
+}
+
+.doc-viewer-style #header-bar #doc-nav #doc-nav-info {
+  margin: 5px;
+}
+
+.attach-delete-download-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 20px;
+  height: auto;
+  margin-top: -162px;
+  margin-left: 20px;
+}
+
+#react-doc-viewer {
+  position: relative;
+}
+
+#react-doc-viewer:hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+/* #react-doc-viewer {
+  position: relative;
+} */
+
+/* #react-doc-viewer:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.update-issue-attachment-container:hover .attach-delete-download-container {
+  display: flex;
+}
+
+.attach-delete-download-container {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 3px;
+}
+
+.attach-delete-container,
+.attach-download-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #F5F4F4;
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  text-decoration: none;
+}
+
+.attach-download-container {
+  margin-left: 3px;
+}
+
+.fa-solid.fa-cloud-arrow-down,
+.fa-sharp.fa-solid.fa-trash {
+  width: 100%;
+} */
+
+#file-upload,
+.update-issue-upload-button {
+  cursor: pointer;
+}

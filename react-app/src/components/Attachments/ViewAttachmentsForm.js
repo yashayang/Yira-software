@@ -1,41 +1,60 @@
-// import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
-// import { thunkGetOneIssue } from "../../store/issue";
-// import { thunkLoadAttachments } from "../../store/attachment";
-import "../CSS/UpdateIssues.css"
+import DeleteAttachmentForm from './DeleteAttachmentFrom';
+import DownloadAttachmentForm from './DownloadAttachmentForm';
+import "../CSS/Attachments/ViewAttachments.css"
+import "../CSS/Attachments/DeleteAttachment.css"
+import "../CSS/Attachments/DownloadAttachment.css"
 
-const ViewAttachmentsForm = ({attachments, attachLoading, setAttachLoading}) => {
-  const currAttachment = attachments[0]?.url;
+const ViewAttachmentsForm = ({attachLoading, setAttachLoading}) => {
   const attachmentObj = useSelector(state => state.attachments.Attachments);
   const attachmentArr = Object.values(attachmentObj);
   const issueId = useSelector(state => state.issues.SingleIssue.issueId);
-  // console.log("ViewAttachmentsForm --- currAttachment:", currAttachment)
+  const currAttachmentUrl = attachmentArr.filter((file) => (issueId === file.issueId))[0]?.url;
+  const currAttachmentId = attachmentArr.filter((file) => (issueId === file.issueId))[0]?.attachmentId;
+
+  // console.log("ViewAttachmentsForm --- attachments:", attachments)
+  // console.log("ViewAttachmentsForm --- currAttachmentId:", currAttachmentId)
+  // console.log("ViewAttachmentsForm --- currAttachmentUrl:", currAttachmentUrl)
   // console.log("ViewAttachmentsForm --- attachmentArr:", attachmentArr)
 
   const getExtension = (fileName) =>{
     if (fileName){
-       const urlArr = fileName.split('.');
-       const ext = urlArr[urlArr.length-1];
-       return ext
-      }
-      return "jpg"
+      const urlArr = fileName.split('.');
+      const ext = urlArr[urlArr.length-1];
+      return ext
     }
+    return "jpg"
+  }
 
   const docs = attachmentArr
   .filter((file) => (issueId === file.issueId))
   .map((file) => (
     {
-    uri: file.url,
-    fileName: file.name,
-    fileType: getExtension(file.url),
-  }));
-  // console.log("ViewAttachmentsForm --- issueId:", issueId)
+      uri: file.url,
+      fileName: file.name,
+      fileType: getExtension(file.url),
+      attachmentId: file.attachmentId
+    }));
+
   // console.log("ViewAttachmentsForm --- docs:", docs)
+
+  const [activeDocument, setActiveDocument] = useState(docs[0]);
+  const [activeDocId, setActiveDocId] = useState(currAttachmentId);
+  const [activeDocUrl, setActiveDocUrl] = useState(currAttachmentUrl);
+  // console.log("ViewAttachmentsForm --- docs[0]:", docs[0])
+  // console.log("ViewAttachmentsForm --- activeDocument:", activeDocument)
+
+  const handleDocumentChange = (document) => {
+    setActiveDocument(document);
+    setActiveDocId(document.attachmentId)
+    setActiveDocUrl(document.uri)
+  };
 
   return (
     <div className="update-issue-attachment-container">
-      {currAttachment &&
+      {currAttachmentUrl &&
         <>
           <div className="update-issue-attachment-label">Attachments{" "}({docs.length})</div>
           {attachLoading && <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="Loading..." className="update-issue-attachment-loading"/>}
@@ -58,8 +77,10 @@ const ViewAttachmentsForm = ({attachments, attachLoading, setAttachLoading}) => 
           {!attachLoading && <DocViewer
             className="doc-viewer-style"
             documents={docs}
-            pluginRenderers={DocViewerRenderers}
-            prefetchMethod="GET"
+            activeDocument={activeDocument}
+            onDocumentChange={handleDocumentChange}
+            // pluginRenderers={DocViewerRenderers}
+            // prefetchMethod="GET"
             config={{
               header: {
                 disableHeader: false,
@@ -78,7 +99,12 @@ const ViewAttachmentsForm = ({attachments, attachLoading, setAttachLoading}) => 
               textTertiary: "#00000099",
               // disableThemeScrollbar: false,
             }}
-            />}
+            />
+          }
+          <div className="attach-delete-download-container">
+            <DeleteAttachmentForm activeDocId={activeDocId} attachmentId={currAttachmentId}/>
+            <DownloadAttachmentForm activeDocUrl={activeDocUrl} attachmentUrl={currAttachmentUrl}/>
+          </div>
         </>
       }
     </div>

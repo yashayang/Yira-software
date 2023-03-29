@@ -12,7 +12,7 @@ import UpdateAssigneeReporterForm from './UpdateAssigneeReporterForm';
 import "../../CSS/UpdateIssues.css"
 
 
-const UpdateIssueMainForm = ({currIssue, currPhase}) => {
+const UpdateIssueMainForm = ({currIssue, currPhase, showModal, setShowModal}) => {
   // console.log("UpdateIssueForm----currIssue", currIssue)
   // console.log("UpdateIssueForm----currPhase", currPhase)
   const dispatch = useDispatch();
@@ -51,6 +51,7 @@ const UpdateIssueMainForm = ({currIssue, currPhase}) => {
 
       </div>
 
+
       <div className="update-issue-right-container">
         <UpdatePhaseForm currIssue={currIssue}/>
         <UpdateAssigneeReporterForm currIssue={currIssue} />
@@ -61,6 +62,10 @@ const UpdateIssueMainForm = ({currIssue, currPhase}) => {
         <div className="update-issue-footer"></div>
       </div>
 
+      <div className="update-issue-close-container" onClick={() => setShowModal(false)}>
+        <i class="fa-sharp fa-solid fa-xmark"></i>
+      </div>
+      
     </div>
   )
 }
