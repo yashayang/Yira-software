@@ -109,3 +109,8 @@
 .fa-sharp.fa-solid.fa-trash {
   width: 100%;
 } */
+
+#file-upload,
+.update-issue-upload-button {
+  cursor: pointer;
+}

@@ -4,6 +4,7 @@ import { thunkUploadAttachment } from "../../store/attachment";
 import UpdateDescriptionForm from '../Issues/UpdateIssueModal/UpdateDescriptionForm';
 import ViewAttachmentsForm from './ViewAttachmentsForm';
 import "../CSS/UpdateIssues.css"
+import "../CSS/Attachments/ViewAttachments.css"
 
 const UploadAttachmentFrom = ({issueId, currIssue}) => {
   const dispatch = useDispatch();
@@ -78,8 +79,8 @@ const UploadAttachmentFrom = ({issueId, currIssue}) => {
           accept="attachment/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           onChange={(e) =>{
             setAttachErrors([])
-            console.log("UploadAttachmentForm---- e.target.files", e.target.files)
-            console.log("UploadAttachmentForm---- Array.from(e.target.files)[0]", Array.from(e.target.files)[0])
+            // console.log("UploadAttachmentForm---- e.target.files", e.target.files)
+            // console.log("UploadAttachmentForm---- Array.from(e.target.files)[0]", Array.from(e.target.files)[0])
             e.target.files?.length && setAttachment(Array.from(e.target.files)[0])
             e.target.files?.length && setName(Array.from(e.target.files)[0].name)
           }}

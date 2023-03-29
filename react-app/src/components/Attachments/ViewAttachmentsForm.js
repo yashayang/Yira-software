@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import DeleteAttachmentForm from './DeleteAttachmentFrom';
 import DownloadAttachmentForm from './DownloadAttachmentForm';
-import "../CSS//Attachments/ViewAttachments.css"
+import "../CSS/Attachments/ViewAttachments.css"
 import "../CSS/Attachments/DeleteAttachment.css"
 import "../CSS/Attachments/DownloadAttachment.css"
 
@@ -80,7 +80,7 @@ const ViewAttachmentsForm = ({attachLoading, setAttachLoading}) => {
             activeDocument={activeDocument}
             onDocumentChange={handleDocumentChange}
             // pluginRenderers={DocViewerRenderers}
-            prefetchMethod="GET"
+            // prefetchMethod="GET"
             config={{
               header: {
                 disableHeader: false,

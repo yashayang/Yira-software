@@ -140,7 +140,7 @@
 .update-issue-description-input-container {
   margin-left: 10px;
   margin-top: 5px;
-  height: 80px;
+  height: 120px;
   margin-bottom: 20px;
 }
 
@@ -163,10 +163,10 @@
   display: flex;
   position: absolute;
   margin-top: 120px;
-  z-index: 2;
 }
 
 .update-issue-description-save {
+  cursor: pointer;
   margin-top: 3px;
   margin-right: 5px;
   background-color: #e3e3e3;
@@ -181,6 +181,7 @@
 }
 
 .update-issue-description-cancel {
+  cursor: pointer;
   color: #2F2F2F;
   font-size: 0.9rem;
   margin: 10px 0px 0px 10px;
@@ -208,10 +209,11 @@
 .update-issue-right-container {
   margin-left: 15px;
   margin-top: 67px;
-  margin-right: -10px;
+  margin-right: -60px;
 }
 
 .update-issue-right-phase-selector {
+  cursor: pointer;
   font-size: 0.80rem;
   color: white;
   background-color: #615DEC;
@@ -351,4 +353,18 @@
   color: #EF476F;
   font-size: 0.8rem;
   margin-left: 10px;
+}
+
+.update-issue-close-container {
+  width: 30px;
+  height: 30px;
+  padding: 15px;
+  margin-top: 12px;
+  /* background-color: hotpink; */
+}
+
+.fa-sharp.fa-solid.fa-xmark {
+  cursor: pointer;
+  font-size: 20px;
+  color: #2F2F2F;
 }

@@ -23,7 +23,7 @@ const IssueCards = ({phase, issue, projectNameInit}) => {
           dispatch(thunkGetAllPhasesIssues())
           setShowModal(false)
           }}>
-          <UpdateIssueMainForm currIssue={issue} currPhase={phase}/>
+          <UpdateIssueMainForm currIssue={issue} currPhase={phase}  showModal={showModal} setShowModal={setShowModal}/>
         </Modal>)
       }
 
