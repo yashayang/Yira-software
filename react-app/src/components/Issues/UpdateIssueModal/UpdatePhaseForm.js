@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkUpdateIssue } from "../../../store/issue";
+import { thunkUpdateIssue, thunkGetAllPhasesIssues } from "../../../store/issue";
 import "../../CSS/UpdateIssues.css"
 
 const UpdatePhaseForm = ({currIssue}) => {
@@ -29,6 +29,7 @@ const UpdatePhaseForm = ({currIssue}) => {
     }
 
     await dispatch(thunkUpdateIssue(issueId, issue, currPhaseId))
+    // await dispatch(thunkGetAllPhasesIssues())
   }
 
   return (

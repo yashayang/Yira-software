@@ -19,8 +19,8 @@ const IssueCards = ({phase, issue, projectNameInit}) => {
       if (!showModal) setShowModal(true)
       }}>
       {showModal &&(
-        <Modal onClose={() => {
-          dispatch(thunkGetAllPhasesIssues())
+        <Modal onClose={async() => {
+          await dispatch(thunkGetAllPhasesIssues())
           setShowModal(false)
           }}>
           <UpdateIssueMainForm currIssue={issue} currPhase={phase}  showModal={showModal} setShowModal={setShowModal}/>
