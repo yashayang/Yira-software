@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkCreateIssue } from "../../../store/issue";
+import { thunkCreateIssue, thunkDeleteIssue } from "../../../store/issue";
 import { thunkGetAllPhasesIssues } from '../../../store/issue';
 import { thunkUploadAttachment } from "../../../store/attachment";
 import { loadAllUsers } from '../../../store/session';
@@ -53,14 +53,20 @@ const CreateIssue = ({setModal}) => {
       errorsArr.push(errorMsg)
       setErrors(errorsArr)
     } else {
-      setModal(false)
       const data = {
         issueId: response.issueId,
         name: attachment.name,
         attachment
       }
       const res = await dispatch(thunkUploadAttachment(data))
-      // await dispatch(thunkGetAllPhasesIssues())
+      if (res.errors) {
+        // console.log("CREATE ISSUE IN PHASE -res.errors", res.errors)
+        errorsArr.push(res.errors)
+        setErrors(errorsArr)
+        dispatch(thunkDeleteIssue(response.issueId, phaseId))
+      } else {
+        setModal(false)
+      }
     }
 
   }
