@@ -63,9 +63,9 @@ const UpdateIssueMainForm = ({currIssue, currPhase, showModal, setShowModal}) =>
       </div>
 
       <div className="update-issue-close-container" onClick={() => setShowModal(false)}>
-        <i class="fa-sharp fa-solid fa-xmark"></i>
+        <i className="fa-sharp fa-solid fa-xmark"></i>
       </div>
-      
+
     </div>
   )
 }

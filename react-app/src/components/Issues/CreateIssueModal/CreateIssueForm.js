@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkCreateIssue } from "../../../store/issue";
 import { thunkGetAllPhasesIssues } from '../../../store/issue';
+import { thunkUploadAttachment } from "../../../store/attachment";
 import { loadAllUsers } from '../../../store/session';
 import "../../CSS/CreateIssues.css"
 
@@ -11,14 +12,14 @@ const CreateIssue = ({setModal}) => {
   const allUsersArr = useSelector(state => state.session.AllUsers?.users);
   const allPhases = useSelector(state => state.issues.AllPhases);
   const allPhasesArr = Object.values(allPhases);
+
   const [phaseId, setPhaseId] = useState(1);
   const [summary, setSummary] = useState("");
   const [description, setDescription] = useState("");
-  const [assigneeId, setAssigneeId] = useState(currUser.id)
-  const [errors, setErrors] = useState([]);
-
+  const [assigneeId, setAssigneeId] = useState("Unassigned")
+  const [reportorId, setReportorId] = useState(currUser.id)
   const [attachment, setAttachment] = useState(null)
-  const [attachLoading, setAttachLoading] = useState(false)
+  const [errors, setErrors] = useState([]);
 
   // console.log("CREATE ISSUE - allPhasesArr", allPhasesArr)
 
@@ -29,62 +30,39 @@ const CreateIssue = ({setModal}) => {
 
 
   const handleSubmit = async(e) => {
-    console.log("!!!!!!!!!!")
     e.preventDefault()
     setErrors([])
-    // const issueInfo = { summary, description, phaseId, assigneeId }
+
     console.log("CREATEISSUE FORM-summary, description, phaseId, attachment:", summary, description, phaseId, assigneeId, attachment)
-    if (attachment) {
-      const formData = new FormData()
-      formData.append("summary", summary)
-      formData.append("description", description)
-      formData.append("phase_id", parseInt(phaseId))
-      formData.append("owner_id", parseInt(assigneeId))
-      formData.append("attachment", attachment)
 
-      setAttachLoading(true)
-      console.log("CREATEISSUE FORM-formData:", formData)
-      const response = await dispatch(thunkCreateIssue(phaseId, formData, attachment))
-      console.log("!!!!!!!", response)
-      let errorsArr = []
-      if(response.errors) {
-        if(response.errors[0].length > 40) {
-          let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
-          errorsArr.push(errorMsg)
-        } else if(!Array.isArray(response)) {
-          errorsArr.push(response.errors)
-        } else {
-          errorsArr.push(response.errors[0])
-        }
-        setErrors(errorsArr)
-      } else {
-        setModal(false)
-        await dispatch(thunkGetAllPhasesIssues())
-      }
-    } else {
-      const issueInfo = {
-        summary,
-        description: "",
-        attachment: "",
-        phase_id: parseInt(phaseId),
-        owner_id: parseInt(assigneeId)
-      }
-      console.log("CREATE ISSUE IN PHASE -issueInfo", issueInfo)
-      const response = await dispatch(thunkCreateIssue(phaseId, issueInfo))
-
-      console.log("CREATE ISSUE IN PHASE -response", response)
-
-      let errorsArr = []
-      if(response.errors) {
-        let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
-        errorsArr.push(errorMsg)
-        // console.log("!!!!!!!", errorsArr)
-        setErrors(errorsArr)
-      } else {
-        setModal(false)
-        await dispatch(thunkGetAllPhasesIssues())
-      }
+    const issueInfo = {
+      summary,
+      description,
+      phase_id: parseInt(phaseId),
+      owner_id: parseInt(reportorId),
+      assignee_id: assigneeId === "Unassigned" ? 0 : parseInt(assigneeId)
     }
+
+    const response = await dispatch(thunkCreateIssue(phaseId, issueInfo))
+
+    console.log("CREATE ISSUE IN PHASE -response", response)
+
+    let errorsArr = []
+    if(response.errors) {
+      let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
+      errorsArr.push(errorMsg)
+      setErrors(errorsArr)
+    } else {
+      setModal(false)
+      const data = {
+        issueId: response.issueId,
+        name: attachment.name,
+        attachment
+      }
+      const res = await dispatch(thunkUploadAttachment(data))
+      // await dispatch(thunkGetAllPhasesIssues())
+    }
+
   }
 
   const handleCancel = async(e) => {
@@ -151,12 +129,18 @@ const CreateIssue = ({setModal}) => {
       <div>
         <select
           name="assigneeId"
+          value={assigneeId}
           className="create-issue-assignee-select"
           onChange={(e) => setAssigneeId(e.target.value)}
         >
-        {/* <option disabled selected value={Number(assigneeId)}>Unassigned</option> */}
-        <option disabled selected value={Number(assigneeId)}>{currUser?.first_name[0].toUpperCase() +currUser?.first_name.slice(1) + " " + currUser?.last_name[0].toUpperCase() +currUser?.last_name.slice(1)}</option>
-        {allUsersArr?.map((user, i) => <option value={Number(user.id)} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>)}
+          <option value="">
+            Unassigned
+          </option>
+          {allUsersArr?.map((user, i) => (
+            <option value={Number(user.id)} key={i}>
+              {user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -167,15 +151,19 @@ const CreateIssue = ({setModal}) => {
         <select
           name="reporter"
           className="create-issue-assignee-select"
-          // onChange={(e) => setAssigneeId(e.target.value)}
+          value={reportorId}
+          onChange={(e) => setReportorId(e.target.value)}
         >
-        <option disabled selected>{currUser.first_name[0].toUpperCase() + currUser.first_name.slice(1) + " " + currUser.last_name[0].toUpperCase() + currUser.last_name.slice(1)}</option>
-        {/* {allUsersArr?.map((user, i) => <option value={user.id} key={i}>{user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}</option>)} */}
+          {allUsersArr?.map((user, i) =>
+            <option value={user.id} key={i}>
+              {user.first_name[0].toUpperCase() + user.first_name.slice(1) + " " + user.last_name[0].toUpperCase() + user.last_name.slice(1)}
+            </option>
+          )}
         </select>
       </div>
 
       <div className="create-issue-label-container">
-        <label>(Attach file in .pdf .png .jpg .jpeg .gif .docx .xlsx)</label>
+        <label>(File type: .png .jpg .jpeg .gif .docx .pdf .xlsx .ppt)</label>
       </div>
       <div className="create-issue-attachment-container">
         <input
@@ -190,7 +178,6 @@ const CreateIssue = ({setModal}) => {
         <div className="create-issue-button-container">
         <div className="create-issue-cancel" onClick={handleCancel}>Cancel</div>
         <button className="create-issue-create-button" type="submit">Create</button>
-        {/* {(attachLoading)&& <p>Loading...</p>} */}
         </div>
       </div>
 
