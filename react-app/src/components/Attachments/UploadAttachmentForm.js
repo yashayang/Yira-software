@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkUploadAttachment } from "../../store/attachment";
+import { thunkGetOneIssue, thunkGetAllPhasesIssues } from "../../store/issue";
 import UpdateDescriptionForm from '../Issues/UpdateIssueModal/UpdateDescriptionForm';
 import ViewAttachmentsForm from './ViewAttachmentsForm';
 import "../CSS/UpdateIssues.css"
@@ -54,8 +55,8 @@ const UploadAttachmentFrom = ({issueId, currIssue}) => {
           setAttachLoading(false)
           setAttachment(null)
           setName("")
-          // await dispatch(thunkGetOneIssue(parseInt(issueId)))
-          // await dispatch(thunkLoadAttachments(issueId))
+          await dispatch(thunkGetOneIssue(parseInt(issueId)))
+          await dispatch(thunkGetAllPhasesIssues())
     }
 }
 

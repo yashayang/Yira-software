@@ -62,7 +62,10 @@ const UpdateIssueMainForm = ({currIssue, currPhase, showModal, setShowModal}) =>
         <div className="update-issue-footer"></div>
       </div>
 
-      <div className="update-issue-close-container" onClick={() => setShowModal(false)}>
+      <div className="update-issue-close-container" onClick={async () =>{
+        await dispatch(thunkGetAllPhasesIssues());
+        setShowModal(false);
+        }}>
         <i className="fa-sharp fa-solid fa-xmark"></i>
       </div>
 

@@ -66,6 +66,7 @@ const CreateIssue = ({setModal}) => {
         dispatch(thunkDeleteIssue(response.issueId, phaseId))
       } else {
         setModal(false)
+        await dispatch(thunkGetAllPhasesIssues())
       }
     }
 

@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { thunkDeleteAttachment } from "../../store/attachment";
+import { thunkGetAllPhasesIssues } from "../../store/issue";
 import "../CSS/Attachments/DeleteAttachment.css"
 // import "../CSS//Attachments/ViewAttachments.css"
 
@@ -21,6 +22,7 @@ const DeleteAttachmentForm = ({activeDocId, attachmentId}) => {
       let response = await dispatch(thunkDeleteAttachment(currAttachmentId))
       if (response.ok) {
         window.alert(`Attachment has been deleted!`)
+        await dispatch(thunkGetAllPhasesIssues())
       }
       if (response.errors) {
         window.alert(`${response.errors}`)
