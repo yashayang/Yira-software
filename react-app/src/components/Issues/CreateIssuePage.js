@@ -39,7 +39,7 @@ const CreateIssuePage = () => {
     formData.append("phase_id", parseInt(phaseId))
     formData.append("owner_id", parseInt(assigneeId))
     formData.append("image", attachment)
-    console.log("CREATEISSUE FORM-issueInfo:", attachment)
+    // console.log("CREATEISSUE FORM-issueInfo:", attachment)
     setAttachLoading(true)
     const response = await dispatch(thunkCreateIssue(phaseId, formData, attachment))
     // console.log("!!!!!!!", response)

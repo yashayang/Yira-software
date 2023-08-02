@@ -123,7 +123,7 @@ export const thunkDeletePhase = (phaseId) => async (dispatch) => {
   const response = await fetch(`/api/phases/${phaseId}`, {
     method: "DELETE"
   })
-  console.log("DELETE ISSUES_response:", response)
+  // console.log("DELETE ISSUES_response:", response)
   if (response.ok) {
     dispatch(removeOnePhase(phaseId));
     return response

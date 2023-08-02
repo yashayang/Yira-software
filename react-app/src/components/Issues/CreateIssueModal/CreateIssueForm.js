@@ -33,7 +33,7 @@ const CreateIssue = ({setModal}) => {
     e.preventDefault()
     setErrors([])
 
-    console.log("CREATEISSUE FORM-summary, description, phaseId, attachment:", summary, description, phaseId, assigneeId, attachment)
+    // console.log("CREATEISSUE FORM-summary, description, phaseId, attachment:", summary, description, phaseId, assigneeId, attachment)
 
     const issueInfo = {
       summary,
@@ -45,19 +45,22 @@ const CreateIssue = ({setModal}) => {
 
     const response = await dispatch(thunkCreateIssue(phaseId, issueInfo))
 
-    console.log("CREATE ISSUE IN PHASE -response", response)
+    // console.log("CREATE ISSUE IN PHASE -response", response)
 
     let errorsArr = []
     if(response.errors) {
       let errorMsg = response.errors[0].slice(response.errors[0].indexOf(':')+1, response.errors[0].length)
       errorsArr.push(errorMsg)
       setErrors(errorsArr)
+    } else if (response.summary) {
+      setModal(false)
     } else {
       const data = {
         issueId: response.issueId,
         name: attachment.name,
         attachment
       }
+      // console.log("CREATE ISSUE IN PHASE -data", data)
       const res = await dispatch(thunkUploadAttachment(data))
       if (res.errors) {
         // console.log("CREATE ISSUE IN PHASE -res.errors", res.errors)

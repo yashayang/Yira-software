@@ -20,7 +20,7 @@ const LoginForm = () => {
     if (!email) errors.push("Email: this field is required.")
     if (!password) errors.push("Password: this field is required.")
     const data = await dispatch(login(email, password));
-    console.log(data)
+    // console.log(data)
     if (data) {
       if (data.filter(error => error.includes("Password was incorrect.") || error.includes("Email provided not found."))){
         errors.push("The credentials are invalid.")
