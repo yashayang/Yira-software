@@ -11,3 +11,7 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         'DATABASE_URL').replace('postgres://', 'postgresql://')
     SQLALCHEMY_ECHO = True
+
+    # Configure the cache
+    CACHE_TYPE = 'SimpleCache' # Can use other types like 'RedisCache' or 'MemcachedCache'
+    CACHE_DEFAULT_TIMEOUT = 300 # Cache timeout in seconds
