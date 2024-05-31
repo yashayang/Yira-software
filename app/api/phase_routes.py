@@ -31,18 +31,24 @@ def create_phase(project_id):
   form = PhaseForm()
   form['csrf_token'].data = request.cookies['csrf_token']
 
+  # Use `validate_on_submit` method provided by Flask-WTF to handling
+  # form submission and validation
   if form.validate_on_submit():
-    new_phase = Phase(
-      title = form.data["title"],
-      project_id = project_id,
-      owner_id = current_user.id,
-      created_at= datetime.now()
-    )
+    try:
+      new_phase = Phase(
+        title = form.data["title"],
+        project_id = project_id,
+        owner_id = current_user.id,
+        created_at= datetime.now()
+      )
 
-    db.session.add(new_phase)
-    db.session.commit()
+      db.session.add(new_phase)
+      db.session.commit()
 
-    return new_phase.to_dict_all_phase(), 201
+      return new_phase.to_dict_all_phase(), 201
+    except Exception as e:
+      db.sesssion.rollback()
+      return {'errors': str(e)}, 500
   else:
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
@@ -71,13 +77,19 @@ def update_phase(phase_id):
   if phase is None:
     return {"errors" : "Issue couldn't be found"}, 404
 
+  # Use `validate_on_submit` method provided by Flask-WTF to handling
+  # form submission and validation
   if form.validate_on_submit():
-    phase.title = form.data['title']
-    phase.phase_id = phase_id
-    phase.owner_id = current_user.id
-    phase.updated_at = datetime.now()
-    db.session.commit()
-    return phase.to_dict_all_phase(), 200
+    try:
+      phase.title = form.data['title']
+      phase.phase_id = phase_id
+      phase.owner_id = current_user.id
+      phase.updated_at = datetime.now()
+      db.session.commit()
+      return phase.to_dict_all_phase(), 200
+    except Exception as e:
+      db.session.rollback()
+      return {'errors': str(e)}, 500
   else:
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 

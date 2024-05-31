@@ -33,19 +33,25 @@ def create_issue(phase_id):
   form = IssueForm()
   form['csrf_token'].data = request.cookies['csrf_token']
 
+  # Use `validate_on_submit` method provided by Flask-WTF to handling
+  # form submission and validation
   if form.validate_on_submit():
-    new_issue = Issue(
-      summary = form.data["summary"],
-      description = form.data["description"],
-      phase_id = form.data["phase_id"],
-      assignee_id = form.data["assignee_id"],
-      owner_id = form.data["owner_id"],
-      created_at= datetime.now()
-    )
-    db.session.add(new_issue)
-    db.session.commit()
+    try:
+      new_issue = Issue(
+        summary = form.data["summary"],
+        description = form.data["description"],
+        phase_id = form.data["phase_id"],
+        assignee_id = form.data["assignee_id"],
+        owner_id = form.data["owner_id"],
+        created_at= datetime.now()
+      )
+      db.session.add(new_issue)
+      db.session.commit()
 
-    return new_issue.to_dict(), 201
+      return new_issue.to_dict(), 201
+    except Exception as e:
+      db.session.rollback()
+      return {'errors': str(e)}, 500
   else:
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
@@ -69,7 +75,7 @@ def create_issue(phase_id):
 @login_required
 def update_issue(issue_id):
   issue = Issue.query.filter(Issue.id == issue_id).first()
-  print("!!!!!!!!!!!!ISSUE_ROUTE issue!!!!!!!!!!!!!!:", issue.to_dict())
+  # print("!!!!!!!!!!!!ISSUE_ROUTE issue!!!!!!!!!!!!!!:", issue.to_dict())
   if issue is None:
     return {"errors" : "Issue couldn't be found"}, 404
 
@@ -81,15 +87,21 @@ def update_issue(issue_id):
   form = IssueForm(formdata=formdata)
   form['csrf_token'].data = request.cookies['csrf_token']
 
+  # Use `validate_on_submit` method provided by Flask-WTF to handling
+  # form submission and validation
   if form.validate_on_submit():
-    issue.summary = form.summary.data
-    issue.description = form.description.data
-    issue.phase_id = form.phase_id.data
-    issue.owner_id = form.owner_id.data if form.assignee_id.data != "" else 0
-    issue.assignee_id = form.assignee_id.data if form.assignee_id.data != "" else 0
-    issue.updated_at = datetime.now()
-    db.session.commit()
-    return issue.to_dict(), 200
+    try:
+      issue.summary = form.summary.data
+      issue.description = form.description.data
+      issue.phase_id = form.phase_id.data
+      issue.owner_id = form.owner_id.data if form.assignee_id.data != "" else 0
+      issue.assignee_id = form.assignee_id.data if form.assignee_id.data != "" else 0
+      issue.updated_at = datetime.now()
+      db.session.commit()
+      return issue.to_dict(), 200
+    except Exception as e:
+      db.session.rollback()
+      return {'errors': str(e)}, 500
   else:
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
