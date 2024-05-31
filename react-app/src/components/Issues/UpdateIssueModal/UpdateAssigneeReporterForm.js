@@ -12,7 +12,7 @@ const UpdateAssigneeReporterForm = ({currIssue}) => {
   const currAssigneeId = currIssue.Assignee?.id;
   const currReportorId = currIssue.ownerId;
   const currDescription = currIssue.description;
-  
+
   const [assigneeId, setAssigneeId] = useState(currAssigneeId)
   const [reportorId, setReportorId] = useState(currReportorId)
 
@@ -53,13 +53,17 @@ const UpdateAssigneeReporterForm = ({currIssue}) => {
       issue = {
         "owner_id": 0,
         "summary": currIssue.summary,
-        "phase_id": currPhaseId
+        "phase_id": currPhaseId,
+        "description": currDescription,
+        "assignee_id": currAssigneeId ? currAssigneeId : 0
       }
     } else {
       issue = {
         "owner_id": Number(e.target.value),
         "summary": currIssue.summary,
-        "phase_id": currPhaseId
+        "phase_id": currPhaseId,
+        "description": currDescription,
+        "assignee_id": currAssigneeId ? currAssigneeId : 0
       }
     }
 

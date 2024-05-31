@@ -69,7 +69,7 @@ def create_issue(phase_id):
 @login_required
 def update_issue(issue_id):
   issue = Issue.query.filter(Issue.id == issue_id).first()
-
+  print("!!!!!!!!!!!!ISSUE_ROUTE issue!!!!!!!!!!!!!!:", issue.to_dict())
   if issue is None:
     return {"errors" : "Issue couldn't be found"}, 404
 

@@ -182,6 +182,7 @@ export const thunkUpdateIssue = (issueId, issue, phaseId) => async (dispatch) =>
     }
 
     const updatedIssue = await response.json();
+    console.log("ThunkUpdatedIssue - updateIssue:", updatedIssue)
     dispatch(updateOneIssue(updatedIssue, phaseId));
     return updatedIssue
 
