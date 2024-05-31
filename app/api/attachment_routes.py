@@ -20,7 +20,7 @@ def load_attachments(issue_id):
 def upload_attachment():
   form = AttachmentForm()
   form['csrf_token'].data = request.cookies['csrf_token']
-  print("-----upload_attachment-----:", request.files)
+  
   if "attachment" not in request.files:
     return {"errors": "file required"}, 400
 
@@ -38,10 +38,8 @@ def upload_attachment():
     return upload, 400
 
   url = upload["url"]
-  print("---CREATE ISSUE with attachment---before---url", url)
-  print("---CREATE ISSUE with attachment---before---form.data", form.data)
+
   if form.validate_on_submit():
-    print("---CREATE ISSUE with attachment---after---ENTER!!!!")
     new_attachment = Attachment(
       owner_id=current_user.id,
       issue_id=form.data["issueId"],
@@ -49,13 +47,12 @@ def upload_attachment():
       url=url,
       created_at = datetime.now()
     )
-    print("---CREATE ISSUE with attachment---new_issue:", new_attachment)
+
     db.session.add(new_attachment)
     db.session.commit()
 
     return new_attachment.to_dict(), 201
   else:
-    # print("---CREATE ISSUE---FORM ERRORS:", form.errors)
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 # fetch("http://localhost:3000/api/attachments/new", {

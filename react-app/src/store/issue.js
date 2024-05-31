@@ -1,3 +1,7 @@
+// Purpose: This file contains the redux store for the issues.
+//          It contains the action creators, thunks, and reducer for the issues.
+
+// Constants
 const LOAD_ALL_PHASES_ISSUES = 'issues/LOAD_ALL_PHASES_ISSUES';
 const LOAD_ONE_ISSUE = 'issues/LOAD_ONE_ISSUE'
 const CREATE_ISSUE = 'issues/CREATE_ISSUE';
@@ -6,25 +10,26 @@ const DELETE_ISSUE = 'issues/DELETE_ISSUE';
 const RESET_PROJECT = 'issues/RESET_PROJECT'
 const DELETE_PHASE = 'issues/DELETE_PHASE';
 
+// Action creators
 export const cleanState = () => {
   return {
     type: RESET_PROJECT
   }
-}
+};
 
 export const allPhasesIssues = (phasesIssues) => {
   return {
     type: LOAD_ALL_PHASES_ISSUES,
     phasesIssues
   }
-}
+};
 
 export const loadOneIssue = (issue) => {
   return {
     type: LOAD_ONE_ISSUE,
     issue
   }
-}
+};
 
 export const createOneIssue = (issue, phaseId) => {
   return {
@@ -32,7 +37,7 @@ export const createOneIssue = (issue, phaseId) => {
     issue,
     phaseId
   }
-}
+};
 
 export const updateOneIssue = (issue, phaseId) => {
   return {
@@ -40,7 +45,7 @@ export const updateOneIssue = (issue, phaseId) => {
     issue,
     phaseId
   }
-}
+};
 
 export const removeOneIssue = (issueId, phaseId) => {
   return {
@@ -48,15 +53,16 @@ export const removeOneIssue = (issueId, phaseId) => {
     issueId,
     phaseId
   }
-}
+};
 
 export const removePhase = (phaseId) =>{
   return {
     type: DELETE_PHASE,
     phaseId
   }
-}
+};
 
+// Thunks
 export const thunkGetAllPhasesIssues = () => async (dispatch) => {
   const response = await fetch('/api/phases/');
 
@@ -65,7 +71,7 @@ export const thunkGetAllPhasesIssues = () => async (dispatch) => {
     dispatch(allPhasesIssues(phasesIssues));
     return phasesIssues;
   }
-}
+};
 
 export const thunkGetOneIssue = (issueId) => async (dispatch) => {
   const response = await fetch(`/api/issues/${issueId}`)
@@ -75,24 +81,21 @@ export const thunkGetOneIssue = (issueId) => async (dispatch) => {
     dispatch(loadOneIssue(issue))
     return issue
   }
-}
+};
 
 
 export const thunkCreateIssue = (phaseId, issue, attachment) => async (dispatch) => {
-  // console.log("CREATE ISSUES - phaseId/THUNK_issue:", phaseId, issue)
   if (attachment) {
-    // console.log("CREATE ISSUES THUNK_issue.attachment:", issue.attachment)
     try {
       const response = await fetch(`/api/issues/${phaseId}/new`, {
         method: "POST",
         body: issue
       })
-      // console.log("CREATE ISSUES THUNK_response:", response)
+
       if (!response.ok) {
         let error;
         if (response.status === 401 || 400) {
           error = await response.json();
-          // console.log("CREATE ISSUES THUNK_error:", error)
           return error;
         } else {
           let errorJSON;
@@ -115,8 +118,6 @@ export const thunkCreateIssue = (phaseId, issue, attachment) => async (dispatch)
     }
   }
 
-  // console.log("CREATE ISSUES THUNK_withoutImage_JSON.stringify(issue):", JSON.stringify(issue))
-
   try {
     const response = await fetch(`/api/issues/${phaseId}/new`, {
       method: "POST",
@@ -125,12 +126,11 @@ export const thunkCreateIssue = (phaseId, issue, attachment) => async (dispatch)
           },
       body: JSON.stringify(issue)
     })
-    // console.log("CREATE ISSUES THUNK_without image_response:", response)
+
     if (!response.ok) {
       let error;
       if (response.status === 401 || 400) {
         error = await response.json();
-        // console.log("CREATE ISSUES THUNK_error:", error)
         return error;
       } else {
         let errorJSON;
@@ -152,21 +152,16 @@ export const thunkCreateIssue = (phaseId, issue, attachment) => async (dispatch)
     throw error
   }
 
-
-}
+};
 
 
 export const thunkUpdateIssue = (issueId, issue, phaseId) => async (dispatch) => {
-
-  // console.log("UPDATE ISSUES THUNK ---- issue:", issue)
-  // console.log("thunkUpdateIssue ---- issueId, phaseId", issueId, phaseId)
   try {
     const response = await fetch(`/api/issues/${issueId}`, {
       method: "PUT",
       headers: {
           'Content-Type': 'application/json'
           },
-      // body: JSON.stringify({summary, description, phase_id: parseInt(phaseId), owner_id: parseInt(assigneeId)})
       body: JSON.stringify(issue)
     });
     if (!response.ok) {
@@ -188,36 +183,34 @@ export const thunkUpdateIssue = (issueId, issue, phaseId) => async (dispatch) =>
 
     const updatedIssue = await response.json();
     dispatch(updateOneIssue(updatedIssue, phaseId));
-    // console.log("UPDATE ISSUES THUNK_NO ATTACH_updatedIssue:", updatedIssue)
     return updatedIssue
 
   } catch (error) {
     throw error
   }
-}
+};
 
 export const thunkDeleteIssue = (issueId, phaseId) => async (dispatch) => {
-  // console.log("DELETE ISSUES THUNK_issueId_phaseId:", issueId, phaseId)
   const response = await fetch(`/api/issues/${issueId}`, {
     method: "DELETE"
   })
-  // console.log("DELETE ISSUES_response:", response)
+
   if (response.ok) {
     dispatch(removeOneIssue(issueId, phaseId));
     return response
   }
-}
+};
 
+// Reducer
 const initialState = {
   AllPhases: {},
   NewIssue: {},
   SingleIssue: {}
-}
+};
 
 const issues = (state = initialState, action) => {
   let newState
   switch(action.type) {
-
     case LOAD_ALL_PHASES_ISSUES:
       newState = { ...state, SingleIssue: {...state.SingleIssue}, AllPhases: {...state.AllPhases}}
       action.phasesIssues.AllPhases.forEach(phase => {
@@ -235,7 +228,6 @@ const issues = (state = initialState, action) => {
       newState = { ...state, SingleIssue: {...state.SingleIssue}, AllPhases: {...state.AllPhases}}
       newState.SingleIssue = action.issue
       return newState
-      // return { ...state, ...state.AllPhases, singleIssue: { ...state.singleIssue, ...action.issue }};
 
     case UPDATE_ISSUE:
       newState = { ...state, SingleIssue: {...state.SingleIssue}, AllPhases: {...state.AllPhases}}
@@ -252,7 +244,6 @@ const issues = (state = initialState, action) => {
 
     case RESET_PROJECT:
       newState = { ...state, SingleIssue: {...state.SingleIssue}, AllPhases: {...state.AllPhases}}
-      // newState.AllPhases = {}
       newState.SingleIssue = {}
       newState.NewIssue = {}
       return newState
@@ -265,6 +256,6 @@ const issues = (state = initialState, action) => {
     default:
       return state;
   }
-}
+};
 
 export default issues;

@@ -1,8 +1,11 @@
-// constants
+// Purpose: To create the session store and its actions and reducers.
+
+// Constants
 const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
 const LOAD_ALL_USERS = 'session/ALL_USERS';
 
+// Action creators
 const setUser = (user) => ({
   type: SET_USER,
   payload: user
@@ -10,15 +13,15 @@ const setUser = (user) => ({
 
 const removeUser = () => ({
   type: REMOVE_USER,
-})
+});
 
 const allUsers = (users) => ({
   type: LOAD_ALL_USERS,
   users
-})
+});
 
-const initialState = { user: null };
 
+// Thunks
 export const authenticate = () => async (dispatch) => {
   const response = await fetch('/api/auth/', {
     headers: {
@@ -33,10 +36,9 @@ export const authenticate = () => async (dispatch) => {
 
     dispatch(setUser(data));
   }
-}
+};
 
 export const login = (email, password) => async (dispatch) => {
-  // console.log("LoginThunk_email_password:", email, password)
   const response = await fetch('/api/auth/login', {
     method: 'POST',
     headers: {
@@ -46,7 +48,7 @@ export const login = (email, password) => async (dispatch) => {
       email,
       password
     })
-  });
+  })
 
 
   if (response.ok) {
@@ -61,15 +63,14 @@ export const login = (email, password) => async (dispatch) => {
   } else {
     return ['An error occurred. Please try again.']
   }
-
-}
+};
 
 export const logout = () => async (dispatch) => {
   const response = await fetch('/api/auth/logout', {
     headers: {
       'Content-Type': 'application/json',
     }
-  });
+  })
 
   if (response.ok) {
     dispatch(removeUser());
@@ -90,7 +91,7 @@ export const signUp = (firstName, lastName, email, administration, password) => 
       administration,
       password,
     }),
-  });
+  })
 
   if (response.ok) {
     const data = await response.json();
@@ -104,7 +105,7 @@ export const signUp = (firstName, lastName, email, administration, password) => 
   } else {
     return ['An error occurred. Please try again.']
   }
-}
+};
 
 export const loadAllUsers = () => async (dispatch) => {
   const response = await fetch('/api/users/');
@@ -114,8 +115,10 @@ export const loadAllUsers = () => async (dispatch) => {
     dispatch(allUsers(users));
     return users;
   }
-}
+};
 
+// Reducer
+const initialState = { user: null };
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
@@ -123,8 +126,8 @@ export default function reducer(state = initialState, action) {
     case REMOVE_USER:
       return { user: null }
     case LOAD_ALL_USERS:
-      return { ...state, AllUsers: action.users}
+      return { ...state, AllUsers: action.users } // To overwrite the AllUsers key and create a new state
     default:
       return state;
   }
-}
+};

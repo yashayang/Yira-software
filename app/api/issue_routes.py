@@ -11,9 +11,7 @@ issue_routes = Blueprint('issues', __name__)
 @issue_routes.route("/<int:issue_id>")
 @login_required
 def get_one_issue(issue_id):
-  # print("---GET ONE ISSUE---ISSUE_ID:", issue_id)
   issue = Issue.query.get(issue_id)
-  # print("---GET ONE ISSUE---ISSUE:", issue)
   if issue:
     return issue.to_dict(), 200
   else:
@@ -70,26 +68,20 @@ def create_issue(phase_id):
 @issue_routes.route("/<int:issue_id>", methods=["PUT"])
 @login_required
 def update_issue(issue_id):
-  # print("===========UPDATE ISSUE ENTER!!!!==============")
   issue = Issue.query.filter(Issue.id == issue_id).first()
 
   if issue is None:
-    # print('issue- not existing----',issue)
     return {"errors" : "Issue couldn't be found"}, 404
 
   json_data = request.get_json()
   formdata = MultiDict(json_data)
   if formdata.get("assignee_id") == "":
       formdata["assignee_id"] = None
-  # print("Form data:", formdata)
 
   form = IssueForm(formdata=formdata)
-  # print("Form errors:", form.errors)
   form['csrf_token'].data = request.cookies['csrf_token']
-  # print("===========UPDATE ISSUE NO attachment==============form.assignee_id", form.assignee_id)
 
   if form.validate_on_submit():
-    # print("==========form.validate_on_submit=====")
     issue.summary = form.summary.data
     issue.description = form.description.data
     issue.phase_id = form.phase_id.data
@@ -99,7 +91,6 @@ def update_issue(issue_id):
     db.session.commit()
     return issue.to_dict(), 200
   else:
-    # print("---UPDATE ISSUE---FORM ERRORS:", form.errors)
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 # fetch("http://localhost:3000/api/projects/issues/6", {
@@ -120,9 +111,7 @@ def update_issue(issue_id):
 @issue_routes.route("/<int:issue_id>", methods=["DELETE"])
 @login_required
 def delete_issue(issue_id):
-  # print("---DELETE ISSUE ROUTE---issue_id:", issue_id)
   issue = Issue.query.get(issue_id)
-  # print("---DELETE ISSUE ROUTE---issue:", issue)
   if current_user.is_admin == True:
     db.session.delete(issue)
     db.session.commit()
@@ -133,7 +122,6 @@ def delete_issue(issue_id):
     }), 200
 
   else:
-    # print("---DELETE ISSUE---FORM ERRORS:", form.errors)
     return jsonify({
       "errors": "Unauthorized! You are not the admin of this board!"
     }), 403

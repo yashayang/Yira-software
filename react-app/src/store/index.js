@@ -5,6 +5,7 @@ import phases from './phase';
 import issues from './issue';
 import attachments from './attachment';
 
+// Combine all reducers into a single reducer function
 const rootReducer = combineReducers({
   session,
   phases,
@@ -12,7 +13,7 @@ const rootReducer = combineReducers({
   attachments
 });
 
-
+// Set up the store with the root reducer and middleware
 let enhancer;
 
 if (process.env.NODE_ENV === 'production') {
@@ -22,8 +23,9 @@ if (process.env.NODE_ENV === 'production') {
   const composeEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   enhancer = composeEnhancers(applyMiddleware(thunk, logger));
-}
+};
 
+// Create the store
 const configureStore = (preloadedState) => {
   return createStore(rootReducer, preloadedState, enhancer);
 };
