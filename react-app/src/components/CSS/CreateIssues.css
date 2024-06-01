@@ -1,6 +1,8 @@
 .create-issue-main-container {
-  width: 400px;
-  height: 700px;
+  width: 500px;
+  height: 750px;
+  max-width: 500px;
+  max-height: 1000px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,22 +13,27 @@
 .create-issue-form {
   margin-top: 15px;
   z-index: 999;
-  position: absolute;
+  display: block;
 }
 
 .create-issue-title {
+  margin-top: 15px;
   margin-bottom: 15px;
   color: #2F2F2F;
   font-size: 1.2rem;
   font-weight: 500;
+  text-align: center; /* Center the text */
 }
 
 .create-issue-validation-errors {
+  max-width: 348px;
+  max-height: 600px;
   color: #EF476F;
   font-size: 0.8rem;
   font-weight: 500;
   margin-top: 10px;
   margin-bottom: 10px;
+  overflow-wrap: break-word; /* Break long words */
 }
 
 .create-issue-label-container {
@@ -35,7 +42,6 @@
   font-weight: 500;
   color: #888888;
   margin-bottom: 3px;
-  position: relative;
 }
 
 

@@ -51,7 +51,7 @@ const CreateIssue = ({setModal}) => {
 
   // Summary validation function
   const validateSummary = (summary) => {
-    if (summary.length < 6) {
+    if (summary.length > 0 && summary.length < 6) {
       return "Summary must be at least 6 characters long"
     }
     if (summary.length > 100){
