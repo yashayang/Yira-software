@@ -10,6 +10,7 @@ class Config:
     # so the connection uri must be updated here (for production)
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         'DATABASE_URL').replace('postgres://', 'postgresql://')
+    # Enable SQL query logging
     SQLALCHEMY_ECHO = True
 
     # Configure the cache
