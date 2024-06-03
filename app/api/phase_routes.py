@@ -4,13 +4,26 @@ from datetime import datetime
 from app.models import Phase, Issue, db
 from app.forms import PhaseForm, IssueForm
 from .auth_routes import validation_errors_to_error_messages
+from app.cache import cache
+import logging
+
+# Logging to see if the function is being executed
+logging.basicConfig(level=logging.INFO)
 
 phase_routes = Blueprint('phases', __name__)
 
 
 @phase_routes.route("/")
 @login_required
+@cache.cached(timeout=50)
 def get_all_phases_issues():
+  """
+  If the cache decore is applied correctly. This
+  log message will be displayed in the terminal
+  only once, within a 50 second time frame.
+  """
+  logging.info(f"Fetching all_phases_issues from the database")
+
   all_phases = Phase.query.all()
   if all_phases:
     return {"AllPhases":[phase.to_dict_all_phase() for phase in all_phases]}, 200

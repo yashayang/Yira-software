@@ -5,12 +5,25 @@ from app.models import Phase, Issue, db
 from app.forms import PhaseForm, IssueForm
 from .auth_routes import validation_errors_to_error_messages
 from werkzeug.datastructures import MultiDict
+from app.cache import cache
+import logging
+
+# Logging to see if the function is being executed
+logging.basicConfig(level=logging.INFO)
 
 issue_routes = Blueprint('issues', __name__)
 
 @issue_routes.route("/<int:issue_id>")
 @login_required
+@cache.cached(timeout=50)
 def get_one_issue(issue_id):
+  """
+  If the cache decore is applied correctly. This
+  log message will be displayed in the terminal
+  only once, within a 50 second time frame.
+  """
+  logging.info(f"Fetching issue {issue_id} from the database...")
+
   issue = Issue.query.get(issue_id)
   if issue:
     return issue.to_dict(), 200

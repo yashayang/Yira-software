@@ -6,12 +6,25 @@ from app.forms import AttachmentForm
 from .auth_routes import validation_errors_to_error_messages
 from app.s3_helpers import (
     upload_file_to_s3, allowed_file, get_unique_filename, delete_file_from_s3, download_file_from_s3)
+from app.cache import cache
+import logging
+
+# Logging to see if the function is being executed
+logging.basicConfig(level=logging.INFO)
 
 attachment_routes = Blueprint('attachments', __name__)
 
 @attachment_routes.route('/<int:issue_id>')
 @login_required
+@cache.cached(timeout=50)
 def load_attachments(issue_id):
+  """
+  If the cache decore is applied correctly. This
+  log message will be displayed in the terminal
+  only once, within a 50 second time frame.
+  """
+  logging.info(f"Executing load_attachments for issue_id: {issue_id}")
+
   attachments = Attachment.query.filter_by(issue_id=issue_id)
   return {"attachments": [attachment.to_dict() for attachment in attachments]}
 
@@ -20,7 +33,7 @@ def load_attachments(issue_id):
 def upload_attachment():
   form = AttachmentForm()
   form['csrf_token'].data = request.cookies['csrf_token']
-  
+
   if "attachment" not in request.files:
     return {"errors": "file required"}, 400
 

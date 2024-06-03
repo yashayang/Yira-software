@@ -13,6 +13,8 @@ from .api.issue_routes import issue_routes
 from .api.attachment_routes import attachment_routes
 from .seeds import seed_commands
 from .config import Config
+from .sqlalchemy_events import setup_sqlalchemy_event_listeners
+from .cache import init_app
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
 
@@ -38,6 +40,13 @@ app.register_blueprint(issue_routes, url_prefix='/api/issues')
 app.register_blueprint(attachment_routes, url_prefix='/api/attachments')
 db.init_app(app)
 Migrate(app, db)
+
+# Set up SQLAlchemy event listeners
+with app.app_context():
+    setup_sqlalchemy_event_listeners(db.engine)
+
+# Set up flask caching
+init_app(app)
 
 # Application Security
 CORS(app)
