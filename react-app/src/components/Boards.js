@@ -2,11 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
 import { thunkGetAllPhasesIssues } from '../store/issue';
 import { loadAllUsers } from '../store/session';
-import CreateIssueInPhase from './Issues/CreateIssueInPhase';
 import CreatePhase from './Phases/CreatePhase';
-import UpdatedPhase from './Phases/UpdatePhase';
-import DeletePhase from './Phases/DeletePhase';
-import IssueCards from './Issues/IssueCards'
+import PhaseColumn from './Phases/PhaseColumn';
 import "./CSS/Boards.css"
 
 
@@ -81,16 +78,7 @@ function Boards(){
         <div className="phase-main-container">
           {phasesArr?.map((phase, i) => {
           return (
-            <div className="card-container" key={i}>
-              <div className="phase-title-container" key={i}>
-                <UpdatedPhase phaseId={phase.id} phaseTitle={phase.title} projectId={projectId} ownerId={currUserId}/>
-                <DeletePhase phaseId={phase.id}/>
-              </div>
-                {phase.Issues && Object.values(phase.Issues).map((issue) => {
-                  return <IssueCards issue={issue} phase={phase} projectNameInit={projectNameInit}/>
-                })}
-                <CreateIssueInPhase phaseId={phase.id} assigneeId={currUserId}/>
-            </div>
+            <PhaseColumn phase={phase} i={i} projectNameInit={projectNameInit} projectId={projectId}/>
           )})}
           <CreatePhase projectId={projectId} ownerId={currUserId}/>
         </div>

@@ -17,7 +17,7 @@ const IssueCards = ({phase, issue, projectNameInit}) => {
   return (
     <div className="issue-card-container" onClick={(e) => {
       if (!showModal) setShowModal(true)
-      }}>
+      }} draggable>
       {showModal &&(
         <Modal onClose={async() => {
           await dispatch(thunkGetAllPhasesIssues())
