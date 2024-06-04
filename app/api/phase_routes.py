@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, session, request
+from flask import Blueprint, jsonify, session, request, g
 from flask_login import current_user, login_required
 from datetime import datetime
 from app.models import Phase, Issue, db
@@ -6,12 +6,18 @@ from app.forms import PhaseForm, IssueForm
 from .auth_routes import validation_errors_to_error_messages
 from app.cache import cache
 import logging
+from time import time
 
 # Logging to see if the function is being executed
 logging.basicConfig(level=logging.INFO)
 
 phase_routes = Blueprint('phases', __name__)
 
+
+# Measurement of time taken for executing get_all_phases_issues
+# @phase_routes.before_request
+# def start_timer():
+#     g.start_time = time()
 
 @phase_routes.route("/")
 @login_required
@@ -27,6 +33,13 @@ def get_all_phases_issues():
   all_phases = Phase.query.all()
   if all_phases:
     return {"AllPhases":[phase.to_dict_all_phase() for phase in all_phases]}, 200
+
+# Measurement of time taken for executing get_all_phases_issues
+# @phase_routes.after_request
+# def log_request(response):
+#     elapsed_time = time() - g.start_time
+#     logging.info(f"Request to {request.path} took {elapsed_time:.4f} seconds")
+#     return response
 
 # fetch("http://localhost:3000/api/phases/", {
 #   method: 'GET',
