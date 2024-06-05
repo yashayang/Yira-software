@@ -237,7 +237,7 @@
   position: relative;
   background-color: #F5F4F4;
   width: 300px;
-  border-radius: 2%;
+  border-radius: 8px;
   margin-right: 12px;
 }
 
@@ -281,11 +281,18 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* margin: 20px; */
+  border-radius: 8px;
+  margin: 5px;
+  margin-bottom: 5px;
   width: 96%;
+  cursor: grab;
 }
 
+.issue-card-container:active {
+  border-radius: 8px;
+  opacity: 0.7;
+  border: 2px solid #888888;
+}
 /* .issue-card {
   background-color: #16E0BD;
   position: absolute;
@@ -294,14 +301,11 @@
 } */
 
 .issue-card-outer {
-  /* position: relative; */
   height: auto;
   width: 100%;
   font-size: 0.9rem;
   color: black;
-  border-radius: 3%;
-  margin: 3px;
-  margin-left: 5px;
+  border-radius: 8px;
   background-color: white;
   box-shadow: 0px 1px 1px 1px #e4e4e4;
   min-height: 90px;
@@ -330,7 +334,6 @@
 
 .issue-card-outer:hover {
   background-color: #F5F4F4;
-  cursor: pointer;
 }
 
 .fa-solid.fa-square-check {

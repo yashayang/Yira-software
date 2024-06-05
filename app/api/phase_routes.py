@@ -21,7 +21,7 @@ phase_routes = Blueprint('phases', __name__)
 
 @phase_routes.route("/")
 @login_required
-@cache.cached(timeout=50)
+# @cache.cached(timeout=50)
 def get_all_phases_issues():
   """
   If the cache decore is applied correctly. This

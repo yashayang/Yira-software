@@ -21,11 +21,11 @@ function Boards(){
   const currUserId = curr_user?.id;
   const all_users = useSelector(state => state.session.AllUsers);
 
-
   useEffect(() => {
     dispatch(thunkGetAllPhasesIssues())
     dispatch(loadAllUsers())
   }, [dispatch])
+
 
   if (!phases) return null;
 
@@ -78,7 +78,7 @@ function Boards(){
         <div className="phase-main-container">
           {phasesArr?.map((phase, i) => {
           return (
-            <PhaseColumn phase={phase} i={i} projectNameInit={projectNameInit} projectId={projectId}/>
+            <PhaseColumn phase={phase} i={i} projectNameInit={projectNameInit} projectId={projectId} />
           )})}
           <CreatePhase projectId={projectId} ownerId={currUserId}/>
         </div>

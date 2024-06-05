@@ -4,10 +4,12 @@ import { thunkGetAllPhasesIssues } from "../../store/issue";
 import DeleteIssue from './DeleteIssue';
 import { Modal } from '../../context/Modal';
 import UpdateIssueMainForm from './UpdateIssueModal/UpdateIssueMainForm';
+import DropArea from './DropArea';
 
-const IssueCards = ({phase, issue, projectNameInit}) => {
+const IssueCards = ({issue, index, phase, projectNameInit, setActiveCard, onDrop}) => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
+  // console.log("IssueCard ---- phase.title:", phase.title)
 
   const curr_user = useSelector(state => state.session.user);
   const curr_user_init = curr_user.first_name[0].toUpperCase() + curr_user.last_name[0].toUpperCase();
@@ -15,9 +17,14 @@ const IssueCards = ({phase, issue, projectNameInit}) => {
   // console.log("Issue Cards ---- issue:", issue)
 
   return (
+    <React.Fragment>
     <div className="issue-card-container" onClick={(e) => {
       if (!showModal) setShowModal(true)
-      }} draggable>
+      }}
+      draggable={true}
+      onDragStart={() => setActiveCard({index, issue})}
+      // onDragEnd={() => setActiveCard(null)}
+    >
       {showModal &&(
         <Modal onClose={async() => {
           await dispatch(thunkGetAllPhasesIssues())
@@ -27,7 +34,7 @@ const IssueCards = ({phase, issue, projectNameInit}) => {
         </Modal>)
       }
 
-      <div className="issue-card-outer" key={issue.issueId}>
+      <div className="issue-card-outer" key={issue.issueId} draggable>
         {issue.Attachment?.length >= 1 && (issue.Attachment[0]?.url?.includes("jpeg") || issue.Attachment[0]?.url?.includes("png") || issue.Attachment[0]?.url?.includes("jpg") || issue.Attachment[0]?.url?.includes("gif")) && <img src={`${issue.Attachment[0]?.url}`} alt={issue.Attachment} className="issue-card-attachment-img"/>}
         <div className="issue-card-title">
           <div className="issue-summary">{issue.summary}</div>
@@ -56,8 +63,9 @@ const IssueCards = ({phase, issue, projectNameInit}) => {
           }
         </div>
       </div>
-
     </div>
+    <DropArea onDrop={onDrop} phaseName={phase.title} index={index + 1}/>
+    </React.Fragment>
   )
 }
 

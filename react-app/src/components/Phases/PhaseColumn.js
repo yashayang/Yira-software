@@ -1,12 +1,47 @@
-import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { thunkGetAllPhasesIssues } from "../../store/issue";
 import UpdatedPhase from './UpdatePhase';
 import DeletePhase from './DeletePhase';
 import IssueCards from '../Issues/IssueCards';
 import CreateIssueInPhase from '../Issues/CreateIssueInPhase';
+import DropArea from '../Issues/DropArea';
 
 const PhaseColumn = ({ phase, i, projectNameInit, projectId }) => {
-const curr_user = useSelector(state => state.session.user);
-const currUserId = curr_user?.id;
+  const dispatch = useDispatch();
+  const phaseId = phase.id;
+  console.log("PhaseColumn ---- phaseId:", phaseId)
+  const [issues, setIssues] = useState(Object.values(phase.Issues));
+  const [activeCard, setActiveCard] = useState(null);
+  const phaseName = phase.title;
+  // console.log("PhaseColumn ---- beforeOnDrop:", issues)
+  // console.log("PhaseColumn ---- phaseName:", phaseName)
+  console.log("PhaseColumn ---- activeCard:", activeCard)
+
+  // console.log("PhaseColumn ---- issues:", issues)
+
+  const curr_user = useSelector(state => state.session.user);
+  const currUserId = curr_user?.id;
+
+  const onDrop = (phaseName, index) => {
+    console.log(`${activeCard} is going to place into ${phaseName} and at index ${index}`);
+
+    if (activeCard === null || setActiveCard === undefined) return;
+    const cardToMove = activeCard.issue;
+    const updatedCards = issues.filter((issue, i) => i !== activeCard.index);
+    updatedCards.splice(index, 0, {
+      ...cardToMove,
+      Phase: phase
+    });
+
+    setIssues(updatedCards);
+    setActiveCard(null);
+    console.log("PhaseColumn ---- afterOnDrop:", updatedCards)
+  }
+
+  useEffect(() => {
+    dispatch(thunkGetAllPhasesIssues())
+  }, [dispatch])
 
   return (
     <div className="card-container" key={i} draggable>
@@ -14,10 +49,19 @@ const currUserId = curr_user?.id;
       <UpdatedPhase phaseId={phase.id} phaseTitle={phase.title} projectId={projectId} ownerId={currUserId}/>
       <DeletePhase phaseId={phase.id}/>
     </div>
-      {phase.Issues && Object.values(phase.Issues).map((issue) => {
-        return <IssueCards issue={issue} phase={phase} projectNameInit={projectNameInit}/>
+    <DropArea onDrop={onDrop} phaseName={phaseName} index={0}/>
+      {phase.Issues && Object.values(phase.Issues).map((issue, index) => {
+        return <IssueCards
+                  issue={issue}
+                  index={index}
+                  phase={phase}
+                  projectNameInit={projectNameInit}
+                  setActiveCard={setActiveCard}
+                  onDrop={onDrop}
+                />
       })}
       <CreateIssueInPhase phaseId={phase.id} assigneeId={currUserId}/>
+    {/* <h1>Active Card - {activeCard.index}</h1> */}
   </div>
   )
 }

@@ -15,7 +15,7 @@ issue_routes = Blueprint('issues', __name__)
 
 @issue_routes.route("/<int:issue_id>")
 @login_required
-@cache.cached(timeout=50)
+# @cache.cached(timeout=50)
 def get_one_issue(issue_id):
   """
   If the cache decore is applied correctly. This
