@@ -4,13 +4,15 @@ import session from './session';
 import phases from './phase';
 import issues from './issue';
 import attachments from './attachment';
+import dragndrop from './dragndrop';
 
 // Combine all reducers into a single reducer function
 const rootReducer = combineReducers({
   session,
   phases,
   issues,
-  attachments
+  attachments,
+  dragndrop
 });
 
 // Set up the store with the root reducer and middleware

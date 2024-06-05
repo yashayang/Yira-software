@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
 import { thunkGetAllPhasesIssues } from "../../store/issue";
+import { setActiveCard } from '../../store/dragndrop';
 import DeleteIssue from './DeleteIssue';
 import { Modal } from '../../context/Modal';
 import UpdateIssueMainForm from './UpdateIssueModal/UpdateIssueMainForm';
 import DropArea from './DropArea';
 
-const IssueCards = ({issue, index, phase, projectNameInit, setActiveCard, onDrop}) => {
+const IssueCards = ({issue, index, phase, projectNameInit, onDrop}) => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   // console.log("IssueCard ---- phase.title:", phase.title)
@@ -16,14 +17,19 @@ const IssueCards = ({issue, index, phase, projectNameInit, setActiveCard, onDrop
   const assigneeNameInit = issue?.Assignee?.first_name[0].toUpperCase() + issue?.Assignee?.last_name[0].toUpperCase();
   // console.log("Issue Cards ---- issue:", issue)
 
+  const handleDragStart = () => {
+    console.log("IssueCard ---- handleDragStart:", issue)
+    dispatch(setActiveCard(index, issue));
+  };
+
   return (
     <React.Fragment>
     <div className="issue-card-container" onClick={(e) => {
       if (!showModal) setShowModal(true)
       }}
       draggable={true}
-      onDragStart={() => setActiveCard({index, issue})}
-      // onDragEnd={() => setActiveCard(null)}
+      onDragStart={handleDragStart}
+      onDragEnd={() => dispatch(setActiveCard(null))}
     >
       {showModal &&(
         <Modal onClose={async() => {

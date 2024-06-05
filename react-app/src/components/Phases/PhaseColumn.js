@@ -10,13 +10,15 @@ import DropArea from '../Issues/DropArea';
 const PhaseColumn = ({ phase, i, projectNameInit, projectId }) => {
   const dispatch = useDispatch();
   const phaseId = phase.id;
-  console.log("PhaseColumn ---- phaseId:", phaseId)
+  // console.log("PhaseColumn ---- phaseId:", phaseId)
   const [issues, setIssues] = useState(Object.values(phase.Issues));
-  const [activeCard, setActiveCard] = useState(null);
+  // const [activeCard, setActiveCard] = useState(null);
+  const activeCard = useSelector(state => state.dragndrop.activeCard);
+  const activeIndex = useSelector(state => state.dragndrop.index);
   const phaseName = phase.title;
-  // console.log("PhaseColumn ---- beforeOnDrop:", issues)
+
   // console.log("PhaseColumn ---- phaseName:", phaseName)
-  console.log("PhaseColumn ---- activeCard:", activeCard)
+  // console.log("PhaseColumn ---- activeCard:", activeCard)
 
   // console.log("PhaseColumn ---- issues:", issues)
 
@@ -24,19 +26,29 @@ const PhaseColumn = ({ phase, i, projectNameInit, projectId }) => {
   const currUserId = curr_user?.id;
 
   const onDrop = (phaseName, index) => {
-    console.log(`${activeCard} is going to place into ${phaseName} and at index ${index}`);
+    console.log(`${activeCard.summary} is going to place into ${phaseName} and at index ${index}`);
 
-    if (activeCard === null || setActiveCard === undefined) return;
-    const cardToMove = activeCard.issue;
-    const updatedCards = issues.filter((issue, i) => i !== activeCard.index);
-    updatedCards.splice(index, 0, {
-      ...cardToMove,
-      Phase: phase
-    });
+    if (activeCard === null) return;
 
-    setIssues(updatedCards);
-    setActiveCard(null);
-    console.log("PhaseColumn ---- afterOnDrop:", updatedCards)
+    let updatedCards = []
+    if (activeCard.phaseId === phaseId) {
+      updatedCards = issues.filter((issue, i) => i !== activeIndex);
+      updatedCards.splice(index, 0, {
+        ...activeCard,
+        Phase: phase
+      });
+      setIssues(updatedCards);
+    } else {
+      console.log("PhaseColumn ---- different phase - issues:", issues)
+      console.log("PhaseColumn ---- different phase - updateCards:", updatedCards)
+      issues.splice(index, 0, {
+        ...activeCard,
+        Phase: phase
+      });
+      setIssues(issues);
+      console.log("PhaseColumn ---- afterOnDrop:", updatedCards)
+    }
+
   }
 
   useEffect(() => {
@@ -50,13 +62,13 @@ const PhaseColumn = ({ phase, i, projectNameInit, projectId }) => {
       <DeletePhase phaseId={phase.id}/>
     </div>
     <DropArea onDrop={onDrop} phaseName={phaseName} index={0}/>
-      {phase.Issues && Object.values(phase.Issues).map((issue, index) => {
+      {phase.Issues && issues.map((issue, index) => {
         return <IssueCards
                   issue={issue}
                   index={index}
                   phase={phase}
                   projectNameInit={projectNameInit}
-                  setActiveCard={setActiveCard}
+                  // setActiveCard={setActiveCard}
                   onDrop={onDrop}
                 />
       })}
