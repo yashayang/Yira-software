@@ -12,7 +12,6 @@ const PhaseColumn = ({ phase, i, projectNameInit, projectId }) => {
   const phaseId = phase.id;
   // console.log("PhaseColumn ---- phaseId:", phaseId)
   const [issues, setIssues] = useState(Object.values(phase.Issues));
-  // const [activeCard, setActiveCard] = useState(null);
   const activeCard = useSelector(state => state.dragndrop.activeCard);
   const activeIndex = useSelector(state => state.dragndrop.index);
   const phaseName = phase.title;
@@ -46,7 +45,7 @@ const PhaseColumn = ({ phase, i, projectNameInit, projectId }) => {
         Phase: phase
       });
       setIssues(issues);
-      console.log("PhaseColumn ---- afterOnDrop:", updatedCards)
+      console.log("PhaseColumn ---- afterOnDrop:", issues)
     }
 
   }
@@ -68,7 +67,6 @@ const PhaseColumn = ({ phase, i, projectNameInit, projectId }) => {
                   index={index}
                   phase={phase}
                   projectNameInit={projectNameInit}
-                  // setActiveCard={setActiveCard}
                   onDrop={onDrop}
                 />
       })}
