@@ -10,16 +10,10 @@ import DropArea from '../Issues/DropArea';
 const PhaseColumn = ({ phase, i, projectNameInit, projectId }) => {
   const dispatch = useDispatch();
   const phaseId = phase.id;
-  // console.log("PhaseColumn ---- phaseId:", phaseId)
   const [issues, setIssues] = useState(Object.values(phase.Issues));
   const activeCard = useSelector(state => state.dragndrop.activeCard);
   const activeIndex = useSelector(state => state.dragndrop.index);
   const phaseName = phase.title;
-
-  // console.log("PhaseColumn ---- phaseName:", phaseName)
-  // console.log("PhaseColumn ---- activeCard:", activeCard)
-
-  // console.log("PhaseColumn ---- issues:", issues)
 
   const curr_user = useSelector(state => state.session.user);
   const currUserId = curr_user?.id;
@@ -29,20 +23,26 @@ const PhaseColumn = ({ phase, i, projectNameInit, projectId }) => {
 
     if (activeCard === null) return;
 
-    let updatedCards = []
-    if (activeCard.phaseId === phaseId) {
+    /*
+      Refact when the predecessor_id is been added
+      Send the predecessor_id, original_phase_id, phase_id to the backend
+    */
+    let updatedCards = [];
+    const  original_phase_id = activeCard.phaseId;
+    if (original_phase_id === phaseId) {
       updatedCards = issues.filter((issue, i) => i !== activeIndex);
       updatedCards.splice(index, 0, {
-        ...activeCard,
-        Phase: phase
+        ...activeCard
       });
       setIssues(updatedCards);
+      console.log("PhaseColumn ---- different phase - updateCards:", updatedCards)
     } else {
       console.log("PhaseColumn ---- different phase - issues:", issues)
-      console.log("PhaseColumn ---- different phase - updateCards:", updatedCards)
+      console.log("PhaseColumn ---- different phase - updateCards2:", updatedCards)
       issues.splice(index, 0, {
         ...activeCard,
-        Phase: phase
+        Phase: phase,
+        phaseId: phaseId
       });
       setIssues(issues);
       console.log("PhaseColumn ---- afterOnDrop:", issues)
@@ -61,6 +61,7 @@ const PhaseColumn = ({ phase, i, projectNameInit, projectId }) => {
       <DeletePhase phaseId={phase.id}/>
     </div>
     <DropArea onDrop={onDrop} phaseName={phaseName} index={0}/>
+      {console.log("PhaseColumn ---- afterOnDrop ---- Issues:", phase.Issues)}
       {phase.Issues && issues.map((issue, index) => {
         return <IssueCards
                   issue={issue}
